@@ -1,8 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import Auth from "./pages/Auth";
+
 function App() {
     return (
-        <div className="App">
-            <h1>Current | Movie Archive</h1>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="/auth" element={<Auth />} />
+                </Route>
+            </Routes>
+        </Router>
     );
 }
 
