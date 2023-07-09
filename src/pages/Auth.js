@@ -14,7 +14,10 @@ function Auth() {
     const handleLogin = (e) => {
         e.preventDefault();
         console.log({ username, password });
-        axios.post("http://localhost:5001/api/auth/login", { username, password }).then(({ data }) => console.log(data));
+        axios.post("http://localhost:5001/api/auth/login", { username, password }).then(({ data }) => {
+            console.log(data);
+            localStorage.setItem("token", data.accessToken);
+        });
     };
 
     return (
