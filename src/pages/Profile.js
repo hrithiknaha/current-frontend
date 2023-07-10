@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import MovieList from "../components/MovieList";
+import { connect } from "react-redux";
 
-const Profile = () => {
+import MovieList from "../components/MovieList";
+import { fetchUser } from "../redux/actions/user";
+
+const Profile = ({ auth }) => {
     const { username } = useParams();
 
     const [user, setUser] = useState();
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/users/${username}`)
-            .then(({ data }) => {
-                console.log(data);
-                setUser(data);
-            })
-            .catch((err) => console.log(err));
+        if (auth?.token) {
+            fetchUser(username, auth.token, setUser);
+        } else {
+            console.log("You need to be logged in to see this resource.");
+        }
     }, []);
 
     return (
@@ -39,4 +39,5 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+const mapStateToProps = (state) => ({ auth: state.auth });
+export default connect(mapStateToProps, {})(Profile);

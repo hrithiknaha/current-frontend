@@ -9,7 +9,7 @@ import { getMovieDetails } from "../redux/actions/tmdb";
 import { fetchSavedMovie } from "../redux/actions/user";
 import { saveMovieToCollection } from "../redux/actions/movies";
 
-const Movie = ({ user }) => {
+const Movie = ({ auth }) => {
     const { movieId } = useParams();
     const [movie, setMovie] = useState();
 
@@ -22,15 +22,15 @@ const Movie = ({ user }) => {
     useEffect(() => {
         getMovieDetails(movieId, setMovie);
 
-        if (user?.token) {
+        if (auth?.token) {
             console.log("User logged im. Searching for movie in his collections");
-            fetchSavedMovie(movieId, user.token, setUserSavedMovie);
+            fetchSavedMovie(movieId, auth.token, setUserSavedMovie);
         }
     }, [movieId]);
 
     const submitMovie = (e) => {
         e.preventDefault();
-        if (user?.token) saveMovieToCollection(user, rating, dateWatched, theatre);
+        if (auth?.token) saveMovieToCollection(auth, rating, dateWatched, theatre);
         else console.log("You need to login in order to perform that action.");
     };
     return (
@@ -95,5 +95,5 @@ const Movie = ({ user }) => {
     );
 };
 
-const mapStateToProps = (state) => ({ user: state.auth });
+const mapStateToProps = (state) => ({ auth: state.auth });
 export default connect(mapStateToProps, {})(Movie);
