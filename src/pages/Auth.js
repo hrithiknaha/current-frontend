@@ -1,8 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
-function Auth() {
+import { loginUser } from "../redux/actions/user";
+import RegisterUser from "../components/Auth/RegisterUser";
+import LoginUser from "../components/Auth/LoginUser";
+
+function Auth({ loginUser }) {
     const navigate = useNavigate();
     const [showLogin, setShowLogin] = useState(true);
 
@@ -15,15 +20,7 @@ function Auth() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log({ username, password });
-        axios
-            .post("http://localhost:5001/api/auth/login", { username, password })
-            .then(({ data }) => {
-                console.log(data);
-                localStorage.setItem("token", data.accessToken);
-                navigate("/movies");
-            })
-            .catch((err) => console.log(err));
+        loginUser(username, password, navigate);
     };
 
     return (
@@ -31,34 +28,12 @@ function Auth() {
             {showLogin ? (
                 <div>
                     <h4>Register User</h4>
-                    <form>
-                        <label htmlFor="firstname">Firstname</label>
-                        <input type="text" name="firstname" id="firstname" placeholder="firstname" />
-
-                        <label htmlFor="lastname">Lastname</label>
-                        <input type="text" name="lastname" id="lastname" placeholder="lastname" />
-
-                        <label htmlFor="username">Username</label>
-                        <input type="text" name="username" id="username" placeholder="username" />
-
-                        <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="password" />
-
-                        <button type="submit">Submit</button>
-                    </form>
+                    <RegisterUser />
                 </div>
             ) : (
                 <div>
                     <h4>Login</h4>
-                    <form onSubmit={handleLogin}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" name="username" id="username" placeholder="username" onChange={(e) => setUsername(e.target.value)} />
-
-                        <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
-
-                        <button type="submit">Login</button>
-                    </form>
+                    <LoginUser handleLogin={handleLogin} setUsername={setUsername} setPassword={setPassword} />
                 </div>
             )}
 
@@ -68,4 +43,6 @@ function Auth() {
     );
 }
 
-export default Auth;
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, { loginUser })(Auth);

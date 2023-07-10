@@ -1,0 +1,34 @@
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+
+import { LOGIN_USER, LOGOUT_USER } from "./types";
+
+export const loginUser = (username, password, navigate) => (dispatch) => {
+    axios
+        .post("http://localhost:5001/api/auth/login", { username, password })
+        .then(({ data }) => {
+            const token = data.accessToken;
+
+            localStorage.setItem("token", token);
+            const { username } = jwtDecode(token);
+
+            dispatch({
+                type: LOGIN_USER,
+                payload: { username, token },
+            });
+            navigate("/movies");
+        })
+        .catch((err) => console.log(err));
+};
+
+export const logoutUser = () => (dispatch) => {
+    axios
+        .get("http://localhost:5001/api/auth/logout")
+        .then(() => {
+            localStorage.removeItem("token");
+            dispatch({
+                type: LOGOUT_USER,
+            });
+        })
+        .catch((err) => console.log(err));
+};

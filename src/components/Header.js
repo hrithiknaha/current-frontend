@@ -1,38 +1,20 @@
-import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { connect } from "react-redux";
 
-const Header = () => {
-    const [username, setUsername] = useState();
-    useEffect(() => {
-        const token = localStorage.getItem("token");
+import { logoutUser } from "../redux/actions/user";
 
-        if (token) {
-            const decoded = jwtDecode(token);
-            const { username } = decoded;
-            setUsername(username);
-        }
-    }, [username]);
-
+const Header = ({ user, logoutUser }) => {
     const handleLogout = () => {
         console.log("Logging out user.");
-
-        axios
-            .get("http://localhost:5001/api/auth/logout")
-            .then(({ data }) => {
-                console.log(data);
-                localStorage.removeItem("token");
-                setUsername(null);
-            })
-            .catch((err) => console.log(err));
+        logoutUser();
     };
+
     return (
         <div>
             <div>
-                {username ? (
+                {user.username ? (
                     <div>
-                        <p>⭐️</p>
+                        <p>{user.username}</p>
                         <button onClick={handleLogout}>Logout</button>
                     </div>
                 ) : (
@@ -43,4 +25,6 @@ const Header = () => {
     );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({ user: state.users });
+
+export default connect(mapStateToProps, { logoutUser })(Header);
