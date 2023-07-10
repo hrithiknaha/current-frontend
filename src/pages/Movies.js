@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import MovieList from "../components/MovieList";
+import TMDBMovieList from "../components/TMDBMovieList";
 
 function Movies() {
     const [movieQueries, setMoviesQueries] = useState();
@@ -24,7 +24,7 @@ function Movies() {
                 <button type="submit">Search Movies</button>
             </form>
 
-            {searchedMovies ? <MovieList movies={searchedMovies} /> : <p>Beautiful Day</p>}
+            {searchedMovies ? <TMDBMovieList movies={searchedMovies} /> : <p>Beautiful Day</p>}
         </div>
     );
 }

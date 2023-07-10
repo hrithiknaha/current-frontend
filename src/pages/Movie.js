@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 
 const Movie = () => {
     const { movieId } = useParams();
@@ -26,14 +27,21 @@ const Movie = () => {
             theatre,
         };
         console.log(payload);
-        axios
-            .post("http://localhost:5001/api/movies/add", payload, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            })
-            .then(({ data }) => console.log(data))
-            .catch((err) => console.log(err));
+
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            axios
+                .post("http://localhost:5001/api/movies/add", payload, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                })
+                .then(({ data }) => console.log(data))
+                .catch((err) => console.log(err));
+        } else {
+            console.log("You need to login to perform that action.");
+        }
     };
     return (
         <div>
@@ -61,7 +69,7 @@ const Movie = () => {
                     </a>
                     <ul>
                         {movie.genres.map((genre) => (
-                            <li>{genre.name}</li>
+                            <li key={uuid()}>{genre.name}</li>
                         ))}
                     </ul>
                     <h4>Cast</h4>
@@ -70,7 +78,7 @@ const Movie = () => {
                             .filter((c) => c.order < 10)
                             .map((c) => {
                                 return (
-                                    <div>
+                                    <div key={uuid()}>
                                         <p>{c.name}</p>
                                         <p>{c.character}</p>
                                     </div>
@@ -83,7 +91,7 @@ const Movie = () => {
                             .filter((c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay")
                             .map((c) => {
                                 return (
-                                    <div>
+                                    <div key={uuid()}>
                                         <p>{c.name}</p>
                                         <p>{c.job}</p>
                                     </div>

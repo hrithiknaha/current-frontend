@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Auth() {
+    const navigate = useNavigate();
     const [showLogin, setShowLogin] = useState(true);
 
     const [username, setUsername] = useState();
@@ -14,10 +16,14 @@ function Auth() {
     const handleLogin = (e) => {
         e.preventDefault();
         console.log({ username, password });
-        axios.post("http://localhost:5001/api/auth/login", { username, password }).then(({ data }) => {
-            console.log(data);
-            localStorage.setItem("token", data.accessToken);
-        });
+        axios
+            .post("http://localhost:5001/api/auth/login", { username, password })
+            .then(({ data }) => {
+                console.log(data);
+                localStorage.setItem("token", data.accessToken);
+                navigate("/movies");
+            })
+            .catch((err) => console.log(err));
     };
 
     return (
