@@ -14,7 +14,7 @@ const Header = ({ user, logoutUser }) => {
             <div>
                 {user.username ? (
                     <div>
-                        <p>{user.username}</p>
+                        <Link to={`/profile/${user.username}`}>{user.username}</Link>
                         <button onClick={handleLogout}>Logout</button>
                     </div>
                 ) : (
@@ -25,6 +25,6 @@ const Header = ({ user, logoutUser }) => {
     );
 };
 
-const mapStateToProps = (state) => ({ user: state.users });
+const mapStateToProps = (state) => ({ user: state.user });
 
 export default connect(mapStateToProps, { logoutUser })(Header);

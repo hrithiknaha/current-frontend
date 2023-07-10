@@ -3,19 +3,26 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { loginUser } from "../redux/actions/user";
+import { registerUser, loginUser } from "../redux/actions/user";
 import RegisterUser from "../components/Auth/RegisterUser";
 import LoginUser from "../components/Auth/LoginUser";
 
-function Auth({ loginUser }) {
+function Auth({ registerUser, loginUser }) {
     const navigate = useNavigate();
     const [showLogin, setShowLogin] = useState(true);
 
+    const [firstname, setFirstname] = useState();
+    const [lastname, setLastname] = useState();
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
 
     const handleAuthToggle = () => {
         setShowLogin(!showLogin);
+    };
+
+    const handleRegisration = (e) => {
+        e.preventDefault();
+        registerUser(firstname, lastname, username, password, navigate);
     };
 
     const handleLogin = (e) => {
@@ -28,7 +35,7 @@ function Auth({ loginUser }) {
             {showLogin ? (
                 <div>
                     <h4>Register User</h4>
-                    <RegisterUser />
+                    <RegisterUser handleRegisration={handleRegisration} setFirstname={setFirstname} setLastname={setLastname} setUsername={setUsername} setPassword={setPassword} />
                 </div>
             ) : (
                 <div>
@@ -45,4 +52,4 @@ function Auth({ loginUser }) {
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, { loginUser })(Auth);
+export default connect(mapStateToProps, { registerUser, loginUser })(Auth);

@@ -5,7 +5,6 @@ function Home() {
     return (
         <div>
             <h4>Current</h4>
-            <Link to="/auth">Login</Link>
         </div>
     );
 }
