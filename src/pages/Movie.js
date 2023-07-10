@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
+import { connect } from "react-redux";
 
-const Movie = () => {
+import RateMovieForm from "../components/forms/movie/RateMovieForm";
+import { getMovieDetails } from "../redux/actions/tmdb";
+import { fetchSavedMovie } from "../redux/actions/user";
+import { saveMovieToCollection } from "../redux/actions/movies";
+
+const Movie = ({ user }) => {
     const { movieId } = useParams();
     const [movie, setMovie] = useState();
 
@@ -11,92 +17,75 @@ const Movie = () => {
     const [dateWatched, setDateWatched] = useState();
     const [theatre, setTheatre] = useState(false);
 
+    const [userSavedMovie, setUserSavedMovie] = useState();
+
     useEffect(() => {
-        axios.get(`http://localhost:5001/api/tmdb/movies/${movieId}`).then(({ data }) => {
-            console.log(data);
-            setMovie(data);
-        });
-    }, []);
+        getMovieDetails(movieId, setMovie);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const payload = {
-            movie_id: movieId,
-            rating,
-            date_watched: dateWatched,
-            theatre,
-        };
-        console.log(payload);
-
-        const token = localStorage.getItem("token");
-
-        if (token) {
-            axios
-                .post("http://localhost:5001/api/movies/add", payload, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                })
-                .then(({ data }) => console.log(data))
-                .catch((err) => console.log(err));
-        } else {
-            console.log("You need to login to perform that action.");
+        if (user?.token) {
+            console.log("User logged im. Searching for movie in his collections");
+            fetchSavedMovie(movieId, user.token, setUserSavedMovie);
         }
+    }, [movieId]);
+
+    const submitMovie = (e) => {
+        e.preventDefault();
+        if (user?.token) saveMovieToCollection(user, rating, dateWatched, theatre);
+        else console.log("You need to login in order to perform that action.");
     };
     return (
         <div>
             {movie ? (
                 <div>
-                    <h4>{movie.title}</h4>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="rating">Rating</label>
-                        <input type="number" name="rating" id="rating" placeholder="Rating" onChange={(e) => setRating(e.target.value)} />
-
-                        <label htmlFor="date_watched">Date Watched</label>
-                        <input type="date" name="date_watched" id="date_watched" placeholder="Date Watched" onChange={(e) => setDateWatched(e.target.value)} />
-
-                        <label htmlFor="theatre">Theatre</label>
-                        <input type="checkbox" name="theatre" id="theatre" checked={theatre} onChange={(e) => setTheatre(!theatre)} />
-
-                        <button type="submit">Add</button>
-                    </form>
+                    {userSavedMovie?.rating ? (
+                        <div>
+                            <p>Rating: {userSavedMovie.rating}</p>
+                            <p>Watched: {userSavedMovie.date_watched}</p>
+                            <p>Theatre: {userSavedMovie.theatre}</p>
+                        </div>
+                    ) : (
+                        <RateMovieForm submitMovie={submitMovie} setRating={setRating} setDateWatched={setDateWatched} setTheatre={setTheatre} theatre={theatre} />
+                    )}
                     <div>
-                        <span>{movie.release_date}</span> | <span>{movie.runtime}m</span>
-                    </div>
-                    <p>{movie.overview}</p>
-                    <a href={`https://www.imdb.com/title/${movie.imdb_id}`} target="_blank">
-                        IMDB
-                    </a>
-                    <ul>
-                        {movie.genres.map((genre) => (
-                            <li key={uuid()}>{genre.name}</li>
-                        ))}
-                    </ul>
-                    <h4>Cast</h4>
-                    <div>
-                        {movie.credits.cast
-                            .filter((c) => c.order < 10)
-                            .map((c) => {
-                                return (
-                                    <div key={uuid()}>
-                                        <p>{c.name}</p>
-                                        <p>{c.character}</p>
-                                    </div>
-                                );
-                            })}
-                    </div>
-                    <h4>Crew</h4>
-                    <div>
-                        {movie.credits.crew
-                            .filter((c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay")
-                            .map((c) => {
-                                return (
-                                    <div key={uuid()}>
-                                        <p>{c.name}</p>
-                                        <p>{c.job}</p>
-                                    </div>
-                                );
-                            })}
+                        <h4>{movie.title}</h4>
+                        <div>
+                            <span>{movie.release_date}</span> | <span>{movie.runtime}m</span>
+                        </div>
+                        <p>{movie.overview}</p>
+                        <a href={`https://www.imdb.com/title/${movie.imdb_id}`} target="_blank">
+                            IMDB
+                        </a>
+                        <ul>
+                            {movie.genres.map((genre) => (
+                                <li key={uuid()}>{genre.name}</li>
+                            ))}
+                        </ul>
+                        <h4>Cast</h4>
+                        <div>
+                            {movie.credits.cast
+                                .filter((c) => c.order < 10)
+                                .map((c) => {
+                                    return (
+                                        <div key={uuid()}>
+                                            <p>{c.name}</p>
+                                            <p>{c.character}</p>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                        <h4>Crew</h4>
+                        <div>
+                            {movie.credits.crew
+                                .filter((c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay")
+                                .map((c) => {
+                                    return (
+                                        <div key={uuid()}>
+                                            <p>{c.name}</p>
+                                            <p>{c.job}</p>
+                                        </div>
+                                    );
+                                })}
+                        </div>
                     </div>
                 </div>
             ) : (
@@ -106,4 +95,5 @@ const Movie = () => {
     );
 };
 
-export default Movie;
+const mapStateToProps = (state) => ({ user: state.auth });
+export default connect(mapStateToProps, {})(Movie);

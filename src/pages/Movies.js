@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
+
 import TMDBMovieList from "../components/TMDBMovieList";
+import { searchMovies } from "../redux/actions/tmdb";
 
 function Movies() {
     const [movieQueries, setMoviesQueries] = useState();
@@ -8,11 +10,7 @@ function Movies() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(movieQueries);
-        axios.post("http://localhost:5001/api/tmdb/movies/search", { query: movieQueries, language: "en-US", page: 1 }).then(({ data }) => {
-            console.log(data);
-            setSearchedMovies(data.results);
-        });
+        searchMovies(movieQueries, setSearchedMovies);
     };
     return (
         <div>

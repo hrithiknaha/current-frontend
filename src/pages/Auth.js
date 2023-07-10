@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { registerUser, loginUser } from "../redux/actions/user";
-import RegisterUser from "../components/Auth/RegisterUser";
-import LoginUser from "../components/Auth/LoginUser";
+import { registerUser, loginUser } from "../redux/actions/auth";
+
+import RegisterUser from "../components/forms/auth/RegisterUserForm";
+import LoginUser from "../components/forms/auth/LoginUserForm";
 
 function Auth({ registerUser, loginUser }) {
     const navigate = useNavigate();

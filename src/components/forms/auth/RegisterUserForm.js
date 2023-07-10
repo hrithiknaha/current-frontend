@@ -1,6 +1,6 @@
 import React from "react";
 
-const RegisterUser = ({ handleRegisration, setFirstname, setLastname, setUsername, setPassword }) => {
+const RegisterUserForm = ({ handleRegisration, setFirstname, setLastname, setUsername, setPassword }) => {
     return (
         <form onSubmit={handleRegisration}>
             <label htmlFor="firstname">Firstname</label>
@@ -20,4 +20,4 @@ const RegisterUser = ({ handleRegisration, setFirstname, setLastname, setUsernam
     );
 };
 
-export default RegisterUser;
+export default RegisterUserForm;

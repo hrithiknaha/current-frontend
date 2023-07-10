@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoginUser = ({ handleLogin, setUsername, setPassword }) => {
+const LoginUserForm = ({ handleLogin, setUsername, setPassword }) => {
     return (
         <form onSubmit={handleLogin}>
             <label htmlFor="username">Username</label>
@@ -14,4 +14,4 @@ const LoginUser = ({ handleLogin, setUsername, setPassword }) => {
     );
 };
 
-export default LoginUser;
+export default LoginUserForm;

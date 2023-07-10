@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { logoutUser } from "../redux/actions/user";
+import { logoutUser } from "../redux/actions/auth";
 
 const Header = ({ user, logoutUser }) => {
     const handleLogout = () => {
@@ -25,6 +25,6 @@ const Header = ({ user, logoutUser }) => {
     );
 };
 
-const mapStateToProps = (state) => ({ user: state.user });
+const mapStateToProps = (state) => ({ user: state.auth });
 
 export default connect(mapStateToProps, { logoutUser })(Header);
