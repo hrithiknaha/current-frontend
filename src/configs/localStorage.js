@@ -4,6 +4,6 @@ export const retrieveAccessToken = () => {
     const token = localStorage.getItem("token");
     if (!token) return {};
 
-    const { username } = jwtDecode(token);
-    return { username, token };
+    const { username, exp } = jwtDecode(token);
+    return { username, token, exp };
 };

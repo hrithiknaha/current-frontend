@@ -15,11 +15,11 @@ export const registerUser = (firstname, lastname, username, password, navigate) 
         const token = data.data.accessToken;
 
         localStorage.setItem("token", token);
-        const { username } = jwtDecode(token);
+        const { username, exp } = jwtDecode(token);
 
         dispatch({
             type: LOGIN_USER,
-            payload: { username, token },
+            payload: { username, token, exp },
         });
         navigate("/movies");
     });
@@ -33,16 +33,17 @@ export const loginUser = (username, password, navigate) => (dispatch) => {
     };
 
     axios
-        .post("http://localhost:5001/api/auth/login", payload)
-        .then(({ data }) => {
-            const token = data.accessToken;
+        .post("http://localhost:5001/api/auth/login", payload, { withCredentials: true })
+        .then((response) => {
+            console.log(response);
+            const token = response.data.accessToken;
 
             localStorage.setItem("token", token);
-            const { username } = jwtDecode(token);
+            const { username, exp } = jwtDecode(token);
 
             dispatch({
                 type: LOGIN_USER,
-                payload: { username, token },
+                payload: { username, token, exp },
             });
             navigate("/movies");
         })
@@ -51,7 +52,7 @@ export const loginUser = (username, password, navigate) => (dispatch) => {
 
 export const logoutUser = () => (dispatch) => {
     axios
-        .get("http://localhost:5001/api/auth/logout")
+        .get("http://localhost:5001/api/auth/logout", { withCredentials: true })
         .then(() => {
             localStorage.removeItem("token");
             dispatch({

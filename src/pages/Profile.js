@@ -1,26 +1,45 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 import MovieList from "../components/MovieList";
-import { fetchUser } from "../redux/actions/user";
+
+import axios from "axios";
 
 const Profile = ({ auth }) => {
     const { username } = useParams();
 
+    const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState();
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        if (auth?.token) {
-            fetchUser(username, auth.token, setUser);
-        } else {
-            console.log("You need to be logged in to see this resource.");
+        const fetchUser = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5001/api/users/${username}`, {
+                    headers: {
+                        Authorization: `Bearer ${auth.token}`,
+                    },
+                });
+                setUser(res.data);
+                console.log(res.data);
+                setIsLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchUser();
+
+        if (!auth.isAuthenticated) {
+            navigate("/auth");
         }
-    }, []);
+    }, [username]);
 
     return (
         <div>
-            {user ? (
+            {!isLoading ? (
                 <div>
                     <h5>Hi {username}</h5>
                     <div>

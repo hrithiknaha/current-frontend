@@ -5,9 +5,6 @@ import { v4 as uuid } from "uuid";
 import { connect } from "react-redux";
 
 import RateMovieForm from "../components/forms/movie/RateMovieForm";
-import { getMovieDetails } from "../redux/actions/tmdb";
-import { fetchSavedMovie } from "../redux/actions/user";
-import { saveMovieToCollection } from "../redux/actions/movies";
 
 const Movie = ({ auth }) => {
     const { movieId } = useParams();
@@ -20,17 +17,58 @@ const Movie = ({ auth }) => {
     const [userSavedMovie, setUserSavedMovie] = useState();
 
     useEffect(() => {
-        getMovieDetails(movieId, setMovie);
+        const getMovieDetails = (movieId) => {
+            axios.get(`http://localhost:5001/api/tmdb/movies/${movieId}`).then(({ data }) => {
+                setMovie(data);
+            });
+        };
+
+        getMovieDetails(movieId);
+
+        const fetchSavedMovie = (movieId, token) => {
+            console.log("Requesting");
+            axios
+                .get(`http://localhost:5001/api/users/added/${movieId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then(({ data }) => {
+                    setUserSavedMovie(data);
+                })
+                .catch((err) => console.log(err));
+        };
 
         if (auth?.token) {
             console.log("User logged im. Searching for movie in his collections");
-            fetchSavedMovie(movieId, auth.token, setUserSavedMovie);
+            fetchSavedMovie(movieId, auth.token);
         }
-    }, [movieId]);
+    }, [movieId, auth?.token]);
 
     const submitMovie = (e) => {
         e.preventDefault();
-        if (auth?.token) saveMovieToCollection(auth, rating, dateWatched, theatre);
+        console.log(auth);
+        const saveMovieToCollection = (auth, movieId, rating, dateWatched, theatre) => {
+            const payload = {
+                movie_id: movieId,
+                rating,
+                date_watched: dateWatched,
+                theatre,
+            };
+
+            const token = auth.token;
+
+            axios
+                .post("http://localhost:5001/api/movies/add", payload, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then(({ data }) => console.log(data))
+                .catch((err) => console.log(err));
+        };
+
+        if (auth?.token) saveMovieToCollection(auth, movieId, rating, dateWatched, theatre);
         else console.log("You need to login in order to perform that action.");
     };
     return (
