@@ -1,6 +1,6 @@
-import { LOGIN_USER, LOGOUT_USER } from "../actions/types";
+import { LOGIN_USER, LOGOUT_USER, REFRESH_USER } from "../actions/types";
 
-import { retrieveAccessToken } from "../../configs/localStorage";
+import { retrieveAccessToken } from "../../configs/helpers";
 
 const initialState = {
     isAuthenticated: Boolean(retrieveAccessToken()?.token),
@@ -26,6 +26,14 @@ export default function (state = initialState, action) {
                 username: null,
                 token: null,
                 exp: null,
+            };
+        case REFRESH_USER:
+            return {
+                ...state,
+                isAuthenticated: true,
+                username: action.payload.username,
+                token: action.payload.token,
+                exp: action.payload.exp,
             };
         default:
             return state;

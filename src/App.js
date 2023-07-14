@@ -6,6 +6,7 @@ import Auth from "./pages/Auth";
 import Movies from "./pages/Movies";
 import Movie from "./pages/Movie";
 import Profile from "./pages/Profile";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
     return (
@@ -16,7 +17,9 @@ function App() {
                     <Route path="auth" element={<Auth />} />
                     <Route path="movies" element={<Movies />} />
                     <Route path="movies/:movieId" element={<Movie />} />
-                    <Route path="profile/:username" element={<Profile />} />
+                    <Route path="profile" element={<PrivateRoute />}>
+                        <Route path=":username" element={<Profile />} />
+                    </Route>
                 </Route>
             </Routes>
         </Router>

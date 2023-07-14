@@ -11,6 +11,8 @@ const Profile = ({ auth }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState();
+    const [userStat, setUserStat] = useState();
+    const [isUserStatLoading, setIsUserStatLoading] = useState(true);
 
     const navigate = useNavigate();
 
@@ -23,14 +25,28 @@ const Profile = ({ auth }) => {
                     },
                 });
                 setUser(res.data);
-                console.log(res.data);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
             }
         };
 
+        const fetchUserStats = async () => {
+            try {
+                const res = await axios.get(`http://localhost:5001/api/stats/movies`, {
+                    headers: {
+                        Authorization: `Bearer ${auth.token}`,
+                    },
+                });
+                setUserStat(res.data);
+                setIsUserStatLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
         fetchUser();
+        fetchUserStats();
 
         if (!auth.isAuthenticated) {
             navigate("/auth");
@@ -39,6 +55,15 @@ const Profile = ({ auth }) => {
 
     return (
         <div>
+            {!isUserStatLoading ? (
+                <div>
+                    <p>Total runtime watched : {userStat.totalRuntime}</p>
+                    <p>Average Rating: {userStat.avgRating}</p>
+                    <p>Movies Watched: {userStat.totalMovies}</p>
+                </div>
+            ) : (
+                <p>Loading...</p>
+            )}
             {!isLoading ? (
                 <div>
                     <h5>Hi {username}</h5>
@@ -47,7 +72,6 @@ const Profile = ({ auth }) => {
                         <span>{user.firstname}</span> - <span>{user.lastname}</span>
                     </div>
                     <div>
-                        <h4>Movies Watched - {user.movies.length}</h4>
                         <MovieList movies={user.movies} />
                     </div>
                 </div>
