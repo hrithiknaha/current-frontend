@@ -7,6 +7,10 @@ import Movies from "./pages/Movies";
 import Movie from "./pages/Movie";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
+import TV from "./pages/TV";
+import Series from "./pages/Series";
+import Season from "./pages/Season";
+import Episode from "./pages/Episode";
 
 function App() {
     return (
@@ -16,6 +20,10 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="auth" element={<Auth />} />
                     <Route path="movies" element={<Movies />} />
+                    <Route path="tv" element={<TV />} />
+                    <Route path="tv/:tvId" element={<Series />} />
+                    <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
+                    <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
                     <Route path="movies/:movieId" element={<Movie />} />
                     <Route path="profile" element={<PrivateRoute />}>
                         <Route path=":username" element={<Profile />} />
