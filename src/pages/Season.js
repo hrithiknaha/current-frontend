@@ -10,14 +10,14 @@ const Season = () => {
 
     const auth = useSelector((state) => state.auth);
 
-    const [season, setSeason] = useState();
+    const [seasonEpisodes, setSeasonEpisodes] = useState();
     const [watchedEpisodes, setWatchedEpisodes] = useState();
 
     const [isPending, setIsPending] = useState(true);
 
     useEffect(() => {
         axios.get(`http://localhost:5001/api/tmdb/series/${tvId}/season/${seasonNumber}`).then(({ data }) => {
-            setSeason(data);
+            setSeasonEpisodes(data);
 
             axios
                 .get(`http://localhost:5001/api/series/${tvId}/season/${seasonNumber}`, {
@@ -32,26 +32,20 @@ const Season = () => {
         });
     }, [tvId, seasonNumber]);
 
+    console.log("Rendering");
     if (isPending) return <p>Loading..</p>;
 
     return (
         <div>
-            {season ? (
+            {seasonEpisodes ? (
                 <div>
-                    <p>{season.name}</p>
-                    <p>{(watchedEpisodes.length / season.episodes.length) * 100}</p>
-                    <input
-                        type="range"
-                        name="range"
-                        id="rane"
-                        value={watchedEpisodes.length}
-                        max={season.episodes.length}
-                    />
+                    <p>{seasonEpisodes.name}</p>
+                    <p>{(watchedEpisodes.length / seasonEpisodes.episodes.length) * 100}</p>
 
-                    <p>{season.overview}</p>
+                    <p>{seasonEpisodes.overview}</p>
 
                     <h4>Episodes</h4>
-                    {season.episodes.map((episode) => {
+                    {seasonEpisodes.episodes.map((episode) => {
                         return (
                             <div key={episode.id}>
                                 <Link to={`episode/${episode.episode_number}`}>{episode.name}</Link>
