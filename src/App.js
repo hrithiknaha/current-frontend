@@ -21,10 +21,13 @@ function App() {
                     <Route path="auth" element={<Auth />} />
                     <Route path="movies" element={<Movies />} />
                     <Route path="tv" element={<TV />} />
-                    <Route path="tv/:tvId" element={<Series />} />
-                    <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
-                    <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
-                    <Route path="movies/:movieId" element={<Movie />} />
+                    <Route path="" element={<PrivateRoute />}>
+                        <Route path="tv/:tvId" element={<Series />} />
+                        <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
+                        <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
+                        <Route path="movies/:movieId" element={<Movie />} />
+                    </Route>
+
                     <Route path="profile" element={<PrivateRoute />}>
                         <Route path=":username" element={<Profile />} />
                     </Route>

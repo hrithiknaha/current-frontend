@@ -78,8 +78,8 @@ const Series = () => {
                             <li key={uuid()}>{genre.name}</li>
                         ))}
                     </ul>
-                    <p>Number of episode: {series.number_of_episodes}</p>
                     <p>Number of season: {series.number_of_seasons}</p>
+                    <p>Number of episode: {series.number_of_episodes}</p>
                     {watchedEpisodes && <p>Episodes Watched: {watchedEpisodes.length}</p>}
 
                     <h4>Seasons</h4>

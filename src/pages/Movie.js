@@ -15,6 +15,7 @@ const Movie = ({ auth }) => {
     const [theatre, setTheatre] = useState(false);
 
     const [userSavedMovie, setUserSavedMovie] = useState();
+    const [savedMovie, setSavedMovie] = useState();
 
     useEffect(() => {
         const getMovieDetails = (movieId) => {
@@ -43,7 +44,7 @@ const Movie = ({ auth }) => {
             console.log("User logged im. Searching for movie in his collections");
             fetchSavedMovie(movieId, auth.token);
         }
-    }, [movieId, auth?.token]);
+    }, [movieId, auth?.token, savedMovie]);
 
     const submitMovie = (e) => {
         e.preventDefault();
@@ -64,7 +65,10 @@ const Movie = ({ auth }) => {
                         Authorization: `Bearer ${token}`,
                     },
                 })
-                .then(({ data }) => console.log(data))
+                .then(({ data }) => {
+                    console.log(data);
+                    setSavedMovie(true);
+                })
                 .catch((err) => console.log(err));
         };
 
@@ -82,7 +86,13 @@ const Movie = ({ auth }) => {
                             <p>Theatre: {userSavedMovie.theatre}</p>
                         </div>
                     ) : (
-                        <RateMovieForm submitMovie={submitMovie} setRating={setRating} setDateWatched={setDateWatched} setTheatre={setTheatre} theatre={theatre} />
+                        <RateMovieForm
+                            submitMovie={submitMovie}
+                            setRating={setRating}
+                            setDateWatched={setDateWatched}
+                            setTheatre={setTheatre}
+                            theatre={theatre}
+                        />
                     )}
                     <div>
                         <h4>{movie.title}</h4>
@@ -114,7 +124,12 @@ const Movie = ({ auth }) => {
                         <h4>Crew</h4>
                         <div>
                             {movie.credits.crew
-                                .filter((c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay")
+                                .filter(
+                                    (c) =>
+                                        c.job === "Director" ||
+                                        c.job === "Director of Photography" ||
+                                        c.job === "Screenplay"
+                                )
                                 .map((c) => {
                                     return (
                                         <div key={uuid()}>

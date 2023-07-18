@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 import MovieList from "../components/MovieList";
@@ -12,67 +12,48 @@ const Profile = ({ auth }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState();
     const [userStat, setUserStat] = useState();
-    const [isUserStatLoading, setIsUserStatLoading] = useState(true);
-
-    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const res = await axios.get(`http://localhost:5001/api/users/${username}`, {
-                    headers: {
-                        Authorization: `Bearer ${auth.token}`,
-                    },
-                });
-                setUser(res.data);
-                setIsLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        const fetchUserStats = async () => {
-            try {
-                const res = await axios.get(`http://localhost:5001/api/stats/movies`, {
-                    headers: {
-                        Authorization: `Bearer ${auth.token}`,
-                    },
-                });
-                setUserStat(res.data);
-                setIsUserStatLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        fetchUser();
-        fetchUserStats();
-
-        if (!auth.isAuthenticated) {
-            navigate("/auth");
-        }
+        axios
+            .get(`http://localhost:5001/api/users/${username}`, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`,
+                },
+            })
+            .then(({ data }) => {
+                axios
+                    .get(`http://localhost:5001/api/stats`, {
+                        headers: {
+                            Authorization: `Bearer ${auth.token}`,
+                        },
+                    })
+                    .then(({ data }) => {
+                        setUserStat(data);
+                        setIsLoading(false);
+                    });
+                setUser(data);
+            });
     }, [username]);
 
     return (
         <div>
-            {!isUserStatLoading ? (
-                <div>
-                    <p>Total runtime watched : {userStat.totalRuntime}</p>
-                    <p>Average Rating: {userStat.avgRating}</p>
-                    <p>Movies Watched: {userStat.totalMovies}</p>
-                </div>
-            ) : (
-                <p>Loading...</p>
-            )}
             {!isLoading ? (
                 <div>
+                    <div>
+                        <p>Total movie runtime watched : {userStat.totalMovieRuntime}</p>
+                        <p>Average movie Rating: {userStat.avgMovieRating}</p>
+                        <p>Movies Watched: {userStat.totalMovies}</p>
+                    </div>
+                    <div>
+                        <p>Series Watched: {userStat.totalSeries}</p>
+                        <p>Episodes Watched: {userStat.totalEpisodes}</p>
+                        <p>Total episode runtime watched : {userStat.totalEpisodeRuntime}</p>
+                        <p>Average episode Rating: {userStat.avgEpisodeRating}</p>
+                    </div>
                     <h5>Hi {username}</h5>
                     <div>
                         <p>Full Name</p>
                         <span>{user.firstname}</span> - <span>{user.lastname}</span>
-                    </div>
-                    <div>
-                        <MovieList movies={user.movies} />
                     </div>
                 </div>
             ) : (

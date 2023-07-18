@@ -11,9 +11,15 @@ function Movies() {
         e.preventDefault();
 
         const searchMovies = (movieQueries) => {
-            axios.post("http://localhost:5001/api/tmdb/movies/search", { query: movieQueries, language: "en-US", page: 1 }).then(({ data }) => {
-                setSearchedMovies(data.results);
-            });
+            axios
+                .post("http://localhost:5001/api/tmdb/movies/search", {
+                    query: movieQueries,
+                    language: "en-US",
+                    page: 1,
+                })
+                .then(({ data }) => {
+                    setSearchedMovies(data.results);
+                });
         };
         searchMovies(movieQueries);
     };
@@ -22,7 +28,13 @@ function Movies() {
             <h4>Movies</h4>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="search-movies">Search Movies</label>
-                <input type="text" name="search-movies" id="search-movies" placeholder="Search Movies" onChange={(e) => setMoviesQueries(e.target.value)} />
+                <input
+                    type="text"
+                    name="search-movies"
+                    id="search-movies"
+                    placeholder="Search Movies"
+                    onChange={(e) => setMoviesQueries(e.target.value)}
+                />
 
                 <button type="submit">Search Movies</button>
             </form>
