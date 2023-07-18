@@ -10,15 +10,16 @@ const Episode = () => {
 
     const [rating, setRating] = useState();
 
+    const [tmdbEpisode, setTmdbEpisode] = useState();
     const [episode, setEpisode] = useState();
-    const [episodeData, setEpisodeData] = useState();
-    const [haveWatched, setHaveWatched] = useState();
+    const [isLoading, setIsLoading] = useState();
+    const [haveRated, setHaveRated] = useState(false);
 
     useEffect(() => {
         axios
             .get(`http://localhost:5001/api/tmdb/series/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`)
             .then(({ data }) => {
-                setEpisode(data);
+                setTmdbEpisode(data);
 
                 axios
                     .get(`http://localhost:5001/api/series/${tvId}/episodes/${data.id}`, {
@@ -27,15 +28,15 @@ const Episode = () => {
                         },
                     })
                     .then(({ data }) => {
-                        setEpisodeData(data);
-                        setHaveWatched(true);
+                        setEpisode(data);
+                        setHaveRated(true);
+                        setIsLoading(true);
                     })
                     .catch((error) => {
-                        setEpisodeData({});
-                        setHaveWatched(false);
+                        setIsLoading(false);
                     });
             });
-    }, [tvId, seasonNumber, episodeNumber]);
+    }, [tvId, seasonNumber, episodeNumber, haveRated]);
 
     const handleWatch = (e) => {
         e.preventDefault();
@@ -60,21 +61,25 @@ const Episode = () => {
                 },
             })
             .then(({ data }) => {
-                setEpisodeData(data);
+                setHaveRated(true);
             })
             .catch((err) => console.log(err));
     };
 
-    if (haveWatched === undefined) return <p>Loading...</p>;
+    if (isLoading === undefined) return <p>Loading...</p>;
     return (
         <div>
-            {episode ? (
+            {tmdbEpisode ? (
                 <div>
-                    {episodeData?.rating ? (
-                        <div>
-                            <p>Rated : {episodeData.rating}</p>
-                            <p>Date wathched : {episodeData.date_watched}</p>
-                        </div>
+                    {haveRated ? (
+                        episode?.rating ? (
+                            <div>
+                                <p>Rated : {episode.rating}</p>
+                                <p>Date wathched : {episode.date_watched}</p>
+                            </div>
+                        ) : (
+                            <p>Loading...</p>
+                        )
                     ) : (
                         <form onSubmit={handleWatch}>
                             <input type="number" name="rate" id="rate" onChange={(e) => setRating(e.target.value)} />
@@ -82,13 +87,13 @@ const Episode = () => {
                         </form>
                     )}
 
-                    <p>{episode.name}</p>
-                    <p>{episode.overview}</p>
-                    <p>{episode.air_date}</p>
-                    <p>{episode.runtime}</p>
+                    <p>{tmdbEpisode.name}</p>
+                    <p>{tmdbEpisode.overview}</p>
+                    <p>{tmdbEpisode.air_date}</p>
+                    <p>{tmdbEpisode.runtime}</p>
 
                     <h3>Casts</h3>
-                    {episode.credits.cast.map((c) => {
+                    {tmdbEpisode.credits.cast.map((c) => {
                         return (
                             <p key={c.id}>
                                 {c.name} - {c.character}
@@ -97,7 +102,7 @@ const Episode = () => {
                     })}
 
                     <h3>Guest Stars</h3>
-                    {episode.guest_stars.map((c) => {
+                    {tmdbEpisode.guest_stars.map((c) => {
                         return (
                             <p key={c.id}>
                                 {c.name} - {c.character}
@@ -106,7 +111,7 @@ const Episode = () => {
                     })}
 
                     <h3>Crew</h3>
-                    {episode.credits.crew
+                    {tmdbEpisode.credits.crew
                         .filter(
                             (c) =>
                                 c.job === "Writer" ||
