@@ -29,8 +29,11 @@ const Episode = () => {
                     })
                     .then(({ data }) => {
                         setEpisode(data);
-                        setHaveRated(true);
                         setIsLoading(true);
+
+                        console.log(data);
+
+                        if (data?.rating) setHaveRated(true);
                     })
                     .catch((error) => {
                         setIsLoading(false);

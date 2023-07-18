@@ -26,36 +26,54 @@ const Season = () => {
                     },
                 })
                 .then(({ data }) => {
-                    setWatchedEpisodes(data);
+                    setWatchedEpisodes(data?.sort((a, b) => (a.episode_number > b.episode_number ? 1 : -1)));
+
                     setIsPending(false);
                 });
         });
     }, [tvId, seasonNumber]);
 
-    console.log("Rendering");
     if (isPending) return <p>Loading..</p>;
 
     return (
         <div>
-            {seasonEpisodes ? (
+            {seasonEpisodes && watchedEpisodes ? (
                 <div>
                     <p>{seasonEpisodes.name}</p>
                     <p>{(watchedEpisodes.length / seasonEpisodes.episodes.length) * 100}</p>
 
                     <p>{seasonEpisodes.overview}</p>
 
-                    <h4>Episodes</h4>
-                    {seasonEpisodes.episodes.map((episode) => {
-                        return (
-                            <div key={episode.id}>
-                                <Link to={`episode/${episode.episode_number}`}>{episode.name}</Link>
-                                <p>{episode.episode_number}</p>
-                                <p>{episode.overview}</p>
-                                <p>{episode.air_date}</p>
-                                <p>{episode.runtime}</p>
-                            </div>
-                        );
-                    })}
+                    <h4>Episodes Yet To Watch</h4>
+                    {seasonEpisodes.episodes
+                        .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
+                        .map((episode) => {
+                            return (
+                                <div key={episode.id}>
+                                    <Link to={`episode/${episode.episode_number}`}>{episode.name}</Link>
+                                    <p>{episode.episode_number}</p>
+                                    <p>{episode.overview}</p>
+                                    <p>{episode.air_date}</p>
+                                    <p>{episode.runtime}</p>
+                                </div>
+                            );
+                        })}
+
+                    <h4>Watched Episodes</h4>
+                    {watchedEpisodes.length ? (
+                        watchedEpisodes.map((episode) => {
+                            return (
+                                <div key={episode.episode_id}>
+                                    <Link to={`episode/${episode.episode_number}`}>{episode.name}</Link>
+                                    <p>{episode.episode_number}</p>
+                                    <p>{episode.rating}</p>
+                                    <p>{episode.date_watched}</p>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <p>No Watched episodes</p>
+                    )}
                 </div>
             ) : (
                 <p>Loading..</p>
