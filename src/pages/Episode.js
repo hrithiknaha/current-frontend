@@ -37,6 +37,7 @@ const Episode = () => {
                     })
                     .catch((error) => {
                         setIsLoading(false);
+                        console.log(error);
                     });
             });
     }, [tvId, seasonNumber, episodeNumber, haveRated]);
