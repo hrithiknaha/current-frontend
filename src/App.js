@@ -17,11 +17,11 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
                     <Route path="auth" element={<Auth />} />
-                    <Route path="movies" element={<Movies />} />
-                    <Route path="tv" element={<TV />} />
                     <Route path="" element={<PrivateRoute />}>
+                        <Route index element={<Home />} />
+                        <Route path="movies" element={<Movies />} />
+                        <Route path="tv" element={<TV />} />
                         <Route path="tv/:tvId" element={<Series />} />
                         <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
                         <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
