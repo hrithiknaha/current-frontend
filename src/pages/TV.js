@@ -25,7 +25,7 @@ const TV = () => {
 
     return (
         <div>
-            <h4>Movies</h4>
+            <h4>TV</h4>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="search-movies">Search TV</label>
                 <input
