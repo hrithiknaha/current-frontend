@@ -52,13 +52,12 @@ export const loginUser = (username, password, navigate) => (dispatch) => {
 
 export const logoutUser = () => (dispatch) => {
     axios
-        .get("http://localhost:5001/api/auth/logout", { withCredentials: true })
+        .get("http://localhost:5001/api/auth/logout")
         .then(() => {
             localStorage.removeItem("token");
             dispatch({
                 type: LOGOUT_USER,
             });
-            window.location.reload(false);
         })
         .catch((err) => console.log(err));
 };
