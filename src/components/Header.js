@@ -10,18 +10,27 @@ const Header = ({ user, logoutUser }) => {
     };
 
     return (
-        <div>
-            <div>
-                {user.username ? (
-                    <div>
-                        <Link to={`/`}>Home</Link> <Link to={`/profile/${user.username}`}>{user.username}</Link>
-                        <button onClick={handleLogout}>Logout</button>
+        <nav class="bg-blue-500 p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <Link to="/" class="text-white text-lg font-semibold">
+                    Current
+                </Link>
+
+                {user.username && (
+                    <div className="flex justify-between items-center w-48">
+                        <Link to={`/profile/${user.username}`} className="text-white text-lg hover:underline">
+                            {user.username}
+                        </Link>
+                        <button
+                            onClick={handleLogout}
+                            class="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
+                        >
+                            Logout
+                        </button>
                     </div>
-                ) : (
-                    <Link to="/auth">Login</Link>
                 )}
             </div>
-        </div>
+        </nav>
     );
 };
 

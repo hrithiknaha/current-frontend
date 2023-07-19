@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import Auth from "./pages/Auth";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Movies from "./pages/Movies";
 import Movie from "./pages/Movie";
 import Profile from "./pages/Profile";
@@ -17,9 +18,10 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route path="auth" element={<Auth />} />
+                    <Route index element={<Home />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="register" element={<Register />} />
                     <Route path="" element={<PrivateRoute />}>
-                        <Route index element={<Home />} />
                         <Route path="movies" element={<Movies />} />
                         <Route path="tv" element={<TV />} />
                         <Route path="tv/:tvId" element={<Series />} />
