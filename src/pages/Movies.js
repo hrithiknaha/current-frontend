@@ -24,11 +24,11 @@ function Movies() {
         searchMovies(movieQueries);
     };
     return (
-        <div>
-            <h4>Movies</h4>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="search-movies">Search Movies</label>
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+            <h1 className="text-4xl p-8">Movies</h1>
+            <form onSubmit={handleSubmit} className="flex flex-col w-96">
                 <input
+                    className="mt-1 px-4 py-2 w-full border rounded"
                     type="text"
                     name="search-movies"
                     id="search-movies"
@@ -36,10 +36,15 @@ function Movies() {
                     onChange={(e) => setMoviesQueries(e.target.value)}
                 />
 
-                <button type="submit">Search Movies</button>
+                <button
+                    class="text-center bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 mt-4 rounded outline"
+                    type="submit"
+                >
+                    Search Movies
+                </button>
             </form>
 
-            {searchedMovies ? <TMDBMovieList movies={searchedMovies} /> : <p>Beautiful Day</p>}
+            {searchedMovies && <TMDBMovieList movies={searchedMovies} />}
         </div>
     );
 }

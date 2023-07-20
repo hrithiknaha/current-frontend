@@ -12,3 +12,8 @@ export const retrieveAccessToken = () => {
     const { username, exp } = jwtDecode(token);
     return { username, token, exp };
 };
+
+export const getRatingAsStars = (rating) => {
+    const star = "⭐️";
+    return star.repeat(rating);
+};

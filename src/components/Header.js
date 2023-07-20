@@ -10,9 +10,9 @@ const Header = ({ user, logoutUser }) => {
     };
 
     return (
-        <nav class="bg-blue-500 p-4">
-            <div class="container mx-auto flex justify-between items-center">
-                <Link to="/" class="text-white text-lg font-semibold">
+        <nav className="bg-blue-500 p-4">
+            <div className="container mx-auto flex justify-between items-center">
+                <Link to="/" className="text-white text-lg font-semibold">
                     Current
                 </Link>
 
@@ -23,7 +23,7 @@ const Header = ({ user, logoutUser }) => {
                         </Link>
                         <button
                             onClick={handleLogout}
-                            class="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
+                            className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
                         >
                             Logout
                         </button>

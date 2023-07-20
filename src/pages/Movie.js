@@ -1,91 +1,97 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import { v4 as uuid } from "uuid";
-import { connect } from "react-redux";
+
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 import RateMovieForm from "../components/forms/movie/RateMovieForm";
+import CastList from "../components/CastList";
+import CrewList from "../components/CrewList";
 
-const Movie = ({ auth }) => {
+import { getRatingAsStars } from "../configs/helpers";
+
+const Movie = () => {
     const { movieId } = useParams();
+    const auth = useSelector((state) => state.auth);
+
     const [movie, setMovie] = useState();
 
     const [rating, setRating] = useState();
     const [dateWatched, setDateWatched] = useState();
     const [theatre, setTheatre] = useState(false);
 
-    const [userSavedMovie, setUserSavedMovie] = useState();
-    const [savedMovie, setSavedMovie] = useState();
+    const [savedMovieDetails, setSavedMoveDetails] = useState();
+    const [hasSavedMovie, setHasSavedMovie] = useState();
 
+    const [isLoading, setIsLoading] = useState();
     useEffect(() => {
-        const getMovieDetails = (movieId) => {
-            axios.get(`http://localhost:5001/api/tmdb/movies/${movieId}`).then(({ data }) => {
-                setMovie(data);
+        axios.get(`http://localhost:5001/api/tmdb/movies/${movieId}`).then(({ data }) => {
+            setMovie(data);
+        });
+
+        axios
+            .get(`http://localhost:5001/api/users/added/${movieId}`, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`,
+                },
+            })
+            .then(({ data }) => {
+                setHasSavedMovie(true);
+                setSavedMoveDetails(data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setHasSavedMovie(false);
+                setIsLoading(false);
             });
-        };
-
-        getMovieDetails(movieId);
-
-        const fetchSavedMovie = (movieId, token) => {
-            console.log("Requesting");
-            axios
-                .get(`http://localhost:5001/api/users/added/${movieId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .then(({ data }) => {
-                    setUserSavedMovie(data);
-                })
-                .catch((err) => console.log(err));
-        };
-
-        if (auth?.token) {
-            console.log("User logged im. Searching for movie in his collections");
-            fetchSavedMovie(movieId, auth.token);
-        }
-    }, [movieId, auth?.token, savedMovie]);
+    }, [movieId, hasSavedMovie]);
 
     const submitMovie = (e) => {
         e.preventDefault();
-        console.log(auth);
-        const saveMovieToCollection = (auth, movieId, rating, dateWatched, theatre) => {
-            const payload = {
-                movie_id: movieId,
-                rating,
-                date_watched: dateWatched,
-                theatre,
-            };
 
-            const token = auth.token;
-
-            axios
-                .post("http://localhost:5001/api/movies/add", payload, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .then(({ data }) => {
-                    console.log(data);
-                    setSavedMovie(true);
-                })
-                .catch((err) => console.log(err));
+        const payload = {
+            movie_id: movieId,
+            rating,
+            date_watched: dateWatched,
+            theatre,
         };
 
-        if (auth?.token) saveMovieToCollection(auth, movieId, rating, dateWatched, theatre);
-        else console.log("You need to login in order to perform that action.");
+        axios
+            .post("http://localhost:5001/api/movies/add", payload, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`,
+                },
+            })
+            .then(({ data }) => {
+                console.log(data);
+                setHasSavedMovie(true);
+                setIsLoading(false);
+            })
+            .catch((err) => console.log(err));
     };
+
     return (
-        <div>
-            {movie ? (
-                <div>
-                    {userSavedMovie?.rating ? (
-                        <div>
-                            <p>Rating: {userSavedMovie.rating}</p>
-                            <p>Watched: {userSavedMovie.date_watched}</p>
-                            <p>Theatre: {userSavedMovie.theatre}</p>
-                        </div>
-                    ) : (
+        <div className="bg-gray-100 min-h-screen px-16">
+            {movie && !isLoading ? (
+                <div className="container mx-auto py-16">
+                    <h1 className="text-4xl mb-1">
+                        <span>{movie.title} </span>
+                        <a href={`https://www.imdb.com/title/${movie.imdb_id}`} target="_blank">
+                            🚀
+                        </a>
+                    </h1>
+                    <div className="flex items-center text-gray-600 text-sm mb-4">
+                        {moment(movie.release_date).format("YYYY-MM-DD")} &#x2022; {movie.runtime} min &#x2022;{" "}
+                        {movie.genres.map((genre) => genre.name).join(", ")}
+                    </div>
+                    <h3>Overview</h3>
+                    <p className="text-gray-700 text-sm mb-4">{movie.overview}</p>
+
+                    {hasSavedMovie === undefined ? (
+                        <p>Loading..</p>
+                    ) : !hasSavedMovie ? (
                         <RateMovieForm
                             submitMovie={submitMovie}
                             setRating={setRating}
@@ -93,53 +99,22 @@ const Movie = ({ auth }) => {
                             setTheatre={setTheatre}
                             theatre={theatre}
                         />
+                    ) : (
+                        savedMovieDetails?.rating && (
+                            <div className="flex items-center text-gray-600 text-sm mb-4">
+                                {getRatingAsStars(savedMovieDetails.rating)} &#x2022;{" "}
+                                {moment(savedMovieDetails.date_watched).format("YYYY-MM-DD")} &#x2022;{" "}
+                                {savedMovieDetails.theatre ? <p> Watched in theatre</p> : <p> Watched elsewhere</p>}
+                            </div>
+                        )
                     )}
-                    <div>
-                        <h4>{movie.title}</h4>
-                        <div>
-                            <span>{movie.release_date}</span> | <span>{movie.runtime}m</span>
-                        </div>
-                        <p>{movie.overview}</p>
-                        <a href={`https://www.imdb.com/title/${movie.imdb_id}`} target="_blank">
-                            IMDB
-                        </a>
-                        <ul>
-                            {movie.genres.map((genre) => (
-                                <li key={uuid()}>{genre.name}</li>
-                            ))}
-                        </ul>
-                        <h4>Cast</h4>
-                        <div>
-                            {movie.credits.cast
-                                .filter((c) => c.order < 10)
-                                .map((c) => {
-                                    return (
-                                        <div key={uuid()}>
-                                            <p>{c.name}</p>
-                                            <p>{c.character}</p>
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                        <h4>Crew</h4>
-                        <div>
-                            {movie.credits.crew
-                                .filter(
-                                    (c) =>
-                                        c.job === "Director" ||
-                                        c.job === "Director of Photography" ||
-                                        c.job === "Screenplay"
-                                )
-                                .map((c) => {
-                                    return (
-                                        <div key={uuid()}>
-                                            <p>{c.name}</p>
-                                            <p>{c.job}</p>
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    </div>
+
+                    <CastList casts={movie.credits.cast.filter((cast) => cast.order < 10)} />
+                    <CrewList
+                        crews={movie.credits.crew.filter(
+                            (c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay"
+                        )}
+                    />
                 </div>
             ) : (
                 <p>Loading...</p>
@@ -148,5 +123,4 @@ const Movie = ({ auth }) => {
     );
 };
 
-const mapStateToProps = (state) => ({ auth: state.auth });
-export default connect(mapStateToProps, {})(Movie);
+export default Movie;
