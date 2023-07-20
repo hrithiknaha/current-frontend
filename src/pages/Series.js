@@ -4,14 +4,15 @@ import axios from "axios";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import moment from "moment";
+import CastList from "../components/CastList";
+import CrewList from "../components/CrewList";
 
 const Series = () => {
     const { tvId } = useParams();
 
     const [series, setSeries] = useState();
-
     const [watchedEpisodes, setWatchedEpisodes] = useState();
-
     const [hasSeriesBeenAdded, setHasSeriesBeenAdded] = useState();
 
     const auth = useSelector((state) => state.auth);
@@ -47,7 +48,6 @@ const Series = () => {
     }, [tvId]);
 
     const handleSubmit = () => {
-        console.log("Adding series", tvId);
         const payload = { series_id: tvId };
         axios
             .post(`http://localhost:5001/api/series/add`, payload, {
@@ -56,81 +56,93 @@ const Series = () => {
                 },
             })
             .then(({ data }) => {
-                console.log(data);
                 setHasSeriesBeenAdded(true);
             })
             .catch((err) => console.log(err));
     };
     return (
-        <div>
+        <div className="min-h-screen bg-gray-100">
             {series && watchedEpisodes ? (
-                <div>
-                    <p>{series.name}</p>
-                    {hasSeriesBeenAdded ? <p>Checked</p> : <button onClick={handleSubmit}>Add Series</button>}
+                <div className="container mx-auto py-16">
+                    <h1 className="text-4xl my-1">{series.name} </h1>
 
-                    <p>{series.overview}</p>
-                    <p>{series.status}</p>
-                    <p>Episode Runtime : {series.episode_run_time}</p>
-                    {series.status === "Ended" ? <p>Episode last : {series.last_air_date}</p> : null}
-                    <p>Episode first start date: {series.first_air_date}</p>
-                    <ul>
-                        {series.genres.map((genre) => (
-                            <li key={uuid()}>{genre.name}</li>
-                        ))}
-                    </ul>
-                    <p>Number of season: {series.number_of_seasons}</p>
-                    <p>Number of episode: {series.number_of_episodes}</p>
-                    {watchedEpisodes && <p>Episodes Watched: {watchedEpisodes.length}</p>}
+                    {!hasSeriesBeenAdded && <button onClick={handleSubmit}>Add Series</button>}
 
-                    <h4>Seasons</h4>
-                    {series.seasons
-                        .filter((allSeasons) => allSeasons.name != "Specials")
-                        .map((season) => {
-                            return (
-                                <div key={season.id}>
-                                    <Link to={`/tv/${tvId}/season/${season.season_number}`}>{season.name}</Link>
-                                    <p>
-                                        {watchedEpisodes?.filter((e) => e.season_number == season.season_number).length}{" "}
-                                        / {season.episode_count}
-                                    </p>
-                                    <p>{season.overview}</p>
-                                    <p>Episodes: {season.episode_count}</p>
-                                    <p>Air date: {season.air_date}</p>
-                                </div>
-                            );
-                        })}
+                    <div className="flex items-center text-gray-600 text-sm mb-1">
+                        {moment(series.first_air_date).format("YYYY-MM-DD")} &#x2022; {series.episode_run_time} min
+                        &#x2022; {series.genres.map((genre) => genre.name).join(", ")}
+                    </div>
 
-                    <h4>Cast</h4>
-                    <div>
-                        {series.credits.cast
-                            .filter((c) => c.order < 10)
-                            .map((c) => {
+                    <p className="mb-4">
+                        {series.status} &#x2022;
+                        {series.status === "Ended" && <span>{series.last_air_date}</span>}
+                    </p>
+
+                    <h3>Overview</h3>
+                    <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
+
+                    <div class="bg-white rounded-lg shadow-md p-4">
+                        <h2 class="text-lg font-semibold mb-2">Metadata</h2>
+                        <div class="flex items-center justify-between">
+                            <div class="mr-4">
+                                <p class="text-gray-600">Number of Seasons:</p>
+                                <p class="text-2xl font-semibold">{series.number_of_seasons}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600">Total Episodes:</p>
+                                <p class="text-2xl font-semibold">{series.number_of_episodes}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600">Episodes Watched:</p>
+                                {watchedEpisodes && <p class="text-2xl font-semibold">{watchedEpisodes.length}</p>}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="my-8">
+                        <h1 className="text-2xl">Seasons</h1>
+                        {series.seasons
+                            .filter((allSeasons) => allSeasons.name != "Specials")
+                            .map((season) => {
                                 return (
-                                    <div key={uuid()}>
-                                        <p>{c.name}</p>
-                                        <p>{c.character}</p>
-                                    </div>
+                                    <Link to={`/tv/${tvId}/season/${season.season_number}`}>
+                                        <div class="bg-white rounded-lg shadow-md p-4 mt-3">
+                                            <h2 class="text-lg font-semibold mb-2">{season.name}</h2>
+                                            <div class="flex items-center justify-between">
+                                                <div class="mr-4">
+                                                    <p class="text-gray-600">Number of Episodes:</p>
+                                                    <p class="text-2xl font-semibold">{season.episode_count}</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-gray-600">Watched Episodes:</p>
+                                                    <p class="text-2xl font-semibold">
+                                                        {
+                                                            watchedEpisodes?.filter(
+                                                                (e) => e.season_number == season.season_number
+                                                            ).length
+                                                        }{" "}
+                                                        / {season.episode_count}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-gray-600">Air Date:</p>
+                                                    {watchedEpisodes && (
+                                                        <p class="text-2xl font-semibold">{season.air_date}</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
                                 );
                             })}
                     </div>
-                    <h4>Crew</h4>
-                    <div>
-                        {series.credits.crew
-                            .filter(
-                                (c) =>
-                                    c.job === "Director" ||
-                                    c.job === "Director of Photography" ||
-                                    c.job === "Screenplay"
-                            )
-                            .map((c) => {
-                                return (
-                                    <div key={uuid()}>
-                                        <p>{c.name}</p>
-                                        <p>{c.job}</p>
-                                    </div>
-                                );
-                            })}
-                    </div>
+
+                    <CastList casts={series.credits.cast} />
+                    <CrewList
+                        crews={series.credits.crew.filter(
+                            (c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay"
+                        )}
+                    />
                 </div>
             ) : (
                 <p>Loading..</p>

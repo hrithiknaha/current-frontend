@@ -38,36 +38,50 @@ const TV = () => {
     };
 
     return (
-        <div>
-            <Outlet />
-            <h4>TV</h4>
-            {watchedSeries ? (
-                watchedSeries.map((series) => {
-                    return (
-                        <div key={series.series_id}>
-                            <Link to={`${series.series_id}`}>{series.name}</Link>
-                            <p>{series.status}</p>
-                            <p>{series.episodes.length === series.number_of_episodes ? "Completed" : "watching"}</p>
-                        </div>
-                    );
-                })
-            ) : (
-                <p>Loading...</p>
-            )}
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="search-movies">Search TV</label>
-                <input
-                    type="text"
-                    name="search-movies"
-                    id="search-movies"
-                    placeholder="Search Movies"
-                    onChange={(e) => setTVQuery(e.target.value)}
-                />
+        <div className="min-h-screen bg-gray-100 ">
+            <div className="container mx-auto">
+                <div>
+                    <h1 className="pt-8 pb-4 text-2xl ">Series Added</h1>
+                    <div className="flex flex-wrap gap-4">
+                        {watchedSeries &&
+                            watchedSeries.map((series) => {
+                                return (
+                                    <Link
+                                        to={`/tv/${series.series_id}`}
+                                        key={series.series_id}
+                                        class="bg-white rounded-lg shadow-md p-4"
+                                    >
+                                        <h2 class="text-lg font-semibold mb-2">{series.name}</h2>
+                                        <p class="text-gray-600 mb-2">{series.status}</p>
+                                        <p class="text-gray-600 mt-2">
+                                            {series.episodes.length === series.number_of_episodes
+                                                ? "Completed"
+                                                : "Currently Watching"}
+                                        </p>
+                                    </Link>
+                                );
+                            })}
+                    </div>
+                </div>
+                <form onSubmit={handleSubmit} className="flex flex-col w-96 mt-8">
+                    <input
+                        type="text"
+                        name="search-movies"
+                        id="search-movies"
+                        placeholder="Search TV"
+                        onChange={(e) => setTVQuery(e.target.value)}
+                        className="mt-1 px-4 py-2 w-full border rounded"
+                    />
+                    <button
+                        class="text-center bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 mt-4 rounded outline"
+                        type="submit"
+                    >
+                        Search TV
+                    </button>
+                </form>
 
-                <button type="submit">Search TV</button>
-            </form>
-
-            {searchedTV ? <TMDBTVList series={searchedTV} /> : <p>Beautiful Day</p>}
+                {searchedTV && <TMDBTVList series={searchedTV} />}
+            </div>
         </div>
     );
 };

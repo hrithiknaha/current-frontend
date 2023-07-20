@@ -3,15 +3,23 @@ import { Link } from "react-router-dom";
 
 function TMDBTVList({ series }) {
     return (
-        <div>
-            <h5>Searched Series</h5>
-            <div>
-                {series.map((tv) => {
+        <div className="mt-8">
+            <div className="flex flex-wrap gap-4">
+                {series.map((series) => {
                     return (
-                        <div key={tv.id}>
-                            <Link to={`/tv/${tv.id}`}>{tv.name}</Link> | <span>{tv.first_air_date}</span>
-                            <p>{tv.overview}</p>
-                        </div>
+                        <Link
+                            to={`/tv/${series.id}`}
+                            class="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
+                            key={series.id}
+                        >
+                            <h2 class="text-xl font-bold mb-4">{series.name}</h2>
+                            <p class="text-gray-600 mb-2  max-w-30ch max-w-30ch line-clamp-3">{series.overview}</p>
+                            <img
+                                src={`https://image.tmdb.org/t/p/w300/${series.backdrop_path}`}
+                                className="absolute left-0 bottom-0 w-full h-full opacity-0 hover:opacity-20  rounded-lg transition-all "
+                            />
+                            <p class="text-gray-600 text-sm">Release Date: {series.first_air_date}</p>
+                        </Link>
                     );
                 })}
             </div>
