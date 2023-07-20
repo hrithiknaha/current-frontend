@@ -12,9 +12,21 @@ const Header = ({ user, logoutUser }) => {
     return (
         <nav className="bg-blue-500 p-4">
             <div className="container mx-auto flex justify-between items-center">
-                <Link to="/" className="text-white text-lg font-semibold">
-                    Current
-                </Link>
+                <div className="flex justify-between items-center w-40">
+                    <Link to="/" className="text-white text-lg font-semibold">
+                        Current
+                    </Link>
+                    {user.username && (
+                        <>
+                            <Link to="/movies" className="text-white hover:underline">
+                                Movies
+                            </Link>
+                            <Link to="/tv" className="text-white hover:underline">
+                                TV
+                            </Link>
+                        </>
+                    )}
+                </div>
 
                 {user.username && (
                     <div className="flex justify-between items-center w-48">
