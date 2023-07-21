@@ -4,24 +4,26 @@ import axios from "axios";
 import TMDBMovieList from "../components/TMDBMovieList";
 
 function Movies() {
-    const [movieQueries, setMoviesQueries] = useState();
+    const [searchQuery, setSearchQuery] = useState();
     const [searchedMovies, setSearchedMovies] = useState();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const searchMovies = (movieQueries) => {
-            axios
-                .post("http://localhost:5001/api/tmdb/movies/search", {
-                    query: movieQueries,
-                    language: "en-US",
-                    page: 1,
-                })
-                .then(({ data }) => {
-                    setSearchedMovies(data.results);
-                });
+        const payload = {
+            query: searchQuery,
+            language: "en-US",
+            page: 1,
         };
-        searchMovies(movieQueries);
+
+        axios
+            .post("http://localhost:5001/api/tmdb/movies/search", payload)
+            .then(({ data }) => {
+                setSearchedMovies(data.results);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
@@ -33,7 +35,7 @@ function Movies() {
                     name="search-movies"
                     id="search-movies"
                     placeholder="Search Movies"
-                    onChange={(e) => setMoviesQueries(e.target.value)}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                 />
 
                 <button

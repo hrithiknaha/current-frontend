@@ -10,6 +10,7 @@ import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
 
 import { getRatingAsStars } from "../configs/helpers";
+import NotFound from "../components/NotFound";
 
 const Movie = () => {
     const { movieId } = useParams();
@@ -26,9 +27,12 @@ const Movie = () => {
 
     const [isLoading, setIsLoading] = useState();
     useEffect(() => {
-        axios.get(`http://localhost:5001/api/tmdb/movies/${movieId}`).then(({ data }) => {
-            setMovie(data);
-        });
+        axios
+            .get(`http://localhost:5001/api/tmdb/movies/${movieId}`)
+            .then(({ data }) => {
+                setMovie(data);
+            })
+            .catch((error) => console.log(error));
 
         axios
             .get(`http://localhost:5001/api/users/added/${movieId}`, {
@@ -72,6 +76,7 @@ const Movie = () => {
             .catch((err) => console.log(err));
     };
 
+    if (movie === undefined) return <NotFound />;
     return (
         <div className="bg-gray-100 min-h-screen px-16">
             {movie && !isLoading ? (
