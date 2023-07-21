@@ -16,24 +16,29 @@ const Movie = () => {
     const { movieId } = useParams();
     const auth = useSelector((state) => state.auth);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [movie, setMovie] = useState();
 
     const [rating, setRating] = useState();
     const [dateWatched, setDateWatched] = useState();
     const [theatre, setTheatre] = useState(false);
 
-    const [savedMovieDetails, setSavedMoveDetails] = useState();
-    const [hasSavedMovie, setHasSavedMovie] = useState();
+    const [isDetailsLoading, setIsDetailsLoading] = useState(true);
+    const [movieDetails, setMovieDetails] = useState();
+    const [hasRated, setHasRated] = useState(false);
 
-    const [isLoading, setIsLoading] = useState();
     useEffect(() => {
         axios
             .get(`http://localhost:5001/api/tmdb/movies/${movieId}`)
             .then(({ data }) => {
                 setMovie(data);
+                setIsLoading(false);
             })
             .catch((error) => console.log(error));
+    }, [movieId]);
 
+    useEffect(() => {
         axios
             .get(`http://localhost:5001/api/users/added/${movieId}`, {
                 headers: {
@@ -41,16 +46,15 @@ const Movie = () => {
                 },
             })
             .then(({ data }) => {
-                setHasSavedMovie(true);
-                setSavedMoveDetails(data);
-                setIsLoading(false);
+                setIsDetailsLoading(false);
+                setMovieDetails(data);
+                setHasRated(true);
             })
             .catch((err) => {
+                setIsDetailsLoading(false);
                 console.log(err);
-                setHasSavedMovie(false);
-                setIsLoading(false);
             });
-    }, [movieId, hasSavedMovie]);
+    }, [hasRated]);
 
     const submitMovie = (e) => {
         e.preventDefault();
@@ -68,18 +72,19 @@ const Movie = () => {
                     Authorization: `Bearer ${auth.token}`,
                 },
             })
-            .then(({ data }) => {
-                console.log(data);
-                setHasSavedMovie(true);
-                setIsLoading(false);
+            .then(() => {
+                setHasRated(true);
             })
             .catch((err) => console.log(err));
     };
 
-    if (movie === undefined) return <NotFound />;
     return (
         <div className="bg-gray-100 min-h-screen px-16">
-            {movie && !isLoading ? (
+            {isLoading ? (
+                <p>Loading</p>
+            ) : !movie ? (
+                <NotFound />
+            ) : (
                 <div className="container mx-auto py-16">
                     <h1 className="text-4xl mb-1">
                         <span>{movie.title} </span>
@@ -94,9 +99,15 @@ const Movie = () => {
                     <h3>Overview</h3>
                     <p className="text-gray-700 text-sm mb-4">{movie.overview}</p>
 
-                    {hasSavedMovie === undefined ? (
+                    {isDetailsLoading ? (
                         <p>Loading..</p>
-                    ) : !hasSavedMovie ? (
+                    ) : hasRated ? (
+                        <div className="flex items-center text-gray-600 text-sm mb-4">
+                            {getRatingAsStars(movieDetails.rating)} &#x2022;{" "}
+                            {moment(movieDetails.date_watched).format("YYYY-MM-DD")} &#x2022;{" "}
+                            {movieDetails.theatre ? <p> Watched in theatre</p> : <p> Watched elsewhere</p>}
+                        </div>
+                    ) : (
                         <RateMovieForm
                             submitMovie={submitMovie}
                             setRating={setRating}
@@ -104,14 +115,6 @@ const Movie = () => {
                             setTheatre={setTheatre}
                             theatre={theatre}
                         />
-                    ) : (
-                        savedMovieDetails?.rating && (
-                            <div className="flex items-center text-gray-600 text-sm mb-4">
-                                {getRatingAsStars(savedMovieDetails.rating)} &#x2022;{" "}
-                                {moment(savedMovieDetails.date_watched).format("YYYY-MM-DD")} &#x2022;{" "}
-                                {savedMovieDetails.theatre ? <p> Watched in theatre</p> : <p> Watched elsewhere</p>}
-                            </div>
-                        )
                     )}
 
                     <CastList casts={movie.credits.cast.filter((cast) => cast.order < 10)} />
@@ -121,8 +124,6 @@ const Movie = () => {
                         )}
                     />
                 </div>
-            ) : (
-                <p>Loading...</p>
             )}
         </div>
     );
