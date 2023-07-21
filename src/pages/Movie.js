@@ -10,7 +10,7 @@ import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 
 import { getRatingAsStars } from "../configs/helpers";
-import NotFound from "../components/NotFound";
+import NotFound from "../components/configs/NotFound";
 
 const Movie = () => {
     const { movieId } = useParams();

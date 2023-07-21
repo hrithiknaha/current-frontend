@@ -8,7 +8,7 @@ import GuestList from "../components/lists/GuestList";
 import CrewList from "../components/lists/CrewList";
 import { toast } from "react-hot-toast";
 
-import NotFound from "../components/NotFound";
+import NotFound from "../components/configs/NotFound";
 import RateEpisodeForm from "../components/forms/movie/RateEpisodeForm";
 
 const Episode = () => {

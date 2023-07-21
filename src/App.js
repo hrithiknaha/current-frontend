@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
-import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Movies from "./pages/Movies";
 import Movie from "./pages/Movie";
 import Profile from "./pages/Profile";
-import PrivateRoute from "./components/PrivateRoute";
 import TV from "./pages/TV";
 import Series from "./pages/Series";
 import Season from "./pages/Season";
 import Episode from "./pages/Episode";
+import Layout from "./components/configs/Layout";
+import PrivateRoute from "./components/configs/PrivateRoute";
 
 function App() {
     return (
