@@ -8,6 +8,7 @@ import moment from "moment";
 import { getRatingAsStars } from "../configs/helpers";
 
 import NotFound from "../components/configs/NotFound";
+import Episode from "../components/forms/TV/Episode";
 
 const Season = () => {
     const { tvId, seasonNumber } = useParams();
@@ -71,32 +72,7 @@ const Season = () => {
                         {seasonEpisodes.episodes
                             .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
                             .map((episode) => {
-                                return (
-                                    <Link to={`episode/${episode.episode_number}`}>
-                                        <div key={episode.id} class="bg-white rounded-lg shadow-md p-4 mt-3">
-                                            <h2 class="text-lg font-semibold mb-2">{episode.name}</h2>
-                                            <p class="text-gray-600 mb-2 max-w-30ch line-clamp-3 mt-4">
-                                                {episode.overview}
-                                            </p>
-                                            <div class="flex items-center justify-between">
-                                                <div class="mr-4">
-                                                    <p class="text-gray-600">Episdoe Number:</p>
-                                                    <p class="text-2xl font-semibold">{episode.episode_number}</p>
-                                                </div>
-                                                <div>
-                                                    <p class="text-gray-600">Air Date:</p>
-                                                    <p class="text-2xl font-semibold">{episode.air_date}</p>
-                                                </div>
-                                                <div>
-                                                    <p class="text-gray-600">Runtime:</p>
-                                                    {watchedEpisodes && (
-                                                        <p class="text-2xl font-semibold">{episode.runtime} min</p>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                );
+                                return <Episode episode={episode} watchedEpisodes={watchedEpisodes} />;
                             })}
                     </div>
 
@@ -106,23 +82,26 @@ const Season = () => {
                             watchedEpisodes.map((episode) => {
                                 return (
                                     <Link key={episode.episode_id} to={`episode/${episode.episode_number}`}>
-                                        <div key={episode.episode_id} class="bg-white rounded-lg shadow-md p-4 mt-3">
-                                            <h2 class="text-lg font-semibold mb-2">{episode.name}</h2>
-                                            <div class="flex items-center justify-between">
-                                                <div class="mr-4">
-                                                    <p class="text-gray-600">Episdoe Number:</p>
-                                                    <p class="text-2xl font-semibold">{episode.episode_number}</p>
+                                        <div
+                                            key={episode.episode_id}
+                                            className="bg-white rounded-lg shadow-md p-4 mt-3"
+                                        >
+                                            <h2 className="text-lg font-semibold mb-2">{episode.name}</h2>
+                                            <div className="flex items-center justify-between">
+                                                <div className="mr-4">
+                                                    <p className="text-gray-600">Episdoe Number:</p>
+                                                    <p className="text-2xl font-semibold">{episode.episode_number}</p>
                                                 </div>
                                                 <div>
-                                                    <p class="text-gray-600">Watch Date:</p>
-                                                    <p class="text-2xl font-semibold">
+                                                    <p className="text-gray-600">Watch Date:</p>
+                                                    <p className="text-2xl font-semibold">
                                                         {moment(episode.date_watched).format("YYYY-MM-DD")}
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <p class="text-gray-600 float-right">Rating:</p>
+                                                    <p className="text-gray-600 float-right">Rating:</p>
                                                     {watchedEpisodes && (
-                                                        <p class="text-2xl font-semibold">
+                                                        <p className="text-2xl font-semibold">
                                                             {getRatingAsStars(episode.rating)}
                                                         </p>
                                                     )}

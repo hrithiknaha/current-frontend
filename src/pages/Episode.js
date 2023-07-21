@@ -9,7 +9,7 @@ import CrewList from "../components/lists/CrewList";
 import { toast } from "react-hot-toast";
 
 import NotFound from "../components/configs/NotFound";
-import RateEpisodeForm from "../components/forms/movie/RateEpisodeForm";
+import RateEpisodeForm from "../components/forms/TV/RateEpisodeForm";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();

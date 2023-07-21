@@ -9,16 +9,16 @@ function TMDBTVList({ series }) {
                     return (
                         <Link
                             to={`/tv/${series.id}`}
-                            class="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
+                            className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
                             key={series.id}
                         >
-                            <h2 class="text-xl font-bold mb-4">{series.name}</h2>
-                            <p class="text-gray-600 mb-2  max-w-30ch line-clamp-3">{series.overview}</p>
+                            <h2 className="text-xl font-bold mb-4">{series.name}</h2>
+                            <p className="text-gray-600 mb-2  max-w-30ch line-clamp-3">{series.overview}</p>
                             <img
                                 src={`https://image.tmdb.org/t/p/w300/${series.backdrop_path}`}
                                 className="absolute left-0 bottom-0 w-full h-full opacity-0 hover:opacity-20  rounded-lg transition-all "
                             />
-                            <p class="text-gray-600 text-sm">Release Date: {series.first_air_date}</p>
+                            <p className="text-gray-600 text-sm">Release Date: {series.first_air_date}</p>
                         </Link>
                     );
                 })}

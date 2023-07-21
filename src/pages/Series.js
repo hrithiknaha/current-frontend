@@ -9,6 +9,7 @@ import moment from "moment";
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/configs/NotFound";
+import Season from "../components/forms/TV/Season";
 
 const Series = () => {
     const { tvId } = useParams();
@@ -110,20 +111,22 @@ const Series = () => {
                     <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
 
                     <div>
-                        <div class="bg-white rounded-lg shadow-md p-4">
-                            <h2 class="text-lg font-semibold mb-2">Metadata</h2>
-                            <div class="flex items-center justify-between">
-                                <div class="mr-4">
-                                    <p class="text-gray-600">Number of Seasons:</p>
-                                    <p class="text-2xl font-semibold">{series.number_of_seasons}</p>
+                        <div className="bg-white rounded-lg shadow-md p-4">
+                            <h2 className="text-lg font-semibold mb-2">Metadata</h2>
+                            <div className="flex items-center justify-between">
+                                <div className="mr-4">
+                                    <p className="text-gray-600">Number of Seasons:</p>
+                                    <p className="text-2xl font-semibold">{series.number_of_seasons}</p>
                                 </div>
                                 <div>
-                                    <p class="text-gray-600">Total Episodes:</p>
-                                    <p class="text-2xl font-semibold">{series.number_of_episodes}</p>
+                                    <p className="text-gray-600">Total Episodes:</p>
+                                    <p className="text-2xl font-semibold">{series.number_of_episodes}</p>
                                 </div>
                                 <div>
-                                    <p class="text-gray-600">Episodes Watched:</p>
-                                    {watchedEpisodes && <p class="text-2xl font-semibold">{watchedEpisodes.length}</p>}
+                                    <p className="text-gray-600">Episodes Watched:</p>
+                                    {watchedEpisodes && (
+                                        <p className="text-2xl font-semibold">{watchedEpisodes.length}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -133,36 +136,7 @@ const Series = () => {
                             {series.seasons
                                 .filter((allSeasons) => allSeasons.name != "Specials")
                                 .map((season) => {
-                                    return (
-                                        <Link to={`/tv/${tvId}/season/${season.season_number}`}>
-                                            <div class="bg-white rounded-lg shadow-md p-4 mt-3">
-                                                <h2 class="text-lg font-semibold mb-2">{season.name}</h2>
-                                                <div class="flex items-center justify-between">
-                                                    <div class="mr-4">
-                                                        <p class="text-gray-600">Number of Episodes:</p>
-                                                        <p class="text-2xl font-semibold">{season.episode_count}</p>
-                                                    </div>
-                                                    <div>
-                                                        <p class="text-gray-600">Watched Episodes:</p>
-                                                        <p class="text-2xl font-semibold">
-                                                            {
-                                                                watchedEpisodes?.filter(
-                                                                    (e) => e.season_number == season.season_number
-                                                                ).length
-                                                            }{" "}
-                                                            / {season.episode_count}
-                                                        </p>
-                                                    </div>
-                                                    <div>
-                                                        <p class="text-gray-600">Air Date:</p>
-                                                        {watchedEpisodes && (
-                                                            <p class="text-2xl font-semibold">{season.air_date}</p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    );
+                                    return <Season season={season} tvId={tvId} watchedEpisodes={watchedEpisodes} />;
                                 })}
                         </div>
                     </div>
