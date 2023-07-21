@@ -79,9 +79,9 @@ const Movie = () => {
     };
 
     return (
-        <div className="bg-gray-100 min-h-screen px-16">
+        <div className="bg-gray-100 min-h-screen ">
             {isLoading ? (
-                <p>Loading</p>
+                <p>Loading...</p>
             ) : !movie ? (
                 <NotFound />
             ) : (
@@ -101,7 +101,7 @@ const Movie = () => {
 
                     {isDetailsLoading ? (
                         <p>Loading..</p>
-                    ) : hasRated ? (
+                    ) : hasRated && movieDetails?.rating ? (
                         <div className="flex items-center text-gray-600 text-sm mb-4">
                             {getRatingAsStars(movieDetails.rating)} &#x2022;{" "}
                             {moment(movieDetails.date_watched).format("YYYY-MM-DD")} &#x2022;{" "}

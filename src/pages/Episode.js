@@ -8,42 +8,54 @@ import GuestList from "../components/GuestList";
 import CrewList from "../components/CrewList";
 import { toast } from "react-hot-toast";
 
+import NotFound from "../components/NotFound";
+
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
 
     const auth = useSelector((state) => state.auth);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [rating, setRating] = useState();
 
     const [tmdbEpisode, setTmdbEpisode] = useState();
-    const [episode, setEpisode] = useState();
-    const [isLoading, setIsLoading] = useState();
-    const [haveRated, setHaveRated] = useState(false);
+
+    const [isDetailsLoading, setIsDetailsLoading] = useState(true);
+    const [episodeDetails, setEpisodeDetails] = useState();
+    const [hasRated, setHasRated] = useState(false);
 
     useEffect(() => {
         axios
             .get(`http://localhost:5001/api/tmdb/series/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`)
             .then(({ data }) => {
                 setTmdbEpisode(data);
-
-                axios
-                    .get(`http://localhost:5001/api/series/${tvId}/episodes/${data.id}`, {
-                        headers: {
-                            Authorization: `Bearer ${auth.token}`,
-                        },
-                    })
-                    .then(({ data }) => {
-                        setEpisode(data);
-                        setIsLoading(true);
-
-                        if (data?.rating) setHaveRated(true);
-                    })
-                    .catch((error) => {
-                        setIsLoading(false);
-                        console.log(error);
-                    });
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
             });
-    }, [tvId, seasonNumber, episodeNumber, haveRated]);
+    }, [tvId, seasonNumber, episodeNumber]);
+
+    useEffect(() => {
+        if (tmdbEpisode)
+            axios
+                .get(`http://localhost:5001/api/series/${tvId}/episodes/${tmdbEpisode.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${auth.token}`,
+                    },
+                })
+                .then(({ data }) => {
+                    setEpisodeDetails(data);
+                    setIsDetailsLoading(false);
+                    if (data?.rating) setHasRated(true);
+                })
+                .catch((error) => {
+                    setIsDetailsLoading(false);
+                    console.log(error);
+                });
+    }, [tvId, tmdbEpisode, hasRated]);
 
     const handleWatch = (e) => {
         e.preventDefault();
@@ -67,8 +79,8 @@ const Episode = () => {
                     Authorization: `Bearer ${auth.token}`,
                 },
             })
-            .then(({ data }) => {
-                setHaveRated(true);
+            .then(() => {
+                setHasRated(true);
             })
             .catch((err) => {
                 toast.error("Please add series before playing with its episodes!");
@@ -76,11 +88,13 @@ const Episode = () => {
             });
     };
 
-    if (isLoading === undefined) return <p>Loading...</p>;
-
     return (
         <div className="min-h-screen bg-gray-100">
-            {tmdbEpisode ? (
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : !tmdbEpisode ? (
+                <NotFound />
+            ) : (
                 <div className="container mx-auto py-16">
                     <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
                     <div className="flex items-center text-gray-600 text-sm mb-1">
@@ -90,15 +104,13 @@ const Episode = () => {
                     <h3 className="mt-8">Overview</h3>
                     <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
 
-                    {haveRated ? (
-                        episode?.rating ? (
-                            <div className="text-gray-600 text-sm mb-1">
-                                <p>Metadata</p>
-                                {episode.rating} &#x2022; {moment(episode.date_watched).format("YYYY-MM-DD")}
-                            </div>
-                        ) : (
-                            <p>Loading...</p>
-                        )
+                    {isDetailsLoading ? (
+                        <p>Loading..</p>
+                    ) : hasRated && episodeDetails?.rating ? (
+                        <div className="text-gray-600 text-sm mb-1">
+                            <p>Metadata</p>
+                            {episodeDetails.rating} &#x2022; {moment(episodeDetails.date_watched).format("YYYY-MM-DD")}
+                        </div>
                     ) : (
                         <form onSubmit={handleWatch} className="flex flex-col justify-between w-80 ">
                             <input
@@ -136,8 +148,6 @@ const Episode = () => {
                         />
                     </div>
                 </div>
-            ) : (
-                <p>Loading...</p>
             )}
         </div>
     );

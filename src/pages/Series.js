@@ -7,20 +7,32 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import CastList from "../components/CastList";
 import CrewList from "../components/CrewList";
+import NotFound from "../components/NotFound";
 
 const Series = () => {
     const { tvId } = useParams();
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [series, setSeries] = useState();
+
     const [watchedEpisodes, setWatchedEpisodes] = useState();
+    const [isDetailsLoading, setIsDetailsLoading] = useState(true);
     const [hasSeriesBeenAdded, setHasSeriesBeenAdded] = useState();
 
     const auth = useSelector((state) => state.auth);
 
     useEffect(() => {
-        axios.get(`http://localhost:5001/api/tmdb/series/${tvId}`).then((res) => {
-            setSeries(res.data);
-        });
+        axios
+            .get(`http://localhost:5001/api/tmdb/series/${tvId}`)
+            .then((res) => {
+                setSeries(res.data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                console.log(err);
+            });
 
         axios
             .get(`http://localhost:5001/api/series/${tvId}/episodes`, {
@@ -28,9 +40,11 @@ const Series = () => {
                     Authorization: `Bearer ${auth.token}`,
                 },
             })
-            .then((res) => {
-                setWatchedEpisodes(res.data);
-            });
+            .then(({ data }) => {
+                setWatchedEpisodes(data);
+                setIsDetailsLoading(false);
+            })
+            .catch((err) => console.log(err));
 
         axios
             .get(`http://localhost:5001/api/series/${tvId}`, {
@@ -38,8 +52,8 @@ const Series = () => {
                     Authorization: `Bearer ${auth.token}`,
                 },
             })
-            .then((res) => {
-                if (Boolean(res.data?.series_id)) setHasSeriesBeenAdded(true);
+            .then(({ data }) => {
+                if (data?.series_id) setHasSeriesBeenAdded(true);
             })
             .catch((err) => {
                 console.log(err);
@@ -55,14 +69,18 @@ const Series = () => {
                     Authorization: `Bearer ${auth.token}`,
                 },
             })
-            .then(({ data }) => {
+            .then(() => {
                 setHasSeriesBeenAdded(true);
             })
             .catch((err) => console.log(err));
     };
     return (
         <div className="min-h-screen bg-gray-100">
-            {series && watchedEpisodes ? (
+            {isLoading || isDetailsLoading ? (
+                <p>Loading</p>
+            ) : !series ? (
+                <NotFound />
+            ) : (
                 <div className="container mx-auto py-16">
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">{series.name} </h1>
@@ -90,60 +108,62 @@ const Series = () => {
                     <h3>Overview</h3>
                     <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
 
-                    <div class="bg-white rounded-lg shadow-md p-4">
-                        <h2 class="text-lg font-semibold mb-2">Metadata</h2>
-                        <div class="flex items-center justify-between">
-                            <div class="mr-4">
-                                <p class="text-gray-600">Number of Seasons:</p>
-                                <p class="text-2xl font-semibold">{series.number_of_seasons}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-600">Total Episodes:</p>
-                                <p class="text-2xl font-semibold">{series.number_of_episodes}</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-600">Episodes Watched:</p>
-                                {watchedEpisodes && <p class="text-2xl font-semibold">{watchedEpisodes.length}</p>}
+                    <div>
+                        <div class="bg-white rounded-lg shadow-md p-4">
+                            <h2 class="text-lg font-semibold mb-2">Metadata</h2>
+                            <div class="flex items-center justify-between">
+                                <div class="mr-4">
+                                    <p class="text-gray-600">Number of Seasons:</p>
+                                    <p class="text-2xl font-semibold">{series.number_of_seasons}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Total Episodes:</p>
+                                    <p class="text-2xl font-semibold">{series.number_of_episodes}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Episodes Watched:</p>
+                                    {watchedEpisodes && <p class="text-2xl font-semibold">{watchedEpisodes.length}</p>}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="my-8">
-                        <h1 className="text-2xl">Seasons</h1>
-                        {series.seasons
-                            .filter((allSeasons) => allSeasons.name != "Specials")
-                            .map((season) => {
-                                return (
-                                    <Link to={`/tv/${tvId}/season/${season.season_number}`}>
-                                        <div class="bg-white rounded-lg shadow-md p-4 mt-3">
-                                            <h2 class="text-lg font-semibold mb-2">{season.name}</h2>
-                                            <div class="flex items-center justify-between">
-                                                <div class="mr-4">
-                                                    <p class="text-gray-600">Number of Episodes:</p>
-                                                    <p class="text-2xl font-semibold">{season.episode_count}</p>
-                                                </div>
-                                                <div>
-                                                    <p class="text-gray-600">Watched Episodes:</p>
-                                                    <p class="text-2xl font-semibold">
-                                                        {
-                                                            watchedEpisodes?.filter(
-                                                                (e) => e.season_number == season.season_number
-                                                            ).length
-                                                        }{" "}
-                                                        / {season.episode_count}
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <p class="text-gray-600">Air Date:</p>
-                                                    {watchedEpisodes && (
-                                                        <p class="text-2xl font-semibold">{season.air_date}</p>
-                                                    )}
+                        <div className="my-8">
+                            <h1 className="text-2xl">Seasons</h1>
+                            {series.seasons
+                                .filter((allSeasons) => allSeasons.name != "Specials")
+                                .map((season) => {
+                                    return (
+                                        <Link to={`/tv/${tvId}/season/${season.season_number}`}>
+                                            <div class="bg-white rounded-lg shadow-md p-4 mt-3">
+                                                <h2 class="text-lg font-semibold mb-2">{season.name}</h2>
+                                                <div class="flex items-center justify-between">
+                                                    <div class="mr-4">
+                                                        <p class="text-gray-600">Number of Episodes:</p>
+                                                        <p class="text-2xl font-semibold">{season.episode_count}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-gray-600">Watched Episodes:</p>
+                                                        <p class="text-2xl font-semibold">
+                                                            {
+                                                                watchedEpisodes?.filter(
+                                                                    (e) => e.season_number == season.season_number
+                                                                ).length
+                                                            }{" "}
+                                                            / {season.episode_count}
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-gray-600">Air Date:</p>
+                                                        {watchedEpisodes && (
+                                                            <p class="text-2xl font-semibold">{season.air_date}</p>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </Link>
-                                );
-                            })}
+                                        </Link>
+                                    );
+                                })}
+                        </div>
                     </div>
 
                     <CastList casts={series.credits.cast} />
@@ -153,8 +173,6 @@ const Series = () => {
                         )}
                     />
                 </div>
-            ) : (
-                <p>Loading..</p>
             )}
         </div>
     );
