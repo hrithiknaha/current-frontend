@@ -6,6 +6,7 @@ import moment from "moment";
 import CastList from "../components/CastList";
 import GuestList from "../components/GuestList";
 import CrewList from "../components/CrewList";
+import { toast } from "react-hot-toast";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -69,7 +70,10 @@ const Episode = () => {
             .then(({ data }) => {
                 setHaveRated(true);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                toast.error("Please add series before playing with its episodes!");
+                console.log(err);
+            });
     };
 
     if (isLoading === undefined) return <p>Loading...</p>;

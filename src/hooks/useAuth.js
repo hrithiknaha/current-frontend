@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { REFRESH_USER } from "../redux/actions/types";
 import { retrieveAccessToken, isTokenExpired } from "../configs/helpers";
+import { toast } from "react-hot-toast";
 
 const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState();
@@ -31,6 +32,7 @@ const useAuth = () => {
                 setIsAuthenticated(true);
             }
         } else {
+            toast.success("Please login first!");
             console.log("User logged out");
             setIsAuthenticated(false);
         }

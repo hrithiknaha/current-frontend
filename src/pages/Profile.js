@@ -45,40 +45,42 @@ const Profile = ({ auth }) => {
                     <h1 className="text-4xl my-1">Hi, {username}</h1>
                     <div className="text-2xl mt-8">
                         <h1>Stats</h1>
-                        <div class="flex flex-wrap gap-6 mt-2 justify-between">
-                            <div class="bg-white shadow-md rounded-lg p-6 w-60">
-                                <h2 class="text-xl font-semibold mb-4">Movie Runtime</h2>
-                                <p class="text-3xl font-bold text-blue-500">{userStat.totalMovieRuntime} hrs</p>
+                        <div className="flex flex-wrap gap-6 mt-2 justify-between">
+                            <div className="bg-white shadow-md rounded-lg p-6 w-60">
+                                <h2 className="text-xl font-semibold mb-4">Movie Runtime</h2>
+                                <p className="text-3xl font-bold text-blue-500">{userStat.totalMovieRuntime} hrs</p>
                             </div>
 
-                            <div class="bg-white shadow-md rounded-lg p-6 w-60">
-                                <h2 class="text-xl font-semibold mb-4">Average Movie Rating</h2>
-                                <p class="text-3xl font-bold text-blue-500">{userStat.avgMovieRating.toFixed(2)}</p>
+                            <div className="bg-white shadow-md rounded-lg p-6 w-60">
+                                <h2 className="text-xl font-semibold mb-4">Average Movie Rating</h2>
+                                <p className="text-3xl font-bold text-blue-500">{userStat.avgMovieRating.toFixed(2)}</p>
                             </div>
 
-                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
-                                <h2 class="text-xl font-semibold mb-4">Movies Watched</h2>
-                                <p class="text-3xl font-bold text-blue-500">{userStat.totalMovies}</p>
+                            <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 className="text-xl font-semibold mb-4">Movies Watched</h2>
+                                <p className="text-3xl font-bold text-blue-500">{userStat.totalMovies}</p>
                             </div>
 
-                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
-                                <h2 class="text-xl font-semibold mb-4">Series Watched</h2>
-                                <p class="text-3xl font-bold text-blue-500">{userStat.totalSeries}</p>
+                            <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 className="text-xl font-semibold mb-4">Series Watched</h2>
+                                <p className="text-3xl font-bold text-blue-500">{userStat.totalSeries}</p>
                             </div>
 
-                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
-                                <h2 class="text-xl font-semibold mb-4">Episodes Watched</h2>
-                                <p class="text-3xl font-bold text-blue-500">{userStat.totalEpisodes}</p>
+                            <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 className="text-xl font-semibold mb-4">Episodes Watched</h2>
+                                <p className="text-3xl font-bold text-blue-500">{userStat.totalEpisodes}</p>
                             </div>
 
-                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
-                                <h2 class="text-xl font-semibold mb-4">Episode Watchtime</h2>
-                                <p class="text-3xl font-bold text-blue-500">{userStat.totalEpisodeRuntime} hrs</p>
+                            <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 className="text-xl font-semibold mb-4">Episode Watchtime</h2>
+                                <p className="text-3xl font-bold text-blue-500">{userStat.totalEpisodeRuntime} hrs</p>
                             </div>
 
-                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
-                                <h2 class="text-xl font-semibold mb-4">Average Episode Rating</h2>
-                                <p class="text-3xl font-bold text-blue-500">{userStat.avgEpisodeRating.toFixed(2)}</p>
+                            <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 className="text-xl font-semibold mb-4">Average Episode Rating</h2>
+                                <p className="text-3xl font-bold text-blue-500">
+                                    {userStat.avgEpisodeRating.toFixed(2)}
+                                </p>
                             </div>
                         </div>
                     </div>

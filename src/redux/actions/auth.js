@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { toast } from "react-hot-toast";
 
 import { LOGIN_USER, LOGOUT_USER } from "./types";
 
@@ -46,8 +47,12 @@ export const loginUser = (username, password, navigate) => (dispatch) => {
                 payload: { username, token, exp },
             });
             navigate("/");
+            toast.success("Sweet!");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            toast.error(err.response.data.status_message);
+        });
 };
 
 export const logoutUser = () => (dispatch) => {
