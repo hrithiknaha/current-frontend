@@ -4,6 +4,9 @@ import axios from "axios";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import moment from "moment";
+
+import { getRatingAsStars } from "../configs/helpers";
 
 const Season = () => {
     const { tvId, seasonNumber } = useParams();
@@ -36,48 +39,104 @@ const Season = () => {
     if (isPending) return <p>Loading..</p>;
 
     return (
-        <div>
-            {seasonEpisodes && watchedEpisodes ? (
-                <div>
-                    <p>{seasonEpisodes.name}</p>
-                    <p>{(watchedEpisodes.length / seasonEpisodes.episodes.length) * 100}</p>
+        <div className="min-h-screen bg-gray-100">
+            <div className="container mx-auto py-16">
+                {seasonEpisodes && watchedEpisodes ? (
+                    <>
+                        <p className="text-4xl my-1">{seasonEpisodes.name}</p>
 
-                    <p>{seasonEpisodes.overview}</p>
+                        <div className="h-1 w-full bg-gray-300 mt-4">
+                            <div
+                                style={{ width: `${(watchedEpisodes.length / seasonEpisodes.episodes.length) * 100}%` }}
+                                className={`h-full ${
+                                    watchedEpisodes.length / seasonEpisodes.episodes.length < 70
+                                        ? "bg-blue-500"
+                                        : "bg-green-500"
+                                }`}
+                            ></div>
+                        </div>
 
-                    <h4>Episodes Yet To Watch</h4>
-                    {seasonEpisodes.episodes
-                        .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
-                        .map((episode) => {
-                            return (
-                                <div key={episode.id}>
-                                    <Link to={`episode/${episode.episode_number}`}>{episode.name}</Link>
-                                    <p>{episode.episode_number}</p>
-                                    <p>{episode.overview}</p>
-                                    <p>{episode.air_date}</p>
-                                    <p>{episode.runtime}</p>
-                                </div>
-                            );
-                        })}
+                        <h3 className="mt-8">Overview</h3>
+                        <p className="text-gray-700 text-sm mb-4">{seasonEpisodes.overview}</p>
 
-                    <h4>Watched Episodes</h4>
-                    {watchedEpisodes.length ? (
-                        watchedEpisodes.map((episode) => {
-                            return (
-                                <div key={episode.episode_id}>
-                                    <Link to={`episode/${episode.episode_number}`}>{episode.name}</Link>
-                                    <p>{episode.episode_number}</p>
-                                    <p>{episode.rating}</p>
-                                    <p>{episode.date_watched}</p>
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <p>No Watched episodes</p>
-                    )}
-                </div>
-            ) : (
-                <p>Loading..</p>
-            )}
+                        <div className="my-8 ">
+                            <h1 className="text-2xl">Episodes Yet To Watch</h1>
+                            {seasonEpisodes.episodes
+                                .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
+                                .map((episode) => {
+                                    return (
+                                        <Link to={`episode/${episode.episode_number}`}>
+                                            <div key={episode.id} class="bg-white rounded-lg shadow-md p-4 mt-3">
+                                                <h2 class="text-lg font-semibold mb-2">{episode.name}</h2>
+                                                <p class="text-gray-600 mb-2 max-w-30ch line-clamp-3 mt-4">
+                                                    {episode.overview}
+                                                </p>
+                                                <div class="flex items-center justify-between">
+                                                    <div class="mr-4">
+                                                        <p class="text-gray-600">Episdoe Number:</p>
+                                                        <p class="text-2xl font-semibold">{episode.episode_number}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-gray-600">Air Date:</p>
+                                                        <p class="text-2xl font-semibold">{episode.air_date}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-gray-600">Runtime:</p>
+                                                        {watchedEpisodes && (
+                                                            <p class="text-2xl font-semibold">{episode.runtime} min</p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    );
+                                })}
+                        </div>
+
+                        <div className="my-8 ">
+                            <h1 className="text-2xl">Watched Episodes</h1>
+                            {watchedEpisodes.length ? (
+                                watchedEpisodes.map((episode) => {
+                                    return (
+                                        <Link key={episode.episode_id} to={`episode/${episode.episode_number}`}>
+                                            <div
+                                                key={episode.episode_id}
+                                                class="bg-white rounded-lg shadow-md p-4 mt-3"
+                                            >
+                                                <h2 class="text-lg font-semibold mb-2">{episode.name}</h2>
+                                                <div class="flex items-center justify-between">
+                                                    <div class="mr-4">
+                                                        <p class="text-gray-600">Episdoe Number:</p>
+                                                        <p class="text-2xl font-semibold">{episode.episode_number}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-gray-600">Watch Date:</p>
+                                                        <p class="text-2xl font-semibold">
+                                                            {moment(episode.date_watched).format("YYYY-MM-DD")}
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-gray-600 float-right">Rating:</p>
+                                                        {watchedEpisodes && (
+                                                            <p class="text-2xl font-semibold">
+                                                                {getRatingAsStars(episode.rating)}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    );
+                                })
+                            ) : (
+                                <p>No Watched episodes</p>
+                            )}
+                        </div>
+                    </>
+                ) : (
+                    <p>Loading..</p>
+                )}
+            </div>
         </div>
     );
 };

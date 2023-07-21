@@ -13,7 +13,7 @@ function TMDBMovieList({ movies }) {
                             key={movie.id}
                         >
                             <h2 class="text-xl font-bold mb-4">{movie.title}</h2>
-                            <p class="text-gray-600 mb-2  max-w-30ch max-w-30ch line-clamp-3">{movie.overview}</p>
+                            <p class="text-gray-600 mb-2  max-w-30ch line-clamp-3">{movie.overview}</p>
                             <img
                                 src={`https://image.tmdb.org/t/p/w300/${movie.backdrop_path}`}
                                 className="absolute left-0 bottom-0 w-full h-full opacity-0 hover:opacity-20  rounded-lg transition-all "

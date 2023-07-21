@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
+import { PieChart, Pie, Legend, Tooltip, Cell } from "recharts";
 
 import MovieList from "../components/MovieList";
 
@@ -12,6 +13,8 @@ const Profile = ({ auth }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState();
     const [userStat, setUserStat] = useState();
+
+    const COLORS = ["#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa"];
 
     useEffect(() => {
         axios
@@ -36,24 +39,81 @@ const Profile = ({ auth }) => {
     }, [username]);
 
     return (
-        <div>
+        <div className="min-h-screen bg-gray-100">
             {!isLoading ? (
-                <div>
-                    <div>
-                        <p>Total movie runtime watched : {userStat.totalMovieRuntime}</p>
-                        <p>Average movie Rating: {userStat.avgMovieRating}</p>
-                        <p>Movies Watched: {userStat.totalMovies}</p>
+                <div className="container mx-auto py-16">
+                    <h1 className="text-4xl my-1">Hi, {username}</h1>
+                    <div className="text-2xl mt-8">
+                        <h1>Stats</h1>
+                        <div class="flex flex-wrap gap-6 mt-2 justify-between">
+                            <div class="bg-white shadow-md rounded-lg p-6 w-60">
+                                <h2 class="text-xl font-semibold mb-4">Movie Runtime</h2>
+                                <p class="text-3xl font-bold text-blue-500">{userStat.totalMovieRuntime} hrs</p>
+                            </div>
+
+                            <div class="bg-white shadow-md rounded-lg p-6 w-60">
+                                <h2 class="text-xl font-semibold mb-4">Average Movie Rating</h2>
+                                <p class="text-3xl font-bold text-blue-500">{userStat.avgMovieRating.toFixed(2)}</p>
+                            </div>
+
+                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 class="text-xl font-semibold mb-4">Movies Watched</h2>
+                                <p class="text-3xl font-bold text-blue-500">{userStat.totalMovies}</p>
+                            </div>
+
+                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 class="text-xl font-semibold mb-4">Series Watched</h2>
+                                <p class="text-3xl font-bold text-blue-500">{userStat.totalSeries}</p>
+                            </div>
+
+                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 class="text-xl font-semibold mb-4">Episodes Watched</h2>
+                                <p class="text-3xl font-bold text-blue-500">{userStat.totalEpisodes}</p>
+                            </div>
+
+                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 class="text-xl font-semibold mb-4">Episode Watchtime</h2>
+                                <p class="text-3xl font-bold text-blue-500">{userStat.totalEpisodeRuntime} hrs</p>
+                            </div>
+
+                            <div class="bg-white shadow-md rounded-lg p-6 w-60 ">
+                                <h2 class="text-xl font-semibold mb-4">Average Episode Rating</h2>
+                                <p class="text-3xl font-bold text-blue-500">{userStat.avgEpisodeRating.toFixed(2)}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <p>Series Watched: {userStat.totalSeries}</p>
-                        <p>Episodes Watched: {userStat.totalEpisodes}</p>
-                        <p>Total episode runtime watched : {userStat.totalEpisodeRuntime}</p>
-                        <p>Average episode Rating: {userStat.avgEpisodeRating}</p>
-                    </div>
-                    <h5>Hi {username}</h5>
-                    <div>
-                        <p>Full Name</p>
-                        <span>{user.firstname}</span> - <span>{user.lastname}</span>
+                    <div className="mt-8">
+                        <h1 className="text-2xl">Genres</h1>
+                        <div className="flex justify-between items-center">
+                            <PieChart width={400} height={400}>
+                                <Pie
+                                    dataKey="count"
+                                    data={userStat.movieGenreDataset}
+                                    innerRadius={80}
+                                    outerRadius={100}
+                                >
+                                    {userStat.movieGenreDataset.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip />
+                                <Legend />
+                            </PieChart>
+                            <PieChart width={400} height={400}>
+                                <Pie
+                                    dataKey="count"
+                                    data={userStat.seriesGenreDataset}
+                                    innerRadius={80}
+                                    outerRadius={100}
+                                >
+                                    {userStat.seriesGenreDataset.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip />
+                                <Legend />
+                            </PieChart>
+                        </div>
                     </div>
                 </div>
             ) : (

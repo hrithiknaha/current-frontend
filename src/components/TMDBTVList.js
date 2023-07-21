@@ -13,7 +13,7 @@ function TMDBTVList({ series }) {
                             key={series.id}
                         >
                             <h2 class="text-xl font-bold mb-4">{series.name}</h2>
-                            <p class="text-gray-600 mb-2  max-w-30ch max-w-30ch line-clamp-3">{series.overview}</p>
+                            <p class="text-gray-600 mb-2  max-w-30ch line-clamp-3">{series.overview}</p>
                             <img
                                 src={`https://image.tmdb.org/t/p/w300/${series.backdrop_path}`}
                                 className="absolute left-0 bottom-0 w-full h-full opacity-0 hover:opacity-20  rounded-lg transition-all "

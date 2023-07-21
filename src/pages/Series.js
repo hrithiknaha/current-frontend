@@ -64,9 +64,18 @@ const Series = () => {
         <div className="min-h-screen bg-gray-100">
             {series && watchedEpisodes ? (
                 <div className="container mx-auto py-16">
-                    <h1 className="text-4xl my-1">{series.name} </h1>
+                    <div className="flex justify-between items-center">
+                        <h1 className="text-4xl my-1">{series.name} </h1>
 
-                    {!hasSeriesBeenAdded && <button onClick={handleSubmit}>Add Series</button>}
+                        {!hasSeriesBeenAdded && (
+                            <button
+                                className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
+                                onClick={handleSubmit}
+                            >
+                                Add Series
+                            </button>
+                        )}
+                    </div>
 
                     <div className="flex items-center text-gray-600 text-sm mb-1">
                         {moment(series.first_air_date).format("YYYY-MM-DD")} &#x2022; {series.episode_run_time} min

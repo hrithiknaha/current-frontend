@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import moment from "moment";
+import CastList from "../components/CastList";
+import GuestList from "../components/GuestList";
+import CrewList from "../components/CrewList";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -30,8 +34,6 @@ const Episode = () => {
                     .then(({ data }) => {
                         setEpisode(data);
                         setIsLoading(true);
-
-                        console.log(data);
 
                         if (data?.rating) setHaveRated(true);
                     })
@@ -71,65 +73,64 @@ const Episode = () => {
     };
 
     if (isLoading === undefined) return <p>Loading...</p>;
+
     return (
-        <div>
+        <div className="min-h-screen bg-gray-100">
             {tmdbEpisode ? (
-                <div>
+                <div className="container mx-auto py-16">
+                    <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+                    <div className="flex items-center text-gray-600 text-sm mb-1">
+                        {moment(tmdbEpisode.air_date).format("YYYY-MM-DD")} &#x2022; {tmdbEpisode.runtime} min
+                    </div>
+
+                    <h3 className="mt-8">Overview</h3>
+                    <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
+
                     {haveRated ? (
                         episode?.rating ? (
-                            <div>
-                                <p>Rated : {episode.rating}</p>
-                                <p>Date wathched : {episode.date_watched}</p>
+                            <div className="text-gray-600 text-sm mb-1">
+                                <p>Metadata</p>
+                                {episode.rating} &#x2022; {moment(episode.date_watched).format("YYYY-MM-DD")}
                             </div>
                         ) : (
                             <p>Loading...</p>
                         )
                     ) : (
-                        <form onSubmit={handleWatch}>
-                            <input type="number" name="rate" id="rate" onChange={(e) => setRating(e.target.value)} />
-                            <button type="submit">Rate</button>
+                        <form onSubmit={handleWatch} className="flex flex-col justify-between w-80 ">
+                            <input
+                                min={0}
+                                max={10}
+                                type="number"
+                                name="rate"
+                                id="rate"
+                                onChange={(e) => setRating(e.target.value)}
+                                className="mt-1 px-4 py-2 w-full border rounded mb-4"
+                                placeholder="Rate Episode"
+                            />
+                            <button
+                                type="submit"
+                                className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
+                            >
+                                Rate
+                            </button>
                         </form>
                     )}
 
-                    <p>{tmdbEpisode.name}</p>
-                    <p>{tmdbEpisode.overview}</p>
-                    <p>{tmdbEpisode.air_date}</p>
-                    <p>{tmdbEpisode.runtime}</p>
+                    <div className="mt-8">
+                        <CastList casts={tmdbEpisode.credits.cast} />
 
-                    <h3>Casts</h3>
-                    {tmdbEpisode.credits.cast.map((c) => {
-                        return (
-                            <p key={c.id}>
-                                {c.name} - {c.character}
-                            </p>
-                        );
-                    })}
+                        <GuestList guests={tmdbEpisode.guest_stars} />
 
-                    <h3>Guest Stars</h3>
-                    {tmdbEpisode.guest_stars.map((c) => {
-                        return (
-                            <p key={c.id}>
-                                {c.name} - {c.character}
-                            </p>
-                        );
-                    })}
-
-                    <h3>Crew</h3>
-                    {tmdbEpisode.credits.crew
-                        .filter(
-                            (c) =>
-                                c.job === "Writer" ||
-                                c.job === "Director" ||
-                                c.job === "Screenplay" ||
-                                c.job === "Director of Photography"
-                        )
-                        .map((c) => {
-                            return (
-                                <p key={c.id}>
-                                    {c.name} - {c.job}
-                                </p>
-                            );
-                        })}
+                        <CrewList
+                            crews={tmdbEpisode.credits.crew.filter(
+                                (c) =>
+                                    c.job === "Writer" ||
+                                    c.job === "Director" ||
+                                    c.job === "Screenplay" ||
+                                    c.job === "Director of Photography"
+                            )}
+                        />
+                    </div>
                 </div>
             ) : (
                 <p>Loading...</p>
