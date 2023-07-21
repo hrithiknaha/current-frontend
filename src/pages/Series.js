@@ -5,8 +5,8 @@ import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import CastList from "../components/CastList";
-import CrewList from "../components/CrewList";
+import CastList from "../components/lists/CastList";
+import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/NotFound";
 
 const Series = () => {

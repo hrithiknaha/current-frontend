@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 
 import RateMovieForm from "../components/forms/movie/RateMovieForm";
-import CastList from "../components/CastList";
-import CrewList from "../components/CrewList";
+import CastList from "../components/lists/CastList";
+import CrewList from "../components/lists/CrewList";
 
 import { getRatingAsStars } from "../configs/helpers";
 import NotFound from "../components/NotFound";

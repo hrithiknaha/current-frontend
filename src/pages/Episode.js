@@ -3,12 +3,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import CastList from "../components/CastList";
-import GuestList from "../components/GuestList";
-import CrewList from "../components/CrewList";
+import CastList from "../components/lists/CastList";
+import GuestList from "../components/lists/GuestList";
+import CrewList from "../components/lists/CrewList";
 import { toast } from "react-hot-toast";
 
 import NotFound from "../components/NotFound";
+import RateEpisodeForm from "../components/forms/movie/RateEpisodeForm";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -112,24 +113,7 @@ const Episode = () => {
                             {episodeDetails.rating} &#x2022; {moment(episodeDetails.date_watched).format("YYYY-MM-DD")}
                         </div>
                     ) : (
-                        <form onSubmit={handleWatch} className="flex flex-col justify-between w-80 ">
-                            <input
-                                min={0}
-                                max={10}
-                                type="number"
-                                name="rate"
-                                id="rate"
-                                onChange={(e) => setRating(e.target.value)}
-                                className="mt-1 px-4 py-2 w-full border rounded mb-4"
-                                placeholder="Rate Episode"
-                            />
-                            <button
-                                type="submit"
-                                className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
-                            >
-                                Rate
-                            </button>
-                        </form>
+                        <RateEpisodeForm setRating={setRating} handleWatch={handleWatch} />
                     )}
 
                     <div className="mt-8">

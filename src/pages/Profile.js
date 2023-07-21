@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { PieChart, Pie, Legend, Tooltip, Cell } from "recharts";
-
-import MovieList from "../components/MovieList";
-
 import axios from "axios";
 
 const Profile = ({ auth }) => {

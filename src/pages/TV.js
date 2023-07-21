@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import TMDBTVList from "../components/TMDBTVList";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+import TMDBTVList from "../components/lists/TMDBTVList";
 
 const TV = () => {
     const auth = useSelector((state) => state.auth);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-import TMDBMovieList from "../components/TMDBMovieList";
+import TMDBMovieList from "../components/lists/TMDBMovieList";
 
 function Movies() {
     const [searchQuery, setSearchQuery] = useState();
