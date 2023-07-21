@@ -30,10 +30,7 @@ function App() {
                         <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
                         <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
                         <Route path="movies/:movieId" element={<Movie />} />
-                    </Route>
-
-                    <Route path="profile" element={<PrivateRoute />}>
-                        <Route path=":username" element={<Profile />} />
+                        <Route path="profile/:username" element={<Profile />} />
                     </Route>
                 </Route>
             </Routes>
