@@ -2,7 +2,7 @@ import React from "react";
 
 const SearchMovie = ({ handleSubmit, setSearchQuery }) => {
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col w-96">
+        <form onSubmit={handleSubmit} className="flex flex-col w-96 mt-8">
             <input
                 className="mt-1 px-4 py-2 w-full border rounded"
                 type="text"

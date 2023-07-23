@@ -13,6 +13,7 @@ import Season from "./pages/Season";
 import Episode from "./pages/Episode";
 import Layout from "./components/configs/Layout";
 import PrivateRoute from "./components/configs/PrivateRoute";
+import Person from "./pages/Person";
 
 function App() {
     return (
@@ -25,11 +26,12 @@ function App() {
                     <Route path="register" element={<Register />} />
                     <Route path="" element={<PrivateRoute />}>
                         <Route path="movies" element={<Movies />} />
+                        <Route path="movies/:movieId" element={<Movie />} />
                         <Route path="tv" element={<TV />} />
                         <Route path="tv/:tvId" element={<Series />} />
                         <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
                         <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
-                        <Route path="movies/:movieId" element={<Movie />} />
+                        <Route path="person/:personId" element={<Person />} />
                         <Route path="profile/:username" element={<Profile />} />
                     </Route>
                 </Route>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const defaultImg = "https://t4.ftcdn.net/jpg/02/17/34/67/240_F_217346782_7XpCTt8bLNJqvVAaDZJwvZjm0epQmj6j.jpg";
 
@@ -8,7 +9,7 @@ const CastList = ({ casts }) => {
             <h2 className="text-xl font-bold mb-2">Cast</h2>
             <div className="flex flex-wrap gap-4">
                 {casts.map((actor) => (
-                    <div key={actor.id} className="bg-white rounded shadow w-36">
+                    <Link to={`/people/${actor.id}`} key={actor.id} className="bg-white rounded shadow w-36">
                         <img
                             src={`https://image.tmdb.org/t/p/w300/${actor.profile_path}`}
                             alt={actor.name}
@@ -19,7 +20,7 @@ const CastList = ({ casts }) => {
                             <h3 className="text-sm font-semibold">{actor.name}</h3>
                             <p className="text-xs text-gray-600">{actor.character}</p>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

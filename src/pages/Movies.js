@@ -1,12 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 import TMDBMovieList from "../components/lists/TMDBMovieList";
 import SearchMovie from "../components/forms/movie/SearchMovie";
+import Movie from "../components/forms/movie/Movie";
 
 function Movies() {
+    const [watchedMovies, setWatchedMovies] = useState();
+    const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState();
     const [searchedMovies, setSearchedMovies] = useState();
+
+    const auth = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5001/api/movies", {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`,
+                },
+            })
+            .then(({ data }) => {
+                setWatchedMovies(data);
+                setIsLoading(false);
+            });
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,11 +46,25 @@ function Movies() {
             });
     };
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-            <h1 className="text-4xl p-8">Movies</h1>
-            <SearchMovie handleSubmit={handleSubmit} setSearchQuery={setSearchQuery} />
+        <div className="min-h-screen  bg-gray-100">
+            <div className="container mx-auto">
+                <div>
+                    <h1 className="pt-8 pb-4 text-2xl ">Movies Added</h1>
+                    {isLoading ? (
+                        <p>Loading..</p>
+                    ) : (
+                        <div className="flex flex-wrap gap-4">
+                            {watchedMovies &&
+                                watchedMovies.map((movie) => {
+                                    return <Movie movie={movie} />;
+                                })}
+                        </div>
+                    )}
+                </div>
+                <SearchMovie handleSubmit={handleSubmit} setSearchQuery={setSearchQuery} />
 
-            {searchedMovies && <TMDBMovieList movies={searchedMovies} />}
+                {searchedMovies && <TMDBMovieList movies={searchedMovies} />}
+            </div>
         </div>
     );
 }
