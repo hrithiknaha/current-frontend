@@ -8,7 +8,11 @@ const TMDBPostMoviesList = ({ movies }) => {
         <div className="flex flex-wrap gap-4 items-center mt-4">
             {movies.map((movie) => {
                 return (
-                    <Link to={`/movies/${movie.id}`} className="bg-white shadow-md rounded-lg overflow-hidden w-40">
+                    <Link
+                        key={movie.id}
+                        to={`/movies/${movie.id}`}
+                        className="bg-white shadow-md rounded-lg overflow-hidden w-40"
+                    >
                         <img
                             src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
                             alt="Poster Image"

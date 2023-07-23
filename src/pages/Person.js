@@ -6,6 +6,7 @@ import { compileGender } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import TextWithMultipleParagraphs from "../components/configs/TextWithMultipleParagraphs";
 import TMDBPostMoviesList from "../components/lists/TMDBPostMoviesList";
+import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Person = () => {
     const { personId } = useParams();
@@ -30,13 +31,18 @@ const Person = () => {
     return (
         <div className="min-h-screen bg-gray-100">
             {isLoading ? (
-                <p>Loading...</p>
+                <LoadingSpinner />
             ) : !person ? (
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
                     <div className="bg-white shadow-md rounded-lg p-8">
-                        <h1 className="text-3xl font-bold mb-4">{person.name}</h1>
+                        <h1 className="text-4xl mb-1">
+                            <span>{person.name} </span>
+                            <a href={`https://www.imdb.com/name/${person.imdb_id}`} target="_blank">
+                                🚀
+                            </a>
+                        </h1>
 
                         <div className="text-gray-700 mb-4">
                             <TextWithMultipleParagraphs text={person.biography} />
