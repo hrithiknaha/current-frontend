@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { compileGender } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import TextWithMultipleParagraphs from "../components/configs/TextWithMultipleParagraphs";
+import TMDBPostMoviesList from "../components/lists/TMDBPostMoviesList";
 
 const Person = () => {
     const { personId } = useParams();
@@ -48,7 +50,7 @@ const Person = () => {
 
                             <div>
                                 <h2 className="font-bold mb-1">Gender</h2>
-                                <p className="text-gray-700">Male</p>
+                                <p className="text-gray-700">{compileGender(person.gender)}</p>
                             </div>
 
                             <div>
@@ -60,6 +62,13 @@ const Person = () => {
                                 <h2 className="font-bold mb-1">Department</h2>
                                 <p className="text-gray-700">{person.known_for_department}</p>
                             </div>
+                        </div>
+
+                        <div className="mt-8">
+                            <h1 className="text-2xl">Popular Movies</h1>
+                            <TMDBPostMoviesList
+                                movies={person.combined_credits.cast.filter((movie) => movie.vote_average > 8)}
+                            />
                         </div>
                     </div>
                 </div>

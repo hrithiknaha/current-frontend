@@ -9,7 +9,7 @@ const CrewList = ({ crews }) => {
             <h2 className="text-xl font-bold mb-2">Crew</h2>
             <div className="flex flex-wrap gap-4">
                 {crews.map((crew) => (
-                    <Link to={`/people/${crew.id}`} key={crew.id} className="bg-white rounded shadow w-36">
+                    <Link to={`/person/${crew.id}`} key={crew.id} className="bg-white rounded shadow w-36">
                         <img
                             src={`https://image.tmdb.org/t/p/w300/${crew.profile_path}`}
                             alt={crew.name}

@@ -17,3 +17,18 @@ export const getRatingAsStars = (rating) => {
     const star = "⭐️";
     return star.repeat(rating);
 };
+
+export const compileGender = (key) => {
+    switch (key) {
+        case 0:
+            return "Not set / not specified";
+        case 1:
+            return "Female";
+        case 2:
+            return "Male";
+        case 2:
+            return "Non-Binary";
+        default:
+            break;
+    }
+};
