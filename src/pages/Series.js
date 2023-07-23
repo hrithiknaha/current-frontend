@@ -10,6 +10,7 @@ import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/configs/NotFound";
 import Season from "../components/forms/TV/Season";
+import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Series = () => {
     const { tvId } = useParams();
@@ -79,7 +80,7 @@ const Series = () => {
     return (
         <div className="min-h-screen bg-gray-100">
             {isLoading || isDetailsLoading ? (
-                <p>Loading</p>
+                <LoadingSpinner />
             ) : !series ? (
                 <NotFound />
             ) : (

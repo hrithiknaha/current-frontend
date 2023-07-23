@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { PieChart, Pie, Legend, Tooltip, Cell } from "recharts";
 import axios from "axios";
+import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Profile = ({ auth }) => {
     const { username } = useParams();
@@ -39,7 +40,6 @@ const Profile = ({ auth }) => {
         <div className="min-h-screen bg-gray-100">
             {!isLoading ? (
                 <div className="container mx-auto py-16">
-                    <h1 className="text-4xl my-1">Hi, {username}</h1>
                     <div className="text-2xl mt-8">
                         <h1>Stats</h1>
                         <div className="flex flex-wrap gap-6 mt-2 justify-between">
@@ -84,39 +84,45 @@ const Profile = ({ auth }) => {
                     <div className="mt-8">
                         <h1 className="text-2xl">Genres</h1>
                         <div className="flex justify-between items-center">
-                            <PieChart width={400} height={400}>
-                                <Pie
-                                    dataKey="count"
-                                    data={userStat.movieGenreDataset}
-                                    innerRadius={80}
-                                    outerRadius={100}
-                                >
-                                    {userStat.movieGenreDataset.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip />
-                                <Legend />
-                            </PieChart>
-                            <PieChart width={400} height={400}>
-                                <Pie
-                                    dataKey="count"
-                                    data={userStat.seriesGenreDataset}
-                                    innerRadius={80}
-                                    outerRadius={100}
-                                >
-                                    {userStat.seriesGenreDataset.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip />
-                                <Legend />
-                            </PieChart>
+                            <div className="div">
+                                <h1>Movie</h1>
+                                <PieChart width={400} height={400}>
+                                    <Pie
+                                        dataKey="count"
+                                        data={userStat.movieGenreDataset}
+                                        innerRadius={80}
+                                        outerRadius={100}
+                                    >
+                                        {userStat.movieGenreDataset.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip />
+                                    <Legend />
+                                </PieChart>
+                            </div>
+                            <div className="div">
+                                <h1>TV</h1>
+                                <PieChart width={400} height={400}>
+                                    <Pie
+                                        dataKey="count"
+                                        data={userStat.seriesGenreDataset}
+                                        innerRadius={80}
+                                        outerRadius={100}
+                                    >
+                                        {userStat.seriesGenreDataset.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip />
+                                    <Legend />
+                                </PieChart>
+                            </div>
                         </div>
                     </div>
                 </div>
             ) : (
-                <p>Loading..</p>
+                <LoadingSpinner />
             )}
         </div>
     );

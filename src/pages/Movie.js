@@ -11,6 +11,7 @@ import CrewList from "../components/lists/CrewList";
 
 import { getRatingAsStars } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
+import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Movie = () => {
     const { movieId } = useParams();
@@ -81,7 +82,7 @@ const Movie = () => {
     return (
         <div className="bg-gray-100 min-h-screen ">
             {isLoading ? (
-                <p>Loading...</p>
+                <LoadingSpinner />
             ) : !movie ? (
                 <NotFound />
             ) : (
