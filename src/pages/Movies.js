@@ -5,6 +5,7 @@ import axios from "axios";
 import TMDBMovieList from "../components/lists/TMDBMovieList";
 import SearchMovie from "../components/forms/movie/SearchMovie";
 import Movie from "../components/forms/movie/Movie";
+import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
 function Movies() {
     const [watchedMovies, setWatchedMovies] = useState();
@@ -52,7 +53,7 @@ function Movies() {
                 <div>
                     <h1 className="pt-8 pb-4 text-2xl ">Movies Added</h1>
                     {isLoading ? (
-                        <p>Loading..</p>
+                        <SmallLoadingSpinner />
                     ) : (
                         <div className="flex flex-wrap gap-4">
                             {watchedMovies &&

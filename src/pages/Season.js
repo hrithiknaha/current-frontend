@@ -9,6 +9,7 @@ import { getRatingAsStars } from "../configs/helpers";
 
 import NotFound from "../components/configs/NotFound";
 import Episode from "../components/forms/TV/Episode";
+import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Season = () => {
     const { tvId, seasonNumber } = useParams();
@@ -46,7 +47,7 @@ const Season = () => {
     return (
         <div className="min-h-screen bg-gray-100">
             {isLoading ? (
-                <p>Loading...</p>
+                <LoadingSpinner />
             ) : !seasonEpisodes && !watchedEpisodes ? (
                 <NotFound />
             ) : (

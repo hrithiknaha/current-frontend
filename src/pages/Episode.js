@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 
 import NotFound from "../components/configs/NotFound";
 import RateEpisodeForm from "../components/forms/TV/RateEpisodeForm";
+import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -92,7 +93,7 @@ const Episode = () => {
     return (
         <div className="min-h-screen bg-gray-100">
             {isLoading ? (
-                <p>Loading...</p>
+                <LoadingSpinner />
             ) : !tmdbEpisode ? (
                 <NotFound />
             ) : (

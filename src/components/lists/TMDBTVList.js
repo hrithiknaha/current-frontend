@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function TMDBTVList({ series }) {
     return (
         <div className="mt-8">
-            <div className="flex flex-wrap gap-4 justify-between">
+            <div className="flex flex-wrap gap-4">
                 {series.map((series) => {
                     return (
                         <Link

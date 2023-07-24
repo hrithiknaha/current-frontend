@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import MovieStats from "../components/MovieStats";
 import SeriesStats from "../components/SeriesStats";
+import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Stats = () => {
     const [series, setSeries] = useState();
@@ -54,7 +55,7 @@ const Stats = () => {
                     )}
                 </div>
             ) : (
-                <p>Loading...</p>
+                <LoadingSpinner />
             )}
         </div>
     );

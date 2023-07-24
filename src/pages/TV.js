@@ -7,6 +7,8 @@ import TMDBTVList from "../components/lists/TMDBTVList";
 import SearchTV from "../components/forms/TV/SearchTV";
 import Series from "../components/forms/TV/Series";
 
+import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
+
 const TV = () => {
     const auth = useSelector((state) => state.auth);
 
@@ -50,7 +52,7 @@ const TV = () => {
                 <div>
                     <h1 className="pt-8 pb-4 text-2xl ">Series Added</h1>
                     {isLoading ? (
-                        <p>Loading..</p>
+                        <SmallLoadingSpinner />
                     ) : (
                         <div className="flex flex-wrap gap-4">
                             {watchedSeries &&
