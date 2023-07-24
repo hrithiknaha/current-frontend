@@ -121,7 +121,12 @@ const Movie = () => {
                     <CastList casts={movie.credits.cast.filter((cast) => cast.order < 10)} />
                     <CrewList
                         crews={movie.credits.crew.filter(
-                            (c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay"
+                            (c) =>
+                                c.job === "Writer" ||
+                                c.job === "Director" ||
+                                c.job === "Screenplay" ||
+                                c.job === "Director of Photography" ||
+                                c.job === "Original Music Composer"
                         )}
                     />
                 </div>

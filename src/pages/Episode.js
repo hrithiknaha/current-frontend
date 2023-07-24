@@ -127,7 +127,8 @@ const Episode = () => {
                                     c.job === "Writer" ||
                                     c.job === "Director" ||
                                     c.job === "Screenplay" ||
-                                    c.job === "Director of Photography"
+                                    c.job === "Director of Photography" ||
+                                    c.job === "Original Music Composer"
                             )}
                         />
                     </div>
