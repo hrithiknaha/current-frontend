@@ -8,7 +8,7 @@ import moment from "moment";
 import { getRatingAsStars } from "../configs/helpers";
 
 import NotFound from "../components/configs/NotFound";
-import Episode from "../components/forms/TV/Episode";
+import Episode from "../components/utils/TV/Episode";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Season = () => {

@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import axios from "axios";
 
 import LoadingSpinner from "../components/configs/LoadingSpinner";
-import Movie from "../components/forms/movie/Movie";
-import Series from "../components/forms/TV/Series";
+import Movie from "../components/utils/movie/Movie";
+import Series from "../components/utils/TV/Series";
 
 const Profile = ({ auth }) => {
     const { username } = useParams();

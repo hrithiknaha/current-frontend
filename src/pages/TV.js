@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import TMDBTVList from "../components/lists/TMDBTVList";
-import SearchTV from "../components/forms/TV/SearchTV";
-import Series from "../components/forms/TV/Series";
+import SearchTV from "../components/utils/TV/SearchTV";
+import Series from "../components/utils/TV/Series";
 
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 

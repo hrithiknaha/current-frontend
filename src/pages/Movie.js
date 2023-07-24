@@ -5,7 +5,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-import RateMovieForm from "../components/forms/movie/RateMovieForm";
+import RateMovieForm from "../components/utils/movie/RateMovieForm";
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 

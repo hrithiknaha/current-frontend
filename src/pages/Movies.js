@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 import TMDBMovieList from "../components/lists/TMDBMovieList";
-import SearchMovie from "../components/forms/movie/SearchMovie";
-import Movie from "../components/forms/movie/Movie";
+import SearchMovie from "../components/utils/movie/SearchMovie";
+import Movie from "../components/utils/movie/Movie";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
 function Movies() {

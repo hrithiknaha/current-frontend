@@ -9,7 +9,7 @@ import CrewList from "../components/lists/CrewList";
 import { toast } from "react-hot-toast";
 
 import NotFound from "../components/configs/NotFound";
-import RateEpisodeForm from "../components/forms/TV/RateEpisodeForm";
+import RateEpisodeForm from "../components/utils/TV/RateEpisodeForm";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Episode = () => {

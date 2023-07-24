@@ -7,7 +7,7 @@ import moment from "moment";
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/configs/NotFound";
-import Season from "../components/forms/TV/Season";
+import Season from "../components/utils/TV/Season";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 const Series = () => {
