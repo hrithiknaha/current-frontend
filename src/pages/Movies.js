@@ -26,7 +26,10 @@ function Movies() {
                 setWatchedMovies(data);
                 setIsLoading(false);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
     }, []);
 
     const handleSubmit = (e) => {
@@ -54,13 +57,14 @@ function Movies() {
                     <h1 className="pt-8 pb-4 text-2xl ">Movies Added</h1>
                     {isLoading ? (
                         <SmallLoadingSpinner />
-                    ) : (
+                    ) : watchedMovies ? (
                         <div className="flex flex-wrap gap-4">
-                            {watchedMovies &&
-                                watchedMovies.map((movie) => {
-                                    return <Movie movie={movie} />;
-                                })}
+                            {watchedMovies.map((movie) => {
+                                return <Movie movie={movie} />;
+                            })}
                         </div>
+                    ) : (
+                        <p>No Movies</p>
                     )}
                 </div>
                 <SearchMovie handleSubmit={handleSubmit} setSearchQuery={setSearchQuery} />

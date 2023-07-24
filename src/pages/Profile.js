@@ -24,7 +24,6 @@ const Profile = ({ auth }) => {
             .then(({ data }) => {
                 setUser(data);
                 setIsLoading(false);
-                console.log(data.movies);
             });
     }, [username]);
 
@@ -45,27 +44,27 @@ const Profile = ({ auth }) => {
                     <div className="mt-8">
                         <div className="my-4">
                             <h3 className="text-2xl my-2">Movies</h3>
-                            {user.movies ? (
+                            {user.movies?.length != 0 ? (
                                 <div className="flex flex-wrap gap-4">
                                     {user.movies.map((movie) => {
                                         return <Movie movie={movie} />;
                                     })}
                                 </div>
                             ) : (
-                                <p>Loading...</p>
+                                <p>No Movies</p>
                             )}
                         </div>
 
                         <div className="my-8">
                             <h3 className="text-2xl my-2">Series</h3>
-                            {user.movies ? (
+                            {user.series?.length != 0 ? (
                                 <div className="flex flex-wrap gap-4">
                                     {user.series.map((series) => {
                                         return <Series series={series} />;
                                     })}
                                 </div>
                             ) : (
-                                <p>Loading...</p>
+                                <p>No Series</p>
                             )}
                         </div>
                     </div>

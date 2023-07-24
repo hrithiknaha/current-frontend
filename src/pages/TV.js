@@ -28,7 +28,7 @@ const TV = () => {
             })
             .catch((err) => {
                 console.log(err);
-                setWatchedSeries([]);
+                setIsLoading(false);
             });
     }, []);
 
@@ -53,13 +53,14 @@ const TV = () => {
                     <h1 className="pt-8 pb-4 text-2xl ">Series Added</h1>
                     {isLoading ? (
                         <SmallLoadingSpinner />
-                    ) : (
+                    ) : watchedSeries ? (
                         <div className="flex flex-wrap gap-4">
-                            {watchedSeries &&
-                                watchedSeries.map((series) => {
-                                    return <Series series={series} />;
-                                })}
+                            {watchedSeries.map((series) => {
+                                return <Series series={series} />;
+                            })}
                         </div>
+                    ) : (
+                        <p>No Series</p>
                     )}
                 </div>
                 <SearchTV setSearchQuery={setSearchQuery} handleSubmit={handleSubmit} />
