@@ -24,7 +24,10 @@ const TV = () => {
                 setWatchedSeries(data);
                 setIsLoading(false);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                setWatchedSeries([]);
+            });
     }, []);
 
     const handleSubmit = (e) => {
