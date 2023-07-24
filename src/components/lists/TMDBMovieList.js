@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 function TMDBMovieList({ movies }) {
     return (
-        <div className="container m-16">
-            <div className="flex flex-wrap gap-4 justify-center">
+        <div className="mt-8">
+            <div className="flex flex-wrap gap-4 justify-between">
                 {movies.map((movie) => {
                     return (
                         <Link
                             to={`/movies/${movie.id}`}
-                            className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
+                            className="bg-white rounded-lg shadow-md p-6 w-60 inline-block relative "
                             key={movie.id}
                         >
                             <h2 className="text-xl font-bold mb-4">{movie.title}</h2>
