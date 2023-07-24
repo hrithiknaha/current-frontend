@@ -9,7 +9,7 @@ function TMDBTVList({ series }) {
                     return (
                         <Link
                             to={`/tv/${series.id}`}
-                            className="bg-white rounded-lg shadow-md p-6 w-60 inline-block relative "
+                            className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
                             key={series.id}
                         >
                             <h2 className="text-xl font-bold mb-4">{series.name}</h2>
