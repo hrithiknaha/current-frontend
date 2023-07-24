@@ -24,7 +24,8 @@ function Movies() {
             .then(({ data }) => {
                 setWatchedMovies(data);
                 setIsLoading(false);
-            });
+            })
+            .catch((err) => console.log(err));
     }, []);
 
     const handleSubmit = (e) => {

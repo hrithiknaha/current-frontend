@@ -50,7 +50,9 @@ const Profile = ({ auth }) => {
 
                             <div className="bg-white shadow-md rounded-lg p-6 w-60">
                                 <h2 className="text-xl font-semibold mb-4">Average Movie Rating</h2>
-                                <p className="text-3xl font-bold text-blue-500">{userStat.avgMovieRating.toFixed(2)}</p>
+                                <p className="text-3xl font-bold text-blue-500">
+                                    {userStat.avgMovieRating?.toFixed(2)}
+                                </p>
                             </div>
 
                             <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
@@ -76,7 +78,7 @@ const Profile = ({ auth }) => {
                             <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
                                 <h2 className="text-xl font-semibold mb-4">Average Episode Rating</h2>
                                 <p className="text-3xl font-bold text-blue-500">
-                                    {userStat.avgEpisodeRating.toFixed(2)}
+                                    {userStat.avgEpisodeRating?.toFixed(2)}
                                 </p>
                             </div>
                         </div>
