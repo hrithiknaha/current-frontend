@@ -13,6 +13,8 @@ import { getRatingAsStars } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
+import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+
 const Movie = () => {
     const { movieId } = useParams();
     const auth = useSelector((state) => state.auth);
@@ -30,8 +32,9 @@ const Movie = () => {
     const [hasRated, setHasRated] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/tmdb/movies/${movieId}`)
+        const axiosInstance = axiosPrivateInstance(auth);
+        axiosPublicInstance
+            .get(`/api/tmdb/movies/${movieId}`)
             .then(({ data }) => {
                 setMovie(data);
                 setIsLoading(false);
@@ -40,12 +43,9 @@ const Movie = () => {
     }, [movieId]);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/users/added/${movieId}`, {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
+        const axiosInstance = axiosPrivateInstance(auth);
+        axiosInstance
+            .get(`/api/users/added/${movieId}`)
             .then(({ data }) => {
                 setIsDetailsLoading(false);
                 setMovieDetails(data);
@@ -59,6 +59,7 @@ const Movie = () => {
 
     const submitMovie = (e) => {
         e.preventDefault();
+        const axiosInstance = axiosPrivateInstance(auth);
 
         const payload = {
             movie_id: movieId,
@@ -67,12 +68,8 @@ const Movie = () => {
             theatre,
         };
 
-        axios
-            .post("http://localhost:5001/api/movies/add", payload, {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
+        axiosInstance
+            .post("/api/movies/add", payload)
             .then(() => {
                 setHasRated(true);
             })

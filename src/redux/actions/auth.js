@@ -3,6 +3,7 @@ import jwtDecode from "jwt-decode";
 import { toast } from "react-hot-toast";
 
 import { LOGIN_USER, LOGOUT_USER } from "./types";
+import { axiosPublicInstance } from "../../configs/axios";
 
 export const registerUser = (firstname, lastname, username, password, navigate) => (dispatch) => {
     const payload = {
@@ -12,7 +13,7 @@ export const registerUser = (firstname, lastname, username, password, navigate) 
         password,
     };
 
-    axios.post("http://localhost:5001/api/auth/register", payload).then(({ data }) => {
+    axiosPublicInstance.post("/api/auth/register", payload).then(({ data }) => {
         const token = data.data.accessToken;
 
         localStorage.setItem("token", token);
@@ -33,8 +34,8 @@ export const loginUser = (username, password, navigate) => (dispatch) => {
         password,
     };
 
-    axios
-        .post("http://localhost:5001/api/auth/login", payload, { withCredentials: true })
+    axiosPublicInstance
+        .post("/api/auth/login", payload)
         .then((response) => {
             console.log(response);
             const token = response.data.accessToken;
@@ -56,8 +57,8 @@ export const loginUser = (username, password, navigate) => (dispatch) => {
 };
 
 export const logoutUser = () => (dispatch) => {
-    axios
-        .get("http://localhost:5001/api/auth/logout")
+    axiosPublicInstance
+        .get("/api/auth/logout")
         .then(() => {
             localStorage.removeItem("token");
             dispatch({

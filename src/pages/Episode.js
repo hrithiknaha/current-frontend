@@ -12,6 +12,8 @@ import NotFound from "../components/configs/NotFound";
 import RateEpisodeForm from "../components/utils/TV/RateEpisodeForm";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
+import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
 
@@ -28,8 +30,8 @@ const Episode = () => {
     const [hasRated, setHasRated] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/tmdb/series/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`)
+        axiosPublicInstance
+            .get(`/api/tmdb/series/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`)
             .then(({ data }) => {
                 setTmdbEpisode(data);
                 setIsLoading(false);
@@ -41,13 +43,10 @@ const Episode = () => {
     }, [tvId, seasonNumber, episodeNumber]);
 
     useEffect(() => {
+        const axiosInstance = axiosPrivateInstance(auth);
         if (tmdbEpisode)
-            axios
-                .get(`http://localhost:5001/api/series/${tvId}/episodes/${tmdbEpisode.id}`, {
-                    headers: {
-                        Authorization: `Bearer ${auth.token}`,
-                    },
-                })
+            axiosInstance
+                .get(`/api/series/${tvId}/episodes/${tmdbEpisode.id}`)
                 .then(({ data }) => {
                     setEpisodeDetails(data);
                     setIsDetailsLoading(false);
@@ -61,6 +60,7 @@ const Episode = () => {
 
     const handleWatch = (e) => {
         e.preventDefault();
+        const axiosInstance = axiosPrivateInstance(auth);
 
         const date_timestamp = new Date();
         const day = date_timestamp.getDate();
@@ -75,12 +75,8 @@ const Episode = () => {
             season_number: seasonNumber,
         };
 
-        axios
-            .post(`http://localhost:5001/api/series/watch`, payload, {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
+        axiosInstance
+            .post(`/api/series/watch`, payload)
             .then(() => {
                 setHasRated(true);
             })

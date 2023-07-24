@@ -11,6 +11,8 @@ import NotFound from "../components/configs/NotFound";
 import Episode from "../components/utils/TV/Episode";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
+import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+
 const Season = () => {
     const { tvId, seasonNumber } = useParams();
 
@@ -22,21 +24,16 @@ const Season = () => {
     const [watchedEpisodes, setWatchedEpisodes] = useState();
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/tmdb/series/${tvId}/season/${seasonNumber}`)
+        const axiosInstance = axiosPrivateInstance(auth);
+        axiosPublicInstance
+            .get(`/api/tmdb/series/${tvId}/season/${seasonNumber}`)
             .then(({ data }) => {
                 setSeasonEpisodes(data);
 
-                axios
-                    .get(`http://localhost:5001/api/series/${tvId}/season/${seasonNumber}`, {
-                        headers: {
-                            Authorization: `Bearer ${auth.token}`,
-                        },
-                    })
-                    .then(({ data }) => {
-                        setWatchedEpisodes(data?.sort((a, b) => (a.episode_number > b.episode_number ? 1 : -1)));
-                        setIsLoading(false);
-                    });
+                axiosInstance.get(`/api/series/${tvId}/season/${seasonNumber}`).then(({ data }) => {
+                    setWatchedEpisodes(data?.sort((a, b) => (a.episode_number > b.episode_number ? 1 : -1)));
+                    setIsLoading(false);
+                });
             })
             .catch((err) => {
                 setIsLoading(false);

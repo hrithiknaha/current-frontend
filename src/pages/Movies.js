@@ -7,6 +7,8 @@ import SearchMovie from "../components/utils/movie/SearchMovie";
 import Movie from "../components/utils/movie/Movie";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
+import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+
 function Movies() {
     const [watchedMovies, setWatchedMovies] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -16,12 +18,9 @@ function Movies() {
     const auth = useSelector((state) => state.auth);
 
     useEffect(() => {
-        axios
-            .get("http://localhost:5001/api/movies", {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
+        const axiosInstance = axiosPrivateInstance(auth);
+        axiosInstance
+            .get("/api/movies")
             .then(({ data }) => {
                 setWatchedMovies(data);
                 setIsLoading(false);
@@ -41,8 +40,8 @@ function Movies() {
             page: 1,
         };
 
-        axios
-            .post("http://localhost:5001/api/tmdb/movies/search", payload)
+        axiosPublicInstance
+            .post("/api/tmdb/movies/search", payload)
             .then(({ data }) => {
                 setSearchedMovies(data.results);
             })

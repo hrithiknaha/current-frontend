@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 
 import axios from "axios";
 
+import { axiosPrivateInstance } from "../configs/axios";
+
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import Movie from "../components/utils/movie/Movie";
 import Series from "../components/utils/TV/Series";
@@ -15,16 +17,11 @@ const Profile = ({ auth }) => {
     const [user, setUser] = useState();
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/users/${username}`, {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
-            .then(({ data }) => {
-                setUser(data);
-                setIsLoading(false);
-            });
+        const axiosInstance = axiosPrivateInstance(auth);
+        axiosInstance.get(`/api/users/${username}`).then(({ data }) => {
+            setUser(data);
+            setIsLoading(false);
+        });
     }, [username]);
 
     return (

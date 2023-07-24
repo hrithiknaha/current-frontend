@@ -6,6 +6,8 @@ import MovieStats from "../components/MovieStats";
 import SeriesStats from "../components/SeriesStats";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
+import { axiosPrivateInstance } from "../configs/axios";
+
 const Stats = () => {
     const [series, setSeries] = useState();
     const [movies, setMovies] = useState();
@@ -22,17 +24,12 @@ const Stats = () => {
     };
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/stats`, {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
-            .then(({ data }) => {
-                setSeries(data.series);
-                setMovies(data.movies);
-                setIsLoading(false);
-            });
+        const axiosInstance = axiosPrivateInstance(auth);
+        axiosInstance.get(`/api/stats`).then(({ data }) => {
+            setSeries(data.series);
+            setMovies(data.movies);
+            setIsLoading(false);
+        });
     }, []);
     return (
         <div className="min-h-screen bg-gray-100">

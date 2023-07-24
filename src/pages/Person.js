@@ -8,6 +8,8 @@ import TextWithMultipleParagraphs from "../components/configs/TextWithMultiplePa
 import TMDBPostMoviesList from "../components/lists/TMDBPostMoviesList";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
+import { axiosPublicInstance } from "../configs/axios";
+
 const Person = () => {
     const { personId } = useParams();
 
@@ -15,8 +17,8 @@ const Person = () => {
     const [person, setPerson] = useState();
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/tmdb/person/${personId}`)
+        axiosPublicInstance
+            .get(`/api/tmdb/person/${personId}`)
             .then(({ data }) => {
                 console.log(data);
                 setIsLoading(false);

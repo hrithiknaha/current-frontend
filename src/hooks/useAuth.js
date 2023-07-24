@@ -6,6 +6,8 @@ import { toast } from "react-hot-toast";
 import { REFRESH_USER } from "../redux/actions/types";
 import { retrieveAccessToken, isTokenExpired } from "../configs/helpers";
 
+import { axiosPublicInstance } from "../configs/axios";
+
 const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState();
 
@@ -18,8 +20,8 @@ const useAuth = () => {
         if (auth?.token) {
             if (isTokenExpired(exp)) {
                 console.log("Token is invalid. Refreshing token");
-                axios
-                    .get("http://localhost:5001/api/auth/refresh", { withCredentials: true })
+                axiosPublicInstance
+                    .get("/api/auth/refresh", { withCredentials: true })
                     .then(({ data }) => {
                         localStorage.setItem("token", data.accessToken);
                         setIsAuthenticated(true);

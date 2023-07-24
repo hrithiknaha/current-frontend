@@ -10,6 +10,8 @@ import NotFound from "../components/configs/NotFound";
 import Season from "../components/utils/TV/Season";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
+import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+
 const Series = () => {
     const { tvId } = useParams();
 
@@ -24,8 +26,9 @@ const Series = () => {
     const auth = useSelector((state) => state.auth);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5001/api/tmdb/series/${tvId}`)
+        const axiosInstance = axiosPrivateInstance(auth);
+        axiosPublicInstance
+            .get(`/api/tmdb/series/${tvId}`)
             .then((res) => {
                 setSeries(res.data);
                 setIsLoading(false);
@@ -35,24 +38,16 @@ const Series = () => {
                 console.log(err);
             });
 
-        axios
-            .get(`http://localhost:5001/api/series/${tvId}/episodes`, {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
+        axiosInstance
+            .get(`/api/series/${tvId}/episodes`)
             .then(({ data }) => {
                 setWatchedEpisodes(data);
                 setIsDetailsLoading(false);
             })
             .catch((err) => console.log(err));
 
-        axios
-            .get(`http://localhost:5001/api/series/${tvId}`, {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
+        axiosInstance
+            .get(`/api/series/${tvId}`)
             .then(({ data }) => {
                 if (data?.series_id) setHasSeriesBeenAdded(true);
             })
@@ -63,13 +58,10 @@ const Series = () => {
     }, [tvId]);
 
     const handleSubmit = () => {
+        const axiosInstance = axiosPrivateInstance(auth);
         const payload = { series_id: tvId };
-        axios
-            .post(`http://localhost:5001/api/series/add`, payload, {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`,
-                },
-            })
+        axiosInstance
+            .post(`/api/series/add`, payload)
             .then(() => {
                 setHasSeriesBeenAdded(true);
             })
