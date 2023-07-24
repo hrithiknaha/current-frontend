@@ -14,6 +14,7 @@ import Episode from "./pages/Episode";
 import Layout from "./components/configs/Layout";
 import PrivateRoute from "./components/configs/PrivateRoute";
 import Person from "./pages/Person";
+import Stats from "./pages/Stats";
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                         <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
                         <Route path="person/:personId" element={<Person />} />
                         <Route path="profile/:username" element={<Profile />} />
+                        <Route path="profile/:username/stats" element={<Stats />} />
                     </Route>
                 </Route>
             </Routes>
