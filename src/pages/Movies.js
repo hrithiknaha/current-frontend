@@ -32,7 +32,7 @@ function Movies() {
     return (
         <div className="min-h-screen  bg-gray-100">
             <div className="container mx-auto">
-                <div className="text-4xl pt-16">Search Movies</div>
+                <div className="text-2xl pt-16">Search Movies</div>
                 <SearchMovie handleSubmit={handleSubmit} setSearchQuery={setSearchQuery} />
 
                 {searchedMovies && <TMDBMovieList movies={searchedMovies} />}

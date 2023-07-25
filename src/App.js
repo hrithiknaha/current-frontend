@@ -15,7 +15,7 @@ import Layout from "./components/configs/Layout";
 import PrivateRoute from "./components/configs/PrivateRoute";
 import Person from "./pages/Person";
 import Stats from "./pages/Stats";
-import MovieList from "./components/utils/movie/MovieTable";
+import MovieList from "./pages/MovieList";
 
 function App() {
     return (
