@@ -78,7 +78,11 @@ const Series = () => {
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">{series.name} </h1>
 
-                        {!hasSeriesBeenAdded && (
+                        {hasSeriesBeenAdded ? (
+                            <div className="text-2xl text-blue-500">
+                                {((watchedEpisodes.length / series.number_of_episodes) * 100).toFixed(2)}%
+                            </div>
+                        ) : (
                             <button
                                 className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
                                 onClick={handleSubmit}
