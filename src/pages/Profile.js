@@ -40,7 +40,11 @@ const Profile = ({ auth }) => {
 
                     <div className="mt-8">
                         <div className="my-4">
-                            <h3 className="text-2xl my-2">Movies</h3>
+                            <h3 className="text-2xl my-2">
+                                <Link to="/movies/list" className="underline text-blue-600">
+                                    Movies
+                                </Link>
+                            </h3>
                             {user.movies?.length != 0 ? (
                                 <div className="flex flex-wrap gap-4">
                                     {user.movies.map((movie) => {
@@ -53,7 +57,11 @@ const Profile = ({ auth }) => {
                         </div>
 
                         <div className="my-8">
-                            <h3 className="text-2xl my-2">Series</h3>
+                            <h3 className="text-2xl my-2">
+                                <Link to="/tv/list" className="underline text-blue-600">
+                                    Series
+                                </Link>
+                            </h3>
                             {user.series?.length != 0 ? (
                                 <div className="flex flex-wrap gap-4">
                                     {user.series.map((series) => {
