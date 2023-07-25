@@ -32,3 +32,18 @@ export const compileGender = (key) => {
             break;
     }
 };
+
+export const seasonCompleted = (season, watchedEpisodes) => {
+    const seasonEpisodes = watchedEpisodes.filter((episode) => episode.season_number === season.season_number);
+
+    const episodesLength = seasonEpisodes.length;
+    return episodesLength === season.episode_count;
+};
+
+export const seasonVerdict = (rating) => {
+    if (rating >= 9) return "Smashing!";
+    else if (rating >= 7 && rating < 9) return "Good One";
+    else if (rating >= 5 && rating < 7) return "It was alright";
+    else if (rating >= 3 && rating < 5) return "Yuck!";
+    else if (rating < 3) return "Should not have been made!";
+};

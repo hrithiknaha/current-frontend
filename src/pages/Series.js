@@ -3,14 +3,18 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/configs/NotFound";
-import Season from "../components/utils/TV/Season";
+import SeasonRow from "../components/utils/TV/SeasonRow";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+import CompletedSeasonRow from "../components/utils/TV/CompletedSeasonRow";
+
+import { seasonCompleted } from "../configs/helpers";
 
 const Series = () => {
     const { tvId } = useParams();
@@ -131,8 +135,32 @@ const Series = () => {
                             {series.seasons
                                 .filter((allSeasons) => allSeasons.name != "Specials")
                                 .map((season) => {
-                                    return <Season season={season} tvId={tvId} watchedEpisodes={watchedEpisodes} />;
+                                    return (
+                                        <SeasonRow
+                                            season={season}
+                                            tvId={tvId}
+                                            watchedEpisodes={watchedEpisodes}
+                                            key={season.id}
+                                        />
+                                    );
                                 })}
+                        </div>
+                        <div className="my-8 ">
+                            <h1 className="text-2xl">Completed Seasons</h1>
+                            {series.seasons.filter((season) => seasonCompleted(season, watchedEpisodes)).length > 0 ? (
+                                series.seasons
+                                    .filter((season) => seasonCompleted(season, watchedEpisodes))
+                                    .map((completedSeason) => (
+                                        <CompletedSeasonRow
+                                            season={completedSeason}
+                                            tvId={tvId}
+                                            watchedEpisodes={watchedEpisodes}
+                                            key={completedSeason.id}
+                                        />
+                                    ))
+                            ) : (
+                                <p>No completed seasons yet.</p>
+                            )}
                         </div>
                     </div>
 
