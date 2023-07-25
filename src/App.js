@@ -16,6 +16,7 @@ import PrivateRoute from "./components/configs/PrivateRoute";
 import Person from "./pages/Person";
 import Stats from "./pages/Stats";
 import MovieList from "./pages/MovieList";
+import TVList from "./pages/TVList";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                         <Route path="movies/list" element={<MovieList />} />
                         <Route path="movies/:movieId" element={<Movie />} />
                         <Route path="tv" element={<TV />} />
+                        <Route path="tv/list" element={<TVList />} />
                         <Route path="tv/:tvId" element={<Series />} />
                         <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
                         <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
