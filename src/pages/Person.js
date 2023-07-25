@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom";
 import { compileGender } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import TextWithMultipleParagraphs from "../components/configs/TextWithMultipleParagraphs";
-import TMDBPostMoviesList from "../components/lists/TMDBPostMoviesList";
+import TMDBPopularMovieList from "../components/lists/TMDBPopularMovieList";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import { axiosPublicInstance } from "../configs/axios";
+import TMDBPopularTVList from "../components/lists/TMDBPopularTVList";
 
 const Person = () => {
     const { personId } = useParams();
@@ -74,8 +75,20 @@ const Person = () => {
 
                         <div className="mt-8">
                             <h1 className="text-2xl">Popular Movies</h1>
-                            <TMDBPostMoviesList
-                                movies={person.combined_credits.cast.filter((movie) => movie.vote_average > 8)}
+                            <TMDBPopularMovieList
+                                movies={person.combined_credits.cast.filter(
+                                    (movie) =>
+                                        movie.media_type === "movie" && movie.vote_average > 8 && movie.vote_count > 500
+                                )}
+                            />
+                        </div>
+                        <div className="mt-8">
+                            <h1 className="text-2xl">Popular Shows</h1>
+                            <TMDBPopularTVList
+                                series={person.combined_credits.cast.filter(
+                                    (serie) =>
+                                        serie.media_type === "tv" && serie.vote_average > 8 && serie.vote_count > 500
+                                )}
                             />
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const defaultImg = "https://t4.ftcdn.net/jpg/02/17/34/67/240_F_217346782_7XpCTt8bLNJqvVAaDZJwvZjm0epQmj6j.jpg";
 
-const TMDBPostMoviesList = ({ movies }) => {
+const TMDBPopularMovieList = ({ movies }) => {
     return (
         <div className="flex flex-wrap gap-4 items-center mt-4">
             {movies.map((movie) => {
@@ -29,4 +29,4 @@ const TMDBPostMoviesList = ({ movies }) => {
     );
 };
 
-export default TMDBPostMoviesList;
+export default TMDBPopularMovieList;
