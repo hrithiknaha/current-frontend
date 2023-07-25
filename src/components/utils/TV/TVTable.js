@@ -76,10 +76,10 @@ const TVTable = ({ watchedSeries }) => {
                 <tbody>
                     {series &&
                         series.map((tv, index) => (
-                            <tr key={tv.movie_id} className={`bg-gray-${index % 2 == 0 ? 50 : 100}`}>
+                            <tr key={tv.series_id} className={`bg-gray-${index % 2 == 0 ? 50 : 100}`}>
                                 <td className="px-6 py-4 whitespace-nowrap ">
                                     <Link
-                                        to={`/series/${tv.movie_id}`}
+                                        to={`/tv/${tv.series_id}`}
                                         className="text-blue-800 hover:underline hover:text-blue-400"
                                     >
                                         {tv.name}
