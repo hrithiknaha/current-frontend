@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosPublicInstance = axios.create({
-    baseURL: "https://current-api.onrender.com/",
+    baseURL: "http://localhost:5001/",
     timeout: 10000,
     headers: {
         "Content-Type": "application/json",
@@ -11,7 +11,7 @@ const axiosPublicInstance = axios.create({
 
 const axiosPrivateInstance = (auth) =>
     axios.create({
-        baseURL: "https://current-api.onrender.com/",
+        baseURL: "http://localhost:5001",
         timeout: 10000,
         headers: {
             "Content-Type": "application/json",
