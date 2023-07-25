@@ -8,7 +8,7 @@ import moment from "moment";
 import { getRatingAsStars } from "../configs/helpers";
 
 import NotFound from "../components/configs/NotFound";
-import Episode from "../components/utils/TV/Episode";
+import EpisodeRow from "../components/utils/TV/EpisodeRow";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
@@ -70,7 +70,7 @@ const Season = () => {
                         {seasonEpisodes.episodes
                             .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
                             .map((episode) => {
-                                return <Episode episode={episode} watchedEpisodes={watchedEpisodes} />;
+                                return <EpisodeRow episode={episode} watchedEpisodes={watchedEpisodes} />;
                             })}
                     </div>
 
