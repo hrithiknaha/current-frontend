@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Episode = ({ episode, watchedEpisodes }) => {
+const EpisodeRow = ({ episode, watchedEpisodes }) => {
     return (
         <Link to={`episode/${episode.episode_number}`}>
             <div key={episode.id} className="bg-white rounded-lg shadow-md p-4 mt-3">
@@ -26,4 +26,4 @@ const Episode = ({ episode, watchedEpisodes }) => {
     );
 };
 
-export default Episode;
+export default EpisodeRow;
