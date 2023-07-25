@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-import MovieStats from "../components/MovieStats";
-import SeriesStats from "../components/SeriesStats";
+import MovieStats from "../components/utils/movie/MovieStats";
+import SeriesStats from "../components/utils/TV/SeriesStats";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import { axiosPrivateInstance } from "../configs/axios";

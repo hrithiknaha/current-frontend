@@ -15,6 +15,7 @@ import Layout from "./components/configs/Layout";
 import PrivateRoute from "./components/configs/PrivateRoute";
 import Person from "./pages/Person";
 import Stats from "./pages/Stats";
+import MovieList from "./components/utils/movie/MovieTable";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                     <Route path="register" element={<Register />} />
                     <Route path="" element={<PrivateRoute />}>
                         <Route path="movies" element={<Movies />} />
+                        <Route path="movies/list" element={<MovieList />} />
                         <Route path="movies/:movieId" element={<Movie />} />
                         <Route path="tv" element={<TV />} />
                         <Route path="tv/:tvId" element={<Series />} />

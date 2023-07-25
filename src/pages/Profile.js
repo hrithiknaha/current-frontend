@@ -7,7 +7,7 @@ import axios from "axios";
 import { axiosPrivateInstance } from "../configs/axios";
 
 import LoadingSpinner from "../components/configs/LoadingSpinner";
-import Movie from "../components/utils/movie/Movie";
+import MovieCard from "../components/utils/movie/MovieCard";
 import Series from "../components/utils/TV/Series";
 
 const Profile = ({ auth }) => {
@@ -44,7 +44,7 @@ const Profile = ({ auth }) => {
                             {user.movies?.length != 0 ? (
                                 <div className="flex flex-wrap gap-4">
                                     {user.movies.map((movie) => {
-                                        return <Movie movie={movie} />;
+                                        return <MovieCard movie={movie} />;
                                     })}
                                 </div>
                             ) : (
