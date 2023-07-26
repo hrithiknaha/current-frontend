@@ -2,7 +2,7 @@ import React from "react";
 
 const SearchTV = ({ setSearchQuery, handleSubmit }) => {
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col w-96 mt-8">
+        <form onSubmit={handleSubmit} className="flex flex-col w-96 mt-4">
             <input
                 type="text"
                 name="search-tv"
