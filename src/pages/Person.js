@@ -87,7 +87,7 @@ const Person = () => {
                             <TMDBPopularTVList
                                 series={person.combined_credits.cast.filter(
                                     (serie) =>
-                                        serie.media_type === "tv" && serie.vote_average > 8 && serie.vote_count > 500
+                                        serie.media_type === "tv" && serie.vote_average > 7 && serie.vote_count > 500
                                 )}
                             />
                         </div>
