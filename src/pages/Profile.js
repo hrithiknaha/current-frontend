@@ -18,10 +18,13 @@ const Profile = ({ auth }) => {
 
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
-        axiosInstance.get(`/api/users/${username}`).then(({ data }) => {
-            setUser(data);
-            setIsLoading(false);
-        });
+        axiosInstance
+            .get(`/api/users/${username}`)
+            .then(({ data }) => {
+                setUser(data);
+                setIsLoading(false);
+            })
+            .catch((err) => console.log(err));
     }, [username]);
 
     return (
