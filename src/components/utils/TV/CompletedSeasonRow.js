@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { seasonVerdict } from "../../../configs/helpers";
+import { getVerdict } from "../../../configs/helpers";
 
 const CompletedSeasonRow = ({ season, tvId, watchedEpisodes }) => {
-    const [seasonEpisodes, setSeasonEpisodes] = useState(
-        watchedEpisodes.filter((e) => e.season_number === season.season_number)
-    );
+    const [seasonEpisodes] = useState(watchedEpisodes.filter((e) => e.season_number === season.season_number));
 
     const [averageRating, setAverageRating] = useState(0);
 
@@ -32,7 +30,7 @@ const CompletedSeasonRow = ({ season, tvId, watchedEpisodes }) => {
                     </div>
                     <div>
                         <p className="text-gray-600">Verdict:</p>
-                        <p className="text-2xl font-semibold">{seasonVerdict(averageRating)}</p>
+                        <p className="text-2xl font-semibold">{getVerdict(averageRating)}</p>
                     </div>
                 </div>
             </div>

@@ -40,7 +40,7 @@ export const seasonCompleted = (season, watchedEpisodes) => {
     return episodesLength === season.episode_count;
 };
 
-export const seasonVerdict = (rating) => {
+export const getVerdict = (rating) => {
     if (rating >= 9) return "Smashing!";
     else if (rating >= 7 && rating < 9) return "Good One";
     else if (rating >= 5 && rating < 7) return "It was alright";

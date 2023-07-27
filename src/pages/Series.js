@@ -133,7 +133,9 @@ const Series = () => {
                         <div className="my-8">
                             <h1 className="text-2xl">Seasons</h1>
                             {series.seasons
-                                .filter((allSeasons) => allSeasons.name != "Specials")
+                                .filter(
+                                    (season) => season.name != "Specials" && !seasonCompleted(season, watchedEpisodes)
+                                )
                                 .map((season) => {
                                     return (
                                         <SeasonRow
