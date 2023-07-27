@@ -30,6 +30,8 @@ const Episode = () => {
     const [episodeDetails, setEpisodeDetails] = useState();
     const [hasRated, setHasRated] = useState(false);
 
+    const [isSending, setIsSending] = useState(false);
+
     useEffect(() => {
         axiosPublicInstance
             .get(`/api/tmdb/series/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`)
@@ -52,6 +54,7 @@ const Episode = () => {
                     setEpisodeDetails(data);
                     setIsDetailsLoading(false);
                     if (data?.rating) setHasRated(true);
+                    setIsSending(false);
                 })
                 .catch((error) => {
                     setIsDetailsLoading(false);
@@ -61,6 +64,7 @@ const Episode = () => {
 
     const handleWatch = (e) => {
         e.preventDefault();
+        setIsSending(true);
         const axiosInstance = axiosPrivateInstance(auth);
 
         const date_timestamp = new Date();
@@ -112,6 +116,10 @@ const Episode = () => {
                             <p>Metadata</p>
                             {episodeDetails.rating} &#x2022; {moment(episodeDetails.date_watched).format("YYYY-MM-DD")}
                         </div>
+                    ) : isSending ? (
+                        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed">
+                            In Progress
+                        </button>
                     ) : (
                         <RateEpisodeForm setRating={setRating} handleWatch={handleWatch} />
                     )}

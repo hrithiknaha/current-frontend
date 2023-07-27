@@ -8,6 +8,7 @@ import moment from "moment";
 import RateMovieForm from "../components/utils/movie/RateMovieForm";
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
+import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
 import { getRatingAsStars } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
@@ -31,8 +32,9 @@ const Movie = () => {
     const [movieDetails, setMovieDetails] = useState();
     const [hasRated, setHasRated] = useState(false);
 
+    const [isSending, setIsSending] = useState(false);
+
     useEffect(() => {
-        const axiosInstance = axiosPrivateInstance(auth);
         axiosPublicInstance
             .get(`/api/tmdb/movies/${movieId}`)
             .then(({ data }) => {
@@ -50,6 +52,7 @@ const Movie = () => {
                 setIsDetailsLoading(false);
                 setMovieDetails(data);
                 setHasRated(true);
+                setIsSending(false);
             })
             .catch((err) => {
                 setIsDetailsLoading(false);
@@ -59,6 +62,7 @@ const Movie = () => {
 
     const submitMovie = (e) => {
         e.preventDefault();
+        setIsSending(true);
         const axiosInstance = axiosPrivateInstance(auth);
 
         const payload = {
@@ -98,13 +102,17 @@ const Movie = () => {
                     <p className="text-gray-700 text-sm mb-4">{movie.overview}</p>
 
                     {isDetailsLoading ? (
-                        <p>Loading..</p>
+                        <SmallLoadingSpinner />
                     ) : hasRated && movieDetails?.rating ? (
                         <div className="flex items-center text-gray-600 text-sm mb-4">
                             {getRatingAsStars(movieDetails.rating)} &#x2022;{" "}
                             {moment(movieDetails.date_watched).format("YYYY-MM-DD")} &#x2022;{" "}
                             {movieDetails.theatre ? <p> Watched in theatre</p> : <p> Watched elsewhere</p>}
                         </div>
+                    ) : isSending ? (
+                        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed">
+                            In Progress
+                        </button>
                     ) : (
                         <RateMovieForm
                             submitMovie={submitMovie}
