@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { compileGender } from "../configs/helpers";
+import { compileGender, compareDatesDescending } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import TextWithMultipleParagraphs from "../components/configs/TextWithMultipleParagraphs";
 import TMDBPopularMovieList from "../components/lists/TMDBPopularMovieList";
@@ -10,20 +10,22 @@ import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import { axiosPublicInstance } from "../configs/axios";
 import TMDBPopularTVList from "../components/lists/TMDBPopularTVList";
+import TMDBPersonFilmography from "../components/lists/TMDBPersonFilmography";
 
 const Person = () => {
     const { personId } = useParams();
 
     const [isLoading, setIsLoading] = useState(true);
     const [person, setPerson] = useState();
+    const [filmography, setFilmography] = useState();
 
     useEffect(() => {
         axiosPublicInstance
             .get(`/api/tmdb/person/${personId}`)
             .then(({ data }) => {
-                console.log(data);
                 setIsLoading(false);
                 setPerson(data);
+                setFilmography(data.combined_credits.cast.sort(compareDatesDescending));
             })
             .catch((error) => {
                 console.log(error);
@@ -73,24 +75,21 @@ const Person = () => {
                             </div>
                         </div>
 
-                        <div className="mt-8">
-                            <h1 className="text-2xl">Popular Movies</h1>
-                            <TMDBPopularMovieList
-                                movies={person.combined_credits.cast.filter(
-                                    (movie) =>
-                                        movie.media_type === "movie" && movie.vote_average > 8 && movie.vote_count > 500
-                                )}
-                            />
-                        </div>
-                        <div className="mt-8">
-                            <h1 className="text-2xl">Popular Shows</h1>
-                            <TMDBPopularTVList
-                                series={person.combined_credits.cast.filter(
-                                    (serie) =>
-                                        serie.media_type === "tv" && serie.vote_average > 7 && serie.vote_count > 500
-                                )}
-                            />
-                        </div>
+                        <TMDBPopularMovieList
+                            movies={person.combined_credits.cast.filter(
+                                (movie) =>
+                                    movie.media_type === "movie" && movie.vote_average > 7.5 && movie.vote_count > 1000
+                            )}
+                        />
+
+                        <TMDBPopularTVList
+                            series={person.combined_credits.cast.filter(
+                                (serie) =>
+                                    serie.media_type === "tv" && serie.vote_average > 7.5 && serie.vote_count > 250
+                            )}
+                        />
+
+                        <TMDBPersonFilmography filmography={filmography} />
                     </div>
                 </div>
             )}

@@ -21,7 +21,7 @@ const MovieTable = ({ watchedMovies }) => {
         else if (ratingFilter === "8")
             filteredMovies = watchedMovies.filter((movie) => movie.rating >= 8 && movie.rating <= 10);
 
-        const sortedMovies = [...filteredMovies];
+        const sortedMovies = filteredMovies;
 
         if (sort === "recent")
             if (sortDirection === "aesc") sortedMovies.sort((a, b) => (a.date_watched > b.date_watched ? 1 : -1));
@@ -68,7 +68,7 @@ const MovieTable = ({ watchedMovies }) => {
             <table className="w-full whitespace-nowrap">
                 <thead>
                     <tr className="bg-gray-100">
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Movie</th>
+                        <th className="px-6 py-3 text-left font-bold text-gray-700">Title</th>
                         <th className="px-6 py-3 text-left font-bold text-gray-700">Genre</th>
                         <th className="px-6 py-3 text-left font-bold text-gray-700">Rated On</th>
                         <th className="px-6 py-3 text-left font-bold text-gray-700">Rating</th>

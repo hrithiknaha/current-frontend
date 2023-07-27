@@ -47,3 +47,10 @@ export const seasonVerdict = (rating) => {
     else if (rating >= 3 && rating < 5) return "Yuck!";
     else if (rating < 3) return "Should not have been made!";
 };
+
+export const compareDatesDescending = (a, b) => {
+    const dateA = a.media_type === "movie" ? a.release_date : a.first_air_date;
+    const dateB = b.media_type === "movie" ? b.release_date : b.first_air_date;
+
+    return dateB.localeCompare(dateA);
+};
