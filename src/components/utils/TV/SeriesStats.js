@@ -1,5 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Legend, Tooltip, Cell, XAxis, YAxis, Bar, BarChart } from "recharts";
+import StatTable from "../StatTable";
 
 const COLORS = ["#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa"];
 
@@ -104,74 +105,8 @@ const SeriesStats = ({ series, selected }) => {
             </div>
 
             <div className="flex justify-between items-start mt-8">
-                <div class="flex flex-col my-8">
-                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-blue-800">
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                    >
-                                        Production Company
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                    >
-                                        Watches
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                {series.productionCompaniesSeriesDataset.slice(1, 10).map((e) => (
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{e.name}</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{e.count}</div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="flex flex-col my-8">
-                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-blue-800">
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                    >
-                                        Network
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                                    >
-                                        Watches
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                {series.networkSeriesDataset.slice(0, 10).map((e) => (
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{e.name}</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{e.count}</div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <StatTable dataset={series.productionCompaniesSeriesDataset} header="Production Company" />
+                <StatTable dataset={series.networkSeriesDataset} header="Network Company" />
             </div>
         </div>
     );
