@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function TMDBMovieList({ movies }) {
     return (
         <div className="mt-8">
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-4">
                 {movies.map((movie) => {
                     return (
                         <Link
