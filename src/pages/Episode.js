@@ -11,6 +11,7 @@ import { toast } from "react-hot-toast";
 import NotFound from "../components/configs/NotFound";
 import RateEpisodeForm from "../components/utils/TV/RateEpisodeForm";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
+import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 
@@ -94,7 +95,9 @@ const Episode = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
-                    <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+                    <div className="flex justify-between items-center">
+                        <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+                    </div>
                     <div className="flex items-center text-gray-600 text-sm mb-1">
                         {moment(tmdbEpisode.air_date).format("YYYY-MM-DD")} &#x2022; {tmdbEpisode.runtime} min
                     </div>
@@ -103,7 +106,7 @@ const Episode = () => {
                     <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
 
                     {isDetailsLoading ? (
-                        <p>Loading..</p>
+                        <SmallLoadingSpinner />
                     ) : hasRated && episodeDetails?.rating ? (
                         <div className="text-gray-600 text-sm mb-1">
                             <p>Metadata</p>

@@ -70,7 +70,7 @@ const Season = () => {
                         {seasonEpisodes.episodes
                             .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
                             .map((episode) => {
-                                return <EpisodeRow episode={episode} watchedEpisodes={watchedEpisodes} />;
+                                return <EpisodeRow episode={episode} />;
                             })}
                     </div>
 
