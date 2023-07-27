@@ -11,6 +11,7 @@ import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 import WatchedEpisodeRow from "../components/utils/TV/WatchedEpisodeRow";
+import { getAverageEpisodesRating } from "../configs/helpers";
 
 const Season = () => {
     const { tvId, seasonNumber } = useParams();
@@ -52,10 +53,7 @@ const Season = () => {
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">{seasonEpisodes.name}</h1>
                         <div className="text-2xl text-blue-500">
-                            {(
-                                watchedEpisodes.map((e) => e.rating).reduce((acc, co) => acc + co, 0) /
-                                seasonEpisodes.episodes.length
-                            ).toFixed(2)}
+                            {getAverageEpisodesRating(watchedEpisodes, seasonEpisodes)}
                         </div>
                     </div>
 

@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { getVerdict } from "../../../configs/helpers";
+import { getVerdict, getAverageEpisodesRatingOneSeason } from "../../../configs/helpers";
 
 const CompletedSeasonRow = ({ season, tvId, watchedEpisodes }) => {
-    const [seasonEpisodes] = useState(watchedEpisodes.filter((e) => e.season_number === season.season_number));
-
-    const [averageRating, setAverageRating] = useState(0);
-
-    useEffect(() => {
-        const totalRating = seasonEpisodes.map((e) => e.rating).reduce((acc, co) => acc + co, 0);
-        const averageRating = (totalRating / seasonEpisodes.length).toFixed(2);
-
-        setAverageRating(averageRating);
-    }, []);
-
     return (
         <Link to={`/tv/${tvId}/season/${season.season_number}`}>
             <div className="bg-white rounded-lg shadow-md p-4 mt-3">
@@ -26,11 +15,15 @@ const CompletedSeasonRow = ({ season, tvId, watchedEpisodes }) => {
                     </div>
                     <div>
                         <p className="text-gray-600">Average Rating:</p>
-                        <p className="text-2xl font-semibold">{averageRating}</p>
+                        <p className="text-2xl font-semibold">
+                            {getAverageEpisodesRatingOneSeason(watchedEpisodes, season)}
+                        </p>
                     </div>
                     <div>
                         <p className="text-gray-600">Verdict:</p>
-                        <p className="text-2xl font-semibold">{getVerdict(averageRating)}</p>
+                        <p className="text-2xl font-semibold">
+                            {getVerdict(getAverageEpisodesRatingOneSeason(watchedEpisodes, season))}
+                        </p>
                     </div>
                 </div>
             </div>

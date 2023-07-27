@@ -54,3 +54,26 @@ export const compareDatesDescending = (a, b) => {
 
     return dateB.localeCompare(dateA);
 };
+
+export const getAverageEpisodesRating = (watchedEpisodes, seasonEpisodes) => {
+    const totalRating = watchedEpisodes.map((e) => e.rating).reduce((acc, co) => acc + co, 0);
+    const totalEpisodes = seasonEpisodes.episodes.length;
+
+    const averageRating = (totalRating / totalEpisodes).toFixed(2);
+
+    return averageRating;
+};
+
+export const getAverageEpisodesRatingOneSeason = (watchedEpisodes, season) => {
+    const totalRating = watchedEpisodes
+        .filter((e) => e.season_number === season.season_number)
+        .map((e) => e.rating)
+        .reduce((acc, co) => acc + co, 0);
+    const totalEpisodes = season.episode_count;
+
+    console.log(totalRating);
+
+    const averageRating = (totalRating / totalEpisodes).toFixed(2);
+
+    return averageRating;
+};
