@@ -23,7 +23,7 @@ export const registerUser = (firstname, lastname, username, password, navigate) 
             type: LOGIN_USER,
             payload: { username, token, exp },
         });
-        navigate("/");
+        navigate(`/profile/${username}`);
     });
     console.log({ firstname, lastname, username, password });
 };
@@ -47,7 +47,7 @@ export const loginUser = (username, password, navigate) => (dispatch) => {
                 type: LOGIN_USER,
                 payload: { username, token, exp },
             });
-            navigate("/");
+            navigate(`/profile/${username}`);
             toast.success("Sweet!");
         })
         .catch((err) => {
@@ -56,7 +56,7 @@ export const loginUser = (username, password, navigate) => (dispatch) => {
         });
 };
 
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (navigate) => (dispatch) => {
     axiosPublicInstance
         .get("/api/auth/logout")
         .then(() => {
@@ -64,6 +64,7 @@ export const logoutUser = () => (dispatch) => {
             dispatch({
                 type: LOGOUT_USER,
             });
+            navigate(`/`);
         })
         .catch((err) => console.log(err));
 };

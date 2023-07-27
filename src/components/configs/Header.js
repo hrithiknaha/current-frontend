@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { logoutUser } from "../../redux/actions/auth";
 
 const Header = ({ user, logoutUser }) => {
+    const navigate = useNavigate();
+
     const handleLogout = () => {
         console.log("Logging out user.");
-        logoutUser();
+        logoutUser(navigate);
     };
 
     return (
