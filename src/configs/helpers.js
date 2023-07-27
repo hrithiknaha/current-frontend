@@ -71,8 +71,6 @@ export const getAverageEpisodesRatingOneSeason = (watchedEpisodes, season) => {
         .reduce((acc, co) => acc + co, 0);
     const totalEpisodes = season.episode_count;
 
-    console.log(totalRating);
-
     const averageRating = (totalRating / totalEpisodes).toFixed(2);
 
     return averageRating;
