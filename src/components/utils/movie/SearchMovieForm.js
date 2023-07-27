@@ -1,6 +1,6 @@
 import React from "react";
 
-const SearchMovie = ({ handleSubmit, setSearchQuery }) => {
+const SearchMovieForm = ({ handleSubmit, setSearchQuery }) => {
     return (
         <form onSubmit={handleSubmit} className="flex flex-col w-96 mt-4">
             <input
@@ -22,4 +22,4 @@ const SearchMovie = ({ handleSubmit, setSearchQuery }) => {
     );
 };
 
-export default SearchMovie;
+export default SearchMovieForm;

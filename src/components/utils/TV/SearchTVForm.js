@@ -1,6 +1,6 @@
 import React from "react";
 
-const SearchTV = ({ setSearchQuery, handleSubmit }) => {
+const SearchTVForm = ({ setSearchQuery, handleSubmit }) => {
     return (
         <form onSubmit={handleSubmit} className="flex flex-col w-96 mt-4">
             <input
@@ -21,4 +21,4 @@ const SearchTV = ({ setSearchQuery, handleSubmit }) => {
     );
 };
 
-export default SearchTV;
+export default SearchTVForm;

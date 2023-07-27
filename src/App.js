@@ -4,10 +4,10 @@ import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Movies from "./pages/Movies";
+import SearchMovies from "./pages/SearchMovies";
 import Movie from "./pages/Movie";
 import Profile from "./pages/Profile";
-import TV from "./pages/TV";
+import SearchTV from "./pages/SearchTV";
 import Series from "./pages/Series";
 import Season from "./pages/Season";
 import Episode from "./pages/Episode";
@@ -28,10 +28,10 @@ function App() {
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
                     <Route path="" element={<PrivateRoute />}>
-                        <Route path="movies" element={<Movies />} />
+                        <Route path="movies" element={<SearchMovies />} />
                         <Route path="movies/list" element={<MovieList />} />
                         <Route path="movies/:movieId" element={<Movie />} />
-                        <Route path="tv" element={<TV />} />
+                        <Route path="tv" element={<SearchTV />} />
                         <Route path="tv/list" element={<TVList />} />
                         <Route path="tv/:tvId" element={<Series />} />
                         <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
