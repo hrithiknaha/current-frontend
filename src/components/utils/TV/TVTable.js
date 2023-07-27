@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
+import { getGenres } from "../../../configs/helpers";
+
 const TVTable = ({ watchedSeries }) => {
-    const [genreFilter, setGenreFilter] = useState("all");
+    const [genreFilter, setGenreFilter] = useState("All");
     const [sort, setSort] = useState("recent");
     const [sortDirection, setSortDirection] = useState("desc");
 
@@ -12,13 +14,10 @@ const TVTable = ({ watchedSeries }) => {
     useEffect(() => {
         let filteredSeries = [];
 
-        if (genreFilter === "all") filteredSeries = watchedSeries;
-        else if (genreFilter === "Crime") filteredSeries = watchedSeries.filter((tv) => tv.genres.includes("Crime"));
-        else if (genreFilter === "Comedy") filteredSeries = watchedSeries.filter((tv) => tv.genres.includes("Comedy"));
-        else if (genreFilter === "Drama") filteredSeries = watchedSeries.filter((tv) => tv.genres.includes("Drama"));
-        else if (genreFilter === "Action") filteredSeries = watchedSeries.filter((tv) => tv.genres.includes("Action"));
+        if (genreFilter === "All") filteredSeries = watchedSeries;
+        else filteredSeries = watchedSeries.filter((tv) => tv.genres.includes(genreFilter));
 
-        const sortedSeries = [...filteredSeries];
+        const sortedSeries = filteredSeries;
 
         if (sort === "recent")
             if (sortDirection === "aesc") sortedSeries.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
@@ -35,6 +34,7 @@ const TVTable = ({ watchedSeries }) => {
         if (sortDirection === "desc") setSortDirection("aesc");
         else setSortDirection("desc");
     };
+
     return (
         <div>
             <div className="flex items-center space-x-4 justify-end mb-8">
@@ -44,11 +44,10 @@ const TVTable = ({ watchedSeries }) => {
                         onChange={(e) => setGenreFilter(e.target.value)}
                         className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500"
                     >
-                        <option value="all">All</option>
-                        <option value="Crime">Crime</option>
-                        <option value="Drama">Drama</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Action">Action</option>
+                        <option value="All">All</option>
+                        {getGenres(watchedSeries).map((genre) => (
+                            <option value={genre}>{genre}</option>
+                        ))}
                     </select>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -63,7 +62,7 @@ const TVTable = ({ watchedSeries }) => {
                     <button onClick={handleSortDirection}>{sortDirection === "desc" ? "⬇️" : "⬆️"}</button>
                 </div>
             </div>
-            <div class="bg-white shadow-md rounded my-6">
+            <div className="bg-white shadow-md rounded my-6">
                 <table className="w-full whitespace-nowrap">
                     <thead>
                         <tr className="bg-gray-100">

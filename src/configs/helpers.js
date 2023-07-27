@@ -75,3 +75,15 @@ export const getAverageEpisodesRatingForOneSeason = (watchedEpisodes, season) =>
 
     return averageRating;
 };
+
+export const getGenres = (series) => {
+    const uniqueGenres = new Set();
+
+    series.forEach((show) => {
+        show.genres.forEach((genre) => {
+            uniqueGenres.add(genre);
+        });
+    });
+
+    return Array.from(uniqueGenres);
+};
