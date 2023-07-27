@@ -12,7 +12,7 @@ const TMDBPopularTVList = ({ series }) => {
                     return (
                         <Link
                             key={serie.id}
-                            to={`/series/${serie.id}`}
+                            to={`/tv/${serie.id}`}
                             className="bg-white shadow-md rounded-lg overflow-hidden w-40"
                         >
                             <img
