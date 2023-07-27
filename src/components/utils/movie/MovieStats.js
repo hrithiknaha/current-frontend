@@ -89,7 +89,7 @@ const MovieStats = ({ movies, selected }) => {
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                {movies.castMovieDataset.map((e) => (
+                                {movies.castMovieDataset.slice(0, 10).map((e) => (
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{e.name}</div>
@@ -123,7 +123,7 @@ const MovieStats = ({ movies, selected }) => {
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                {movies.directorMovieDataset.map((e) => (
+                                {movies.directorMovieDataset.slice(0, 10).map((e) => (
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{e.name}</div>
@@ -157,7 +157,7 @@ const MovieStats = ({ movies, selected }) => {
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                {movies.productionCompaniesMovieDataset.map((e) => (
+                                {movies.productionCompaniesMovieDataset.slice(0, 10).map((e) => (
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{e.name}</div>

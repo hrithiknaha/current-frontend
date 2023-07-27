@@ -124,7 +124,7 @@ const SeriesStats = ({ series, selected }) => {
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                {series.productionCompaniesSeriesDataset.map((e) => (
+                                {series.productionCompaniesSeriesDataset.slice(1, 10).map((e) => (
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{e.name}</div>
@@ -158,7 +158,7 @@ const SeriesStats = ({ series, selected }) => {
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                {series.networkSeriesDataset.map((e) => (
+                                {series.networkSeriesDataset.slice(0, 10).map((e) => (
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{e.name}</div>
