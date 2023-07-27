@@ -87,3 +87,18 @@ export const getGenres = (series) => {
 
     return Array.from(uniqueGenres);
 };
+
+export const convertMinutesToMonthsDaysHours = (minutes) => {
+    const minutesInDay = 24 * 60;
+    const minutesInMonth = 30 * minutesInDay;
+
+    const months = Math.floor(minutes / minutesInMonth);
+    const remainingMinutes = minutes % minutesInMonth;
+
+    const days = Math.floor(remainingMinutes / minutesInDay);
+    const remainingMinutesInDay = remainingMinutes % minutesInDay;
+
+    const hours = Math.floor(remainingMinutesInDay / 60);
+
+    return `${months}M ${days}D ${hours}H`;
+};

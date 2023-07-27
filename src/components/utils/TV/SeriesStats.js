@@ -1,6 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Legend, Tooltip, Cell, XAxis, YAxis, Bar, BarChart } from "recharts";
 import StatTable from "../StatTable";
+import { convertMinutesToMonthsDaysHours } from "../../../configs/helpers";
 
 const COLORS = ["#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa"];
 
@@ -10,7 +11,9 @@ const SeriesStats = ({ series, selected }) => {
             <div className="flex flex-wrap gap-6 mt-2 justify-center">
                 <div className="bg-white shadow-md rounded-lg p-6 w-60">
                     <h2 className="text-xl font-semibold mb-4">{selected} Runtime</h2>
-                    <p className="text-3xl font-bold text-blue-500">{series.totalWatchedRuntime} hrs</p>
+                    <p className="text-3xl font-bold text-blue-500">
+                        {convertMinutesToMonthsDaysHours(series.totalWatchedRuntime)}
+                    </p>
                 </div>
                 <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
                     <h2 className="text-xl font-semibold mb-4">{selected} Watched</h2>
