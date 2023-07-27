@@ -64,7 +64,7 @@ export const getAverageEpisodesRating = (watchedEpisodes, seasonEpisodes) => {
     return averageRating;
 };
 
-export const getAverageEpisodesRatingOneSeason = (watchedEpisodes, season) => {
+export const getAverageEpisodesRatingForOneSeason = (watchedEpisodes, season) => {
     const totalRating = watchedEpisodes
         .filter((e) => e.season_number === season.season_number)
         .map((e) => e.rating)

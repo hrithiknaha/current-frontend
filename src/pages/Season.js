@@ -52,8 +52,11 @@ const Season = () => {
                 <div className="container mx-auto py-16">
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">{seasonEpisodes.name}</h1>
-                        <div className="text-2xl text-blue-500">
-                            {getAverageEpisodesRating(watchedEpisodes, seasonEpisodes)}
+                        <div className="flex gap-4 items-center justify-between text-2xl text-blue-500">
+                            <div className="text-2xl text-blue-500">
+                                {getAverageEpisodesRating(watchedEpisodes, seasonEpisodes)}
+                            </div>
+                            <div>{watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins</div>
                         </div>
                     </div>
 

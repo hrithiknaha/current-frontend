@@ -83,8 +83,14 @@ const Series = () => {
                         <h1 className="text-4xl my-1">{series.name} </h1>
 
                         {hasSeriesBeenAdded ? (
-                            <div className="text-2xl text-blue-500">
-                                {((watchedEpisodes.length / series.number_of_episodes) * 100).toFixed(2)}%
+                            <div className="flex gap-4 items-center justify-between text-2xl text-blue-500">
+                                <p>
+                                    {(
+                                        watchedEpisodes.map((e) => e.rating).reduce((acc, co) => acc + co, 0) /
+                                        watchedEpisodes.length
+                                    ).toFixed(2)}
+                                </p>
+                                <p>{watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins</p>
                             </div>
                         ) : (
                             <button
@@ -96,18 +102,30 @@ const Series = () => {
                         )}
                     </div>
 
-                    <div className="flex items-center text-gray-600 text-sm mb-1">
-                        {moment(series.first_air_date).format("YYYY-MM-DD")} &#x2022; {series.episode_run_time} min
-                        &#x2022; {series.genres.map((genre) => genre.name).join(", ")}
+                    <div>
+                        <div className="flex items-center text-gray-600 text-sm mb-1">
+                            {moment(series.first_air_date).format("YYYY-MM-DD")} &#x2022; {series.episode_run_time} min
+                            &#x2022; {series.genres.map((genre) => genre.name).join(", ")}
+                        </div>
+                        <p className="mb-4">
+                            {series.status} &#x2022;
+                            {series.status === "Ended" && <span>{series.last_air_date}</span>}
+                        </p>
                     </div>
 
-                    <p className="mb-4">
-                        {series.status} &#x2022;
-                        {series.status === "Ended" && <span>{series.last_air_date}</span>}
-                    </p>
+                    <div className="h-1 w-full bg-gray-300 mt-4">
+                        <div
+                            style={{ width: `${(watchedEpisodes.length / series.number_of_episodes) * 100}%` }}
+                            className={`h-full ${
+                                watchedEpisodes.length / series.number_of_episodes < 70 ? "bg-blue-500" : "bg-green-500"
+                            }`}
+                        ></div>
+                    </div>
 
-                    <h3>Overview</h3>
-                    <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
+                    <div className="mt-4">
+                        <h3>Overview</h3>
+                        <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
+                    </div>
 
                     <div>
                         <div className="bg-white rounded-lg shadow-md p-4">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { getVerdict, getAverageEpisodesRatingOneSeason } from "../../../configs/helpers";
+import { getVerdict, getAverageEpisodesRatingForOneSeason } from "../../../configs/helpers";
 
 const CompletedSeasonRow = ({ season, tvId, watchedEpisodes }) => {
     return (
@@ -16,13 +16,13 @@ const CompletedSeasonRow = ({ season, tvId, watchedEpisodes }) => {
                     <div>
                         <p className="text-gray-600">Average Rating:</p>
                         <p className="text-2xl font-semibold">
-                            {getAverageEpisodesRatingOneSeason(watchedEpisodes, season)}
+                            {getAverageEpisodesRatingForOneSeason(watchedEpisodes, season)}
                         </p>
                     </div>
                     <div>
                         <p className="text-gray-600">Verdict:</p>
                         <p className="text-2xl font-semibold">
-                            {getVerdict(getAverageEpisodesRatingOneSeason(watchedEpisodes, season))}
+                            {getVerdict(getAverageEpisodesRatingForOneSeason(watchedEpisodes, season))}
                         </p>
                     </div>
                 </div>
