@@ -65,37 +65,39 @@ const MovieTable = ({ watchedMovies }) => {
                     <button onClick={handleSortDirection}>{sortDirection === "desc" ? "⬇️" : "⬆️"}</button>
                 </div>
             </div>
-            <table className="w-full whitespace-nowrap">
-                <thead>
-                    <tr className="bg-gray-100">
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Title</th>
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Genre</th>
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Rated On</th>
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {movies &&
-                        movies.map((movie, index) => (
-                            <tr key={movie.movie_id} className={`bg-gray-${index % 2 == 0 ? 50 : 100}`}>
-                                <td className="px-6 py-4 whitespace-nowrap ">
-                                    <Link
-                                        to={`/movies/${movie.movie_id}`}
-                                        className="text-blue-800 hover:underline hover:text-blue-400"
-                                    >
-                                        {movie.title}
-                                    </Link>
-                                </td>
+            <div class="bg-white shadow-md rounded my-6">
+                <table className="w-full whitespace-nowrap">
+                    <thead>
+                        <tr className="bg-gray-100">
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Title</th>
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Genre</th>
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Rated On</th>
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {movies &&
+                            movies.map((movie, index) => (
+                                <tr key={movie.movie_id} className={`bg-gray-${index % 2 == 0 ? 50 : 100}`}>
+                                    <td className="px-6 py-4 whitespace-nowrap ">
+                                        <Link
+                                            to={`/movies/${movie.movie_id}`}
+                                            className="text-blue-800 hover:underline hover:text-blue-400"
+                                        >
+                                            {movie.title}
+                                        </Link>
+                                    </td>
 
-                                <td className="px-6 py-4 whitespace-nowrap">{movie.genres.join(", ")}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    {moment(movie.date_watched).format("DD-MM-YYYY")}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">{movie.rating}</td>
-                            </tr>
-                        ))}
-                </tbody>
-            </table>
+                                    <td className="px-6 py-4 whitespace-nowrap">{movie.genres.join(", ")}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        {moment(movie.date_watched).format("DD-MM-YYYY")}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{movie.rating}</td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

@@ -63,39 +63,43 @@ const TVTable = ({ watchedSeries }) => {
                     <button onClick={handleSortDirection}>{sortDirection === "desc" ? "⬇️" : "⬆️"}</button>
                 </div>
             </div>
-            <table className="w-full whitespace-nowrap">
-                <thead>
-                    <tr className="bg-gray-100">
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Title</th>
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Genre</th>
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Runtime</th>
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Status</th>
-                        <th className="px-6 py-3 text-left font-bold text-gray-700">Progress</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {series &&
-                        series.map((tv, index) => (
-                            <tr key={tv.series_id} className={`bg-gray-${index % 2 == 0 ? 50 : 100}`}>
-                                <td className="px-6 py-4 whitespace-nowrap ">
-                                    <Link
-                                        to={`/tv/${tv.series_id}`}
-                                        className="text-blue-800 hover:underline hover:text-blue-400"
-                                    >
-                                        {tv.name}
-                                    </Link>
-                                </td>
+            <div class="bg-white shadow-md rounded my-6">
+                <table className="w-full whitespace-nowrap">
+                    <thead>
+                        <tr className="bg-gray-100">
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Title</th>
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Genre</th>
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Runtime</th>
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Status</th>
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {series &&
+                            series.map((tv, index) => (
+                                <tr key={tv.series_id} className={`bg-gray-${index % 2 == 0 ? 50 : 100}`}>
+                                    <td className="px-6 py-4 whitespace-nowrap ">
+                                        <Link
+                                            to={`/tv/${tv.series_id}`}
+                                            className="text-blue-800 hover:underline hover:text-blue-400"
+                                        >
+                                            {tv.name}
+                                        </Link>
+                                    </td>
 
-                                <td className="px-6 py-4 whitespace-nowrap">{tv.genres.join(", ")}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{tv.episode_run_time}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{tv.status}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    {tv.episodes.length === tv.number_of_episodes ? "Completed" : "Currently Watching"}
-                                </td>
-                            </tr>
-                        ))}
-                </tbody>
-            </table>
+                                    <td className="px-6 py-4 whitespace-nowrap">{tv.genres.join(", ")}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{tv.episode_run_time}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{tv.status}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        {tv.episodes.length === tv.number_of_episodes
+                                            ? "Completed"
+                                            : "Currently Watching"}
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
