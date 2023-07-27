@@ -22,7 +22,7 @@ const TMDBPopularTVList = ({ series }) => {
                                 onError={(e) => (e.target.src = defaultImg)}
                             />
                             <div className="p-2 text-center">
-                                <h2 className="text-xs font-semibold text-gray-800">{serie.title}</h2>
+                                <h2 className="text-xs font-semibold text-gray-800">{serie.name}</h2>
                             </div>
                         </Link>
                     );
