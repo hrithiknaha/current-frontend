@@ -1,23 +1,50 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { axiosPublicInstance } from "../configs/axios";
+
 function Home() {
+    const [trending, setTrending] = useState();
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        axiosPublicInstance.get("/api/tmdb/trending").then(({ data }) => {
+            setTrending(data.results);
+            setIsLoading(false);
+        });
+    }, []);
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 flex-col">
-            <div className="text-center">
-                <h1 className="mx-auto  text-6xl font-bold mb-4">⚡️ Zap ⚡️</h1>
-                <p className="text-sm bg-gray-200 inline px-4 py-2 my-4 rounded">Don't forget to study too.</p>
-            </div>
-            <div className="flex w-48 justify-evenly my-8">
-                <Link to="movies">
-                    <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
-                        Movies
-                    </button>
-                </Link>
-                <Link to="tv">
-                    <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
-                        TV
-                    </button>
-                </Link>
+        <div className="min-h-screen  bg-gray-100">
+            <div>
+                <div class="bg-gradient-to-r from-purple-500 to-red-500 py-20">
+                    <div class="max-w-6xl mx-auto container">
+                        <h1 class="text-5xl  font-bold text-white mb-4">This is your archive.</h1>
+                        <p class="text-xl  text-white">Do what you want with it!</p>
+                    </div>
+                </div>
+                <div className="container mx-auto pt-8">
+                    <h1 className="text-2xl">Trending this week</h1>
+                    {isLoading ? (
+                        <p>Loading..</p>
+                    ) : (
+                        <div className="flex overflow-x-auto pt-1">
+                            {trending.map((e) => {
+                                return (
+                                    <Link
+                                        key={e.id}
+                                        to={e.media_type === "movie" ? `movies/${e.id}` : `tv/${e.id}`}
+                                        className="rounded-lg shadow-md overflow-hidden flex-none w-40 h-64 m-2"
+                                    >
+                                        <img
+                                            className="w-full h-full object-cover"
+                                            src={`https://image.tmdb.org/t/p/w300/${e.poster_path}`}
+                                            alt={`Image of ${e.title}`}
+                                        />
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
