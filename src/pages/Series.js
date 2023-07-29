@@ -113,7 +113,7 @@ const Series = () => {
                             <span
                                 className={
                                     series.status === "Ended"
-                                        ? "bg-purple-300 inline-block p-1 rounded-lg"
+                                        ? "bg-red-300 inline-block p-1 rounded-lg"
                                         : "bg-green-300 inline-block p-1 rounded-lg"
                                 }
                             >
