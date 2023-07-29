@@ -1,6 +1,6 @@
 import React from "react";
 
-const RateMovieForm = ({ submitMovie, setRating, setDateWatched, setTheatre, theatre }) => {
+const RateMovieForm = ({ submitMovie, setRating }) => {
     return (
         <form onSubmit={submitMovie} className="flex flex-col justify-between w-80">
             <div className="mb-4">
@@ -15,28 +15,6 @@ const RateMovieForm = ({ submitMovie, setRating, setDateWatched, setTheatre, the
                     className="mt-1 px-4 py-2 w-full border rounded"
                     required
                 />
-            </div>
-            <div className="mb-4">
-                <input
-                    type="date"
-                    name="date_watched"
-                    id="date_watched"
-                    placeholder="Date Watched"
-                    onChange={(e) => setDateWatched(e.target.value)}
-                    className="mt-1 px-4 py-2 w-full border rounded"
-                />
-            </div>
-            <div className="mb-4">
-                <input
-                    type="checkbox"
-                    name="theatre"
-                    id="theatre"
-                    checked={theatre}
-                    onChange={(e) => setTheatre(!theatre)}
-                />
-                <label htmlFor="theatre" className="pl-4">
-                    Theatre
-                </label>
             </div>
 
             <button

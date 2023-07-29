@@ -24,8 +24,6 @@ const Movie = () => {
     const [movie, setMovie] = useState();
 
     const [rating, setRating] = useState();
-    const [dateWatched, setDateWatched] = useState();
-    const [theatre, setTheatre] = useState(false);
 
     const [isDetailsLoading, setIsDetailsLoading] = useState(true);
     const [movieDetails, setMovieDetails] = useState();
@@ -64,11 +62,15 @@ const Movie = () => {
         setIsSending(true);
         const axiosInstance = axiosPrivateInstance(auth);
 
+        const date_timestamp = new Date();
+        const day = date_timestamp.getDate();
+        const month = date_timestamp.getMonth() + 1;
+        const year = date_timestamp.getFullYear();
+
         const payload = {
             movie_id: movieId,
             rating,
-            date_watched: dateWatched,
-            theatre,
+            date_watched: `${year}-${month}-${day}`,
         };
 
         axiosInstance
@@ -106,20 +108,13 @@ const Movie = () => {
                         <div className="flex items-center text-gray-600 text-sm mb-4">
                             {getVerdict(movieDetails.rating)} &#x2022;{" "}
                             {moment(movieDetails.date_watched).format("YYYY-MM-DD")} &#x2022;{" "}
-                            {movieDetails.theatre ? <p> Watched in theatre</p> : <p> Watched elsewhere</p>}
                         </div>
                     ) : isSending ? (
                         <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed">
                             In Progress
                         </button>
                     ) : (
-                        <RateMovieForm
-                            submitMovie={submitMovie}
-                            setRating={setRating}
-                            setDateWatched={setDateWatched}
-                            setTheatre={setTheatre}
-                            theatre={theatre}
-                        />
+                        <RateMovieForm submitMovie={submitMovie} setRating={setRating} />
                     )}
 
                     <CastList casts={movie.credits.cast.filter((cast) => cast.order < 10)} />
