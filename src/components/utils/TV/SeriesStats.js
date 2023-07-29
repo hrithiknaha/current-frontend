@@ -28,6 +28,22 @@ const SeriesStats = ({ series, selected }) => {
                     <h2 className="text-xl font-semibold mb-4">Episodes Watched</h2>
                     <p className="text-3xl font-bold text-blue-500">{series.totalEpisode}</p>
                 </div>
+                <div className="bg-white shadow-md rounded-lg p-6 w-60">
+                    <h2 className="text-xl font-semibold mb-4">Episodes Watched Today</h2>
+                    <p className="text-3xl font-bold text-blue-500">{series.totalWatchedToday}</p>
+                </div>
+                <div className="bg-white shadow-md rounded-lg p-6 w-60">
+                    <h2 className="text-xl font-semibold mb-4">Episodes Watched This Week</h2>
+                    <p className="text-3xl font-bold text-blue-500">{series.totalWatchedThisWeek}</p>
+                </div>
+                <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                    <h2 className="text-xl font-semibold mb-4">Episodes Watched This Month</h2>
+                    <p className="text-3xl font-bold text-blue-500">{series.totalWatchedThisMonth}</p>
+                </div>
+                <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                    <h2 className="text-xl font-semibold mb-4">Episodes Watched This Year</h2>
+                    <p className="text-3xl font-bold text-blue-500">{series.totalWatchedThisYear}</p>
+                </div>
             </div>
             <div className="flex gap-4 mt-8 justify-between">
                 <div className="flex flex-col justify-center items-center">

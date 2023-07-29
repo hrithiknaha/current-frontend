@@ -10,7 +10,7 @@ import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
-import { getRatingAsStars } from "../configs/helpers";
+import { getRatingAsStars, getVerdict } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
@@ -105,7 +105,7 @@ const Movie = () => {
                         <SmallLoadingSpinner />
                     ) : hasRated && movieDetails?.rating ? (
                         <div className="flex items-center text-gray-600 text-sm mb-4">
-                            {getRatingAsStars(movieDetails.rating)} &#x2022;{" "}
+                            {getVerdict(movieDetails.rating)} &#x2022;{" "}
                             {moment(movieDetails.date_watched).format("YYYY-MM-DD")} &#x2022;{" "}
                             {movieDetails.theatre ? <p> Watched in theatre</p> : <p> Watched elsewhere</p>}
                         </div>

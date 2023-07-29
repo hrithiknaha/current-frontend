@@ -25,11 +25,14 @@ const Stats = () => {
 
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
-        axiosInstance.get(`/api/stats`).then(({ data }) => {
-            setSeries(data.series);
-            setMovies(data.movies);
-            setIsLoading(false);
-        });
+        axiosInstance
+            .get(`/api/stats`)
+            .then(({ data }) => {
+                setSeries(data.series);
+                setMovies(data.movies);
+                setIsLoading(false);
+            })
+            .catch((err) => console.log(err));
     }, []);
     return (
         <div className="min-h-screen bg-gray-100">

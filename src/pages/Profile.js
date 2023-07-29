@@ -50,9 +50,11 @@ const Profile = ({ auth }) => {
                             </h3>
                             {user.movies?.length != 0 ? (
                                 <div className="flex flex-wrap gap-4">
-                                    {user.movies.map((movie) => {
-                                        return <MovieCard movie={movie} />;
-                                    })}
+                                    {user.movies
+                                        .sort((a, b) => (a.date_watched < b.date_watched ? 1 : -1))
+                                        .map((movie) => {
+                                            return <MovieCard movie={movie} />;
+                                        })}
                                 </div>
                             ) : (
                                 <p>No Movies</p>

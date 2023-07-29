@@ -20,8 +20,24 @@ const MovieStats = ({ movies, selected }) => {
                     <p className="text-3xl font-bold text-blue-500">{movies.avgRatingMovie?.toFixed(2)}</p>
                 </div>
                 <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
-                    <h2 className="text-xl font-semibold mb-4">Movies Watched</h2>
+                    <h2 className="text-xl font-semibold mb-4">{selected} Watched</h2>
                     <p className="text-3xl font-bold text-blue-500">{movies.totalMovies}</p>
+                </div>
+                <div className="bg-white shadow-md rounded-lg p-6 w-60">
+                    <h2 className="text-xl font-semibold mb-4">{selected} Watched Today</h2>
+                    <p className="text-3xl font-bold text-blue-500">{movies.totalWatchedMoviesToday}</p>
+                </div>
+                <div className="bg-white shadow-md rounded-lg p-6 w-60">
+                    <h2 className="text-xl font-semibold mb-4">{selected} Watched This Week</h2>
+                    <p className="text-3xl font-bold text-blue-500">{movies.totalWatchedMoviesThisWeek}</p>
+                </div>
+                <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                    <h2 className="text-xl font-semibold mb-4">{selected} Watched This Month</h2>
+                    <p className="text-3xl font-bold text-blue-500">{movies.totalWatchedMoviesThisMonth}</p>
+                </div>
+                <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
+                    <h2 className="text-xl font-semibold mb-4">{selected} Watched This Year</h2>
+                    <p className="text-3xl font-bold text-blue-500">{movies.totalWatchedMoviesThisYear}</p>
                 </div>
             </div>
             <div className="flex gap-4 my-8 justify-between">
