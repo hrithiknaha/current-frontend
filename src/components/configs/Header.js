@@ -30,7 +30,7 @@ const Header = ({ user, logoutUser }) => {
                     )}
                 </div>
 
-                {user.username && (
+                {user.username ? (
                     <div className="flex justify-between items-center w-48">
                         <Link to={`/profile/${user.username}`} className="text-white text-lg hover:underline">
                             {user.username}
@@ -42,6 +42,13 @@ const Header = ({ user, logoutUser }) => {
                             Logout
                         </button>
                     </div>
+                ) : (
+                    <Link
+                        to={"login"}
+                        className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
+                    >
+                        Login
+                    </Link>
                 )}
             </div>
         </nav>
