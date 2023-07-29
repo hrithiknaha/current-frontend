@@ -1,11 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import TMDBMovieList from "../components/lists/TMDBMovieList";
-import SearchMovie from "../components/utils/movie/SearchMovieForm";
-import MovieCard from "../components/utils/movie/MovieCard";
-import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
-import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+import { axiosPublicInstance } from "../configs/axios";
 import SearchMovieForm from "../components/utils/movie/SearchMovieForm";
 
 function SearchMovies() {

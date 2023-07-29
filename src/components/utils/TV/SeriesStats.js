@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart, Pie, Legend, Tooltip, Cell, XAxis, YAxis, Bar, BarChart } from "recharts";
+import { PieChart, Pie, Legend, Tooltip, Cell, XAxis, Bar, BarChart } from "recharts";
 import StatTable from "../StatTable";
 import { convertMinutesToMonthsDaysHours } from "../../../configs/helpers";
 

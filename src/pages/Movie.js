@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 import { useSelector } from "react-redux";
 import moment from "moment";
@@ -10,7 +9,7 @@ import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
-import { getRatingAsStars, getVerdict } from "../configs/helpers";
+import { getVerdict } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 

@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { Link } from "react-router-dom";
 
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";

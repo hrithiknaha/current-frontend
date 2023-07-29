@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import { toast } from "react-hot-toast";
 
 import { REFRESH_USER } from "../redux/actions/types";

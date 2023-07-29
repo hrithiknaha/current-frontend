@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import moment from "moment";
 
 import NotFound from "../components/configs/NotFound";
 import EpisodeRow from "../components/utils/TV/EpisodeRow";

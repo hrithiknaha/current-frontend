@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
-import { Link, useFetcher } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const MovieTable = ({ watchedMovies }) => {
     const [ratingFilter, setRatingFilter] = useState("0");
@@ -65,7 +65,7 @@ const MovieTable = ({ watchedMovies }) => {
                     <button onClick={handleSortDirection}>{sortDirection === "desc" ? "⬇️" : "⬆️"}</button>
                 </div>
             </div>
-            <div class="bg-white shadow-md rounded my-6">
+            <div className="bg-white shadow-md rounded my-6">
                 <table className="w-full whitespace-nowrap">
                     <thead>
                         <tr className="bg-gray-100">
@@ -78,7 +78,7 @@ const MovieTable = ({ watchedMovies }) => {
                     <tbody>
                         {movies &&
                             movies.map((movie, index) => (
-                                <tr key={movie.movie_id} className={`bg-gray-${index % 2 == 0 ? 50 : 100}`}>
+                                <tr key={movie.movie_id} className={`bg-gray-${index % 2 === 0 ? 50 : 100}`}>
                                     <td className="px-6 py-4 whitespace-nowrap ">
                                         <Link
                                             to={`/movies/${movie.movie_id}`}

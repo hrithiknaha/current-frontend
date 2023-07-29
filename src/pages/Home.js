@@ -16,10 +16,10 @@ function Home() {
     return (
         <div className="min-h-screen  bg-gray-100">
             <div>
-                <div class="bg-gradient-to-r from-blue-500 to-blue-500 py-20">
-                    <div class="mx-auto container">
-                        <h1 class="text-5xl  font-bold text-white mb-4">This is your archive.</h1>
-                        <p class="text-xl  text-white">Do what you want with it!</p>
+                <div className="bg-gradient-to-r from-blue-500 to-blue-500 py-20">
+                    <div className="mx-auto container">
+                        <h1 className="text-5xl  font-bold text-white mb-4">This is your archive.</h1>
+                        <p className="text-xl  text-white">Do what you want with it!</p>
                     </div>
                 </div>
                 <div className="container mx-auto pt-8">
@@ -38,7 +38,7 @@ function Home() {
                                         <img
                                             className="w-full h-full object-cover"
                                             src={`https://image.tmdb.org/t/p/w300/${e.poster_path}`}
-                                            alt={`Image of ${e.title}`}
+                                            alt={`${e.title}`}
                                         />
                                     </Link>
                                 );

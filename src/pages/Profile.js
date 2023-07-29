@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import axios from "axios";
-
 import { axiosPrivateInstance } from "../configs/axios";
 
 import LoadingSpinner from "../components/configs/LoadingSpinner";
@@ -53,7 +51,7 @@ const Profile = ({ auth }) => {
                                     {user.movies
                                         .sort((a, b) => (a.date_watched < b.date_watched ? 1 : -1))
                                         .map((movie) => {
-                                            return <MovieCard movie={movie} />;
+                                            return <MovieCard key={movie.movie_id} movie={movie} />;
                                         })}
                                 </div>
                             ) : (
@@ -70,7 +68,7 @@ const Profile = ({ auth }) => {
                             {user.series?.length != 0 ? (
                                 <div className="flex flex-wrap gap-4">
                                     {user.series.map((series) => {
-                                        return <SeriesCard series={series} />;
+                                        return <SeriesCard key={series.series_id} series={series} />;
                                     })}
                                 </div>
                             ) : (
