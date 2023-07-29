@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { axiosPublicInstance } from "../configs/axios";
+import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
 function Home() {
     const [trending, setTrending] = useState();
@@ -15,8 +16,8 @@ function Home() {
     return (
         <div className="min-h-screen  bg-gray-100">
             <div>
-                <div class="bg-gradient-to-r from-purple-500 to-red-500 py-20">
-                    <div class="max-w-6xl mx-auto container">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-500 py-20">
+                    <div class="mx-auto container">
                         <h1 class="text-5xl  font-bold text-white mb-4">This is your archive.</h1>
                         <p class="text-xl  text-white">Do what you want with it!</p>
                     </div>
@@ -24,7 +25,7 @@ function Home() {
                 <div className="container mx-auto pt-8">
                     <h1 className="text-2xl">Trending this week</h1>
                     {isLoading ? (
-                        <p>Loading..</p>
+                        <SmallLoadingSpinner />
                     ) : (
                         <div className="flex overflow-x-auto pt-1">
                             {trending.map((e) => {

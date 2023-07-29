@@ -108,8 +108,17 @@ const Series = () => {
                             &#x2022; {series.genres.map((genre) => genre.name).join(", ")}
                         </div>
                         <p className="mb-4">
-                            {series.status} &#x2022;
-                            {series.status === "Ended" && <span>{series.last_air_date}</span>}
+                            <span
+                                className={
+                                    series.status === "Ended"
+                                        ? "bg-purple-300 inline-block p-1 rounded-lg"
+                                        : "bg-green-300 inline-block p-1 rounded-lg"
+                                }
+                            >
+                                {series.status}
+                            </span>
+                            &#x2022;
+                            <span>{series.last_air_date}</span>
                         </p>
                     </div>
 
