@@ -67,9 +67,11 @@ const Profile = ({ auth }) => {
                             </h3>
                             {user.series?.length != 0 ? (
                                 <div className="flex flex-wrap gap-4">
-                                    {user.series.map((series) => {
-                                        return <SeriesCard key={series.series_id} series={series} />;
-                                    })}
+                                    {user.series
+                                        .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
+                                        .map((series) => {
+                                            return <SeriesCard key={series.series_id} series={series} />;
+                                        })}
                                 </div>
                             ) : (
                                 <p>No Series</p>
