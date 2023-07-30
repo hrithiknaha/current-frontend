@@ -102,24 +102,26 @@ const Series = () => {
                         )}
                     </div>
 
-                    <div>
-                        <div className="flex items-center text-gray-600 text-sm mb-1">
-                            {moment(series.first_air_date).format("YYYY-MM-DD")} &#x2022; {series.episode_run_time} min
-                            &#x2022; {series.genres.map((genre) => genre.name).join(", ")}
+                    <div className="my-4">
+                        <div className="flex items-center gap-4 text-gray-600 text-sm mb-1">
+                            <span>{moment(series.first_air_date).format("YYYY-MM-DD")}</span>
+                            {series.episode_run_time && <span>{series.episode_run_time} min</span>}
+                            <span>{series.genres.map((genre) => genre.name).join(", ")}</span>
                         </div>
-                        <p className="mb-4">
+                        <div className="flex gap-4 items-center mb-4">
                             <span
                                 className={
-                                    series.status === "Ended"
+                                    series.status === "Canceled"
                                         ? "bg-red-300 inline-block p-1 rounded-lg"
+                                        : series.status === "Ended"
+                                        ? "bg-orange-300 inline-block p-1 rounded-lg"
                                         : "bg-green-300 inline-block p-1 rounded-lg"
                                 }
                             >
                                 {series.status}
                             </span>
-                            &#x2022;
                             <span>{series.last_air_date}</span>
-                        </p>
+                        </div>
                     </div>
 
                     <div className="h-1 w-full bg-gray-300 mt-4">
