@@ -14,21 +14,9 @@ const Header = ({ user, logoutUser }) => {
     return (
         <nav className="bg-blue-500 p-4">
             <div className="container mx-auto flex justify-between items-center">
-                <div className="flex justify-between items-center w-40">
-                    <Link to="/" className="text-white text-lg font-semibold">
-                        Current
-                    </Link>
-                    {user.username && (
-                        <>
-                            <Link to="/movies" className="text-white hover:underline">
-                                Movies
-                            </Link>
-                            <Link to="/tv" className="text-white hover:underline">
-                                TV
-                            </Link>
-                        </>
-                    )}
-                </div>
+                <Link to="/" className="text-white text-lg font-semibold">
+                    Current
+                </Link>
 
                 {user.username ? (
                     <div className="flex justify-between items-center w-48">
@@ -37,16 +25,14 @@ const Header = ({ user, logoutUser }) => {
                         </Link>
                         <button
                             onClick={handleLogout}
-                            className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
-                        >
+                            className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
                             Logout
                         </button>
                     </div>
                 ) : (
                     <Link
                         to={"login"}
-                        className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
-                    >
+                        className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
                         Login
                     </Link>
                 )}

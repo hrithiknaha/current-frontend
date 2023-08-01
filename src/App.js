@@ -17,8 +17,10 @@ import Person from "./pages/Person";
 import Stats from "./pages/Stats";
 import MovieList from "./pages/MovieList";
 import TVList from "./pages/TVList";
+import Search from "./pages/Search";
 
-function App() {
+function App ()
+{
     return (
         <Router>
             <Toaster />
@@ -27,6 +29,7 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
+                    <Route path="search" element={<Search />} />
                     <Route path="" element={<PrivateRoute />}>
                         <Route path="movies" element={<SearchMovies />} />
                         <Route path="movies/list" element={<MovieList />} />
