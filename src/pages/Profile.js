@@ -5,14 +5,24 @@ import { connect } from "react-redux";
 import { axiosPrivateInstance } from "../configs/axios";
 
 import LoadingSpinner from "../components/configs/LoadingSpinner";
-import MovieCard from "../components/utils/movie/MovieCard";
-import SeriesCard from "../components/utils/TV/SeriesCard";
+import SeriesList from "../components/lists/SeriesList";
+import MovieList from "../components/lists/MovieList";
 
 const Profile = ({ auth }) => {
     const { username } = useParams();
 
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState();
+
+    const [selected, setSelected] = useState("movies");
+
+    const selectMovies = (e) => {
+        setSelected("movies");
+    };
+
+    const selectShows = (e) => {
+        setSelected("series");
+    };
 
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
@@ -39,42 +49,35 @@ const Profile = ({ auth }) => {
                         </Link>
                     </div>
 
-                    <div className="mt-8">
-                        <div className="my-4">
-                            <h3 className="text-2xl my-2">
-                                <Link to="/movies/list" className="underline text-blue-600">
-                                    Movies
-                                </Link>
-                            </h3>
-                            {user.movies?.length != 0 ? (
-                                <div className="flex flex-wrap gap-4">
-                                    {user.movies
-                                        .sort((a, b) => (a.date_watched < b.date_watched ? 1 : -1))
-                                        .map((movie) => {
-                                            return <MovieCard key={movie.movie_id} movie={movie} />;
-                                        })}
+                    <div className="flex gap-4 py-8">
+                        <div className="flex flex-col justify-between w-80 h-full shadow rounded">
+                            <h1 className="text-xl p-4 bg-blue-500 text-white rounded-t">Search Results</h1>
+                            <div>
+                                <div
+                                    onClick={selectMovies}
+                                    className={`flex items-center justify-between ${
+                                        selected === "movies"
+                                            ? "bg-gray-200 "
+                                            : "hover:bg-gray-200 hover:cursor-pointer"
+                                    } pt-4 p-3`}>
+                                    <p>Movies</p>
+                                    <p className="bg-blue-500 px-2 rounded text-white">{user.movies.length}</p>
                                 </div>
-                            ) : (
-                                <p>No Movies</p>
-                            )}
+                                <div
+                                    onClick={selectShows}
+                                    className={`flex items-center justify-between ${
+                                        selected === "series" ? "bg-gray-200" : "hover:bg-gray-200 hover:cursor-pointer"
+                                    } pt-4 p-3`}>
+                                    <p>TV Shows</p>
+                                    <p className="bg-blue-500 px-2 rounded text-white">{user.series.length}</p>
+                                </div>
+                            </div>
                         </div>
-
-                        <div className="my-8">
-                            <h3 className="text-2xl my-2">
-                                <Link to="/tv/list" className="underline text-blue-600">
-                                    Series
-                                </Link>
-                            </h3>
-                            {user.series?.length != 0 ? (
-                                <div className="flex flex-wrap gap-4">
-                                    {user.series
-                                        .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
-                                        .map((series) => {
-                                            return <SeriesCard key={series.series_id} series={series} />;
-                                        })}
-                                </div>
+                        <div className="w-full">
+                            {selected === "movies" ? (
+                                <MovieList movies={user.movies} />
                             ) : (
-                                <p>No Series</p>
+                                <SeriesList series={user.series} />
                             )}
                         </div>
                     </div>
