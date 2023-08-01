@@ -44,10 +44,10 @@ const Movie = () => {
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosInstance
-            .get(`/api/users/added/${movieId}`)
+            .get(`/api/movies/${movieId}`)
             .then(({ data }) => {
                 setIsDetailsLoading(false);
-                setMovieDetails(data);
+                setMovieDetails(data[0]);
                 setHasRated(true);
                 setIsSending(false);
             })
@@ -107,7 +107,7 @@ const Movie = () => {
                     ) : hasRated && movieDetails?.rating ? (
                         <div className="flex items-center text-gray-600 text-sm mb-4">
                             {getVerdict(movieDetails.rating)} &#x2022;{" "}
-                            {moment(movieDetails.date_watched).format("YYYY-MM-DD")} &#x2022;{" "}
+                            {moment(movieDetails.date_watched).format("YYYY-MM-DD")}
                         </div>
                     ) : isSending ? (
                         <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed">
