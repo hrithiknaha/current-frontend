@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { axiosPrivateInstance } from "../configs/axios";
 
@@ -8,8 +8,9 @@ import LoadingSpinner from "../components/configs/LoadingSpinner";
 import SeriesList from "../components/lists/SeriesList";
 import MovieList from "../components/lists/MovieList";
 
-const Profile = ({ auth }) => {
+const Profile = () => {
     const { username } = useParams();
+    const auth = useSelector((state) => state.auth);
 
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState();
@@ -42,11 +43,26 @@ const Profile = ({ auth }) => {
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">Hi, {user.username}</h1>
 
-                        <Link to="stats">
-                            <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
-                                Stats
-                            </button>
-                        </Link>
+                        <div className="flex gap-4">
+                            <Link to="stats">
+                                <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                    Stats
+                                </button>
+                            </Link>
+                            {selected === "movies" ? (
+                                <Link to="/movies/list">
+                                    <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                        Movies Info
+                                    </button>
+                                </Link>
+                            ) : (
+                                <Link to="/tv/list">
+                                    <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                        TV Shows Info
+                                    </button>
+                                </Link>
+                            )}
+                        </div>
                     </div>
 
                     <div className="flex gap-4 py-8">
@@ -89,5 +105,4 @@ const Profile = ({ auth }) => {
     );
 };
 
-const mapStateToProps = (state) => ({ auth: state.auth });
-export default connect(mapStateToProps, {})(Profile);
+export default Profile;
