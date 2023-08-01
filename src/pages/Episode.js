@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { toast } from "react-hot-toast";
+
 import CastList from "../components/lists/CastList";
 import GuestList from "../components/lists/GuestList";
 import CrewList from "../components/lists/CrewList";
-import { toast } from "react-hot-toast";
 
 import NotFound from "../components/configs/NotFound";
-import RateEpisodeForm from "../components/utils/TV/RateEpisodeForm";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
+
+import RateEpisodeForm from "../components/forms/RateEpisodeForm";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 

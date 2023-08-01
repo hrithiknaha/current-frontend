@@ -18,6 +18,7 @@ function TMDBMovieList({ movies }) {
                             src={`https://image.tmdb.org/t/p/w300/${movie.backdrop_path}`}
                             className="absolute left-0 bottom-0 w-full h-full opacity-0 hover:opacity-20  rounded-lg transition-all "
                             onError={(e) => (e.target.src = defaultImg)}
+                            alt="TMDB List"
                         />
                         <p className="text-gray-600 text-sm">Release Date: {movie.release_date}</p>
                     </Link>

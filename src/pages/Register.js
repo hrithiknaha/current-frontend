@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { registerUser } from "../redux/actions/auth";
 
-import RegisterUser from "../components/utils/auth/RegisterForm";
+import RegisterUser from "../components/forms/RegisterForm";
 
 function Register() {
     const navigate = useNavigate();

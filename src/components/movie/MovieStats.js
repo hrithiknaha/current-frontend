@@ -1,7 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Legend, Tooltip, Cell, XAxis, Bar, BarChart } from "recharts";
-import StatTable from "../StatTable";
-import { convertMinutesToMonthsDaysHours } from "../../../configs/helpers";
+import StatTable from "../profile/StatTable";
+import { convertMinutesToMonthsDaysHours } from "../../configs/helpers";
 
 const COLORS = ["#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa"];
 
@@ -69,8 +69,7 @@ const MovieStats = ({ movies, selected }) => {
                             dataKey="count"
                             data={movies.productionCountriesMovieDataset}
                             innerRadius={60}
-                            outerRadius={100}
-                        >
+                            outerRadius={100}>
                             {movies.productionCountriesMovieDataset.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}

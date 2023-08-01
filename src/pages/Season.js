@@ -3,15 +3,13 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import NotFound from "../components/configs/NotFound";
-import EpisodeRow from "../components/utils/TV/EpisodeRow";
+import EpisodeRow from "../components/TV/EpisodeRow";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
+import WatchedEpisodeRow from "../components/TV/WatchedEpisodeRow";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
-import WatchedEpisodeRow from "../components/utils/TV/WatchedEpisodeRow";
-import { getAverageEpisodesRating } from "../configs/helpers";
 
-const Season = () =>
-{
+const Season = () => {
     const { tvId, seasonNumber } = useParams();
 
     const auth = useSelector((state) => state.auth);
@@ -21,24 +19,20 @@ const Season = () =>
     const [seasonEpisodes, setSeasonEpisodes] = useState();
     const [watchedEpisodes, setWatchedEpisodes] = useState();
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosPublicInstance
             .get(`/api/tmdb/series/${tvId}/season/${seasonNumber}`)
-            .then(({ data }) =>
-            {
+            .then(({ data }) => {
                 setSeasonEpisodes(data);
 
-                axiosInstance.get(`/api/series/${tvId}/season/${seasonNumber}`).then(({ data }) =>
-                {
+                axiosInstance.get(`/api/series/${tvId}/season/${seasonNumber}`).then(({ data }) => {
                     setWatchedEpisodes(data?.sort((a, b) => (a.episode_number > b.episode_number ? 1 : -1)));
 
                     setIsLoading(false);
                 });
             })
-            .catch((err) =>
-            {
+            .catch((err) => {
                 setIsLoading(false);
                 console.log(err);
             });
@@ -62,18 +56,21 @@ const Season = () =>
                                 ).toFixed(2)}{" "}
                                 / 10
                             </div>
-                            <div>{watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins / {seasonEpisodes.episodes.map(e => e.runtime).reduce((cur, ob) => cur + ob, 0)} mins</div>
+                            <div>
+                                {watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins /{" "}
+                                {seasonEpisodes.episodes.map((e) => e.runtime).reduce((cur, ob) => cur + ob, 0)} mins
+                            </div>
                         </div>
                     </div>
 
                     <div className="h-1 w-full bg-gray-300 mt-4">
                         <div
                             style={{ width: `${(watchedEpisodes.length / seasonEpisodes.episodes.length) * 100}%` }}
-                            className={`h-full ${watchedEpisodes.length / seasonEpisodes.episodes.length < 70
-                                ? "bg-blue-500"
-                                : "bg-green-500"
-                                }`}
-                        ></div>
+                            className={`h-full ${
+                                watchedEpisodes.length / seasonEpisodes.episodes.length < 70
+                                    ? "bg-blue-500"
+                                    : "bg-green-500"
+                            }`}></div>
                     </div>
 
                     <h3 className="mt-8">Overview</h3>
@@ -83,8 +80,7 @@ const Season = () =>
                         <h1 className="text-2xl">Episodes Yet To Watch</h1>
                         {seasonEpisodes.episodes
                             .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
-                            .map((episode) =>
-                            {
+                            .map((episode) => {
                                 return <EpisodeRow key={episode.id} episode={episode} />;
                             })}
                     </div>

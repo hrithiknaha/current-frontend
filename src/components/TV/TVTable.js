@@ -2,18 +2,16 @@ import { useState, useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-import { getGenres } from "../../../configs/helpers";
+import { getGenres } from "../../configs/helpers";
 
-const TVTable = ({ watchedSeries }) =>
-{
+const TVTable = ({ watchedSeries }) => {
     const [genreFilter, setGenreFilter] = useState("All");
     const [sort, setSort] = useState("recent");
     const [sortDirection, setSortDirection] = useState("desc");
 
     const [series, setSeries] = useState();
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         let filteredSeries = [];
 
         if (genreFilter === "All") filteredSeries = watchedSeries;
@@ -32,8 +30,7 @@ const TVTable = ({ watchedSeries }) =>
         setSeries(sortedSeries);
     }, [genreFilter, sort, sortDirection, watchedSeries]);
 
-    const handleSortDirection = () =>
-    {
+    const handleSortDirection = () => {
         if (sortDirection === "desc") setSortDirection("aesc");
         else setSortDirection("desc");
     };
@@ -45,11 +42,12 @@ const TVTable = ({ watchedSeries }) =>
                     <span className="text-gray-600">Filter by:</span>
                     <select
                         onChange={(e) => setGenreFilter(e.target.value)}
-                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500"
-                    >
+                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
                         <option value="All">All</option>
                         {getGenres(watchedSeries).map((genre) => (
-                            <option key={genre} value={genre}>{genre}</option>
+                            <option key={genre} value={genre}>
+                                {genre}
+                            </option>
                         ))}
                     </select>
                 </div>
@@ -57,8 +55,7 @@ const TVTable = ({ watchedSeries }) =>
                     <span className="text-gray-600">Sort by:</span>
                     <select
                         onChange={(e) => setSort(e.target.value)}
-                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500"
-                    >
+                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
                         <option value="recent">Most Recent</option>
                         <option value="runtime">Runtime</option>
                     </select>
@@ -80,18 +77,19 @@ const TVTable = ({ watchedSeries }) =>
                     <tbody>
                         {series &&
                             series.map((tv, index) => (
-                                <tr key={tv.series_id} className={`bg-gray-${index % 2 == 0 ? 50 : 100}`}>
+                                <tr key={tv.series_id} className={`bg-gray-${index % 2 === 0 ? 50 : 100}`}>
                                     <td className="px-6 py-4 whitespace-nowrap ">
                                         <Link
                                             to={`/tv/${tv.series_id}`}
-                                            className="text-blue-800 hover:underline hover:text-blue-400"
-                                        >
+                                            className="text-blue-800 hover:underline hover:text-blue-400">
                                             {tv.name}
                                         </Link>
                                     </td>
 
                                     <td className="px-6 py-4 whitespace-nowrap">{tv.genres.join(", ")}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{tv.episode_run_time ? tv.episode_run_time : "NA"}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        {tv.episode_run_time ? tv.episode_run_time : "NA"}
+                                    </td>
                                     <td className="px-6 py-4 whitespace-nowrap">{tv.status}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         {tv.episodes.length === tv.number_of_episodes

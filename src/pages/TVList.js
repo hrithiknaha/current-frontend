@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { axiosPrivateInstance } from "../configs/axios";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
-import TVTable from "../components/utils/TV/TVTable";
+import TVTable from "../components/TV/TVTable";
 
 const TVList = () => {
     const [watchedSeries, setWatchedSeries] = useState();

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { loginUser } from "../redux/actions/auth";
 
-import LoginUser from "../components/utils/auth/LoginForm";
+import LoginUser from "../components/forms/LoginForm";
 
 const Login = () => {
     const navigate = useNavigate();

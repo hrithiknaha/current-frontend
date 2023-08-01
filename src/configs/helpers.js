@@ -26,7 +26,7 @@ export const compileGender = (key) => {
             return "Female";
         case 2:
             return "Male";
-        case 2:
+        case 3:
             return "Non-Binary";
         default:
             break;

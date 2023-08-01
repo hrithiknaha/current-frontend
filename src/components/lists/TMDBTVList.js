@@ -18,6 +18,7 @@ function TMDBTVList({ series }) {
                             src={`https://image.tmdb.org/t/p/w300/${series.backdrop_path}`}
                             className="absolute left-0 bottom-0 w-full h-full opacity-0 hover:opacity-20  rounded-lg transition-all "
                             onError={(e) => (e.target.src = defaultImg)}
+                            alt="TMDB List"
                         />
                         <p className="text-gray-600 text-sm">Release Date: {series.first_air_date}</p>
                     </Link>

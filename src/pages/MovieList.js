@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { axiosPrivateInstance } from "../configs/axios";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
-import MovieTable from "../components/utils/movie/MovieTable";
+import MovieTable from "../components/movie/MovieTable";
 
 const MovieList = () => {
     const [watchedMovies, setWatchedMovies] = useState();

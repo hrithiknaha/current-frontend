@@ -6,11 +6,11 @@ import moment from "moment";
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/configs/NotFound";
-import SeasonRow from "../components/utils/TV/SeasonRow";
+import SeasonRow from "../components/TV/SeasonRow";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
+import CompletedSeasonRow from "../components/TV/CompletedSeasonRow";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
-import CompletedSeasonRow from "../components/utils/TV/CompletedSeasonRow";
 
 import { seasonCompleted } from "../configs/helpers";
 
@@ -95,8 +95,7 @@ const Series = () => {
                         ) : (
                             <button
                                 className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
-                                onClick={handleSubmit}
-                            >
+                                onClick={handleSubmit}>
                                 Add Series
                             </button>
                         )}
@@ -116,8 +115,7 @@ const Series = () => {
                                         : series.status === "Ended"
                                         ? "bg-orange-300 inline-block p-1 rounded-lg"
                                         : "bg-green-300 inline-block p-1 rounded-lg"
-                                }
-                            >
+                                }>
                                 {series.status}
                             </span>
                             <span>{series.last_air_date}</span>
@@ -129,8 +127,7 @@ const Series = () => {
                             style={{ width: `${(watchedEpisodes.length / series.number_of_episodes) * 100}%` }}
                             className={`h-full ${
                                 watchedEpisodes.length / series.number_of_episodes < 70 ? "bg-blue-500" : "bg-green-500"
-                            }`}
-                        ></div>
+                            }`}></div>
                     </div>
 
                     <div className="mt-4">

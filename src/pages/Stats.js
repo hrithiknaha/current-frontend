@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import MovieStats from "../components/utils/movie/MovieStats";
-import SeriesStats from "../components/utils/TV/SeriesStats";
+import MovieStats from "../components/movie/MovieStats";
+import SeriesStats from "../components/TV/SeriesStats";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import { axiosPrivateInstance } from "../configs/axios";
@@ -42,8 +42,7 @@ const Stats = () => {
 
                         <button
                             onClick={handleStatToggle}
-                            className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
-                        >
+                            className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
                             Switch to {selected === "Movies" ? "Series" : "Movies"}
                         </button>
                     </div>
