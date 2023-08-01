@@ -7,7 +7,7 @@ const SeriesList = ({ series }) => {
             {series.map((series) => {
                 return (
                     <Link
-                        to={`/tv/${series.id}`}
+                        to={`/tv/${series.series_id}`}
                         className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
                         key={series.id}>
                         <h2 className="text-xl font-bold mb-4">{series.name}</h2>

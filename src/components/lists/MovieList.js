@@ -8,7 +8,7 @@ const MovieList = ({ movies }) => {
             {movies.map((movie) => {
                 return (
                     <Link
-                        to={`/movies/${movie.id}`}
+                        to={`/movies/${movie.movie_id}`}
                         className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
                         key={movie.id}>
                         <h2 className="text-xl font-bold mb-4">{movie.title}</h2>
