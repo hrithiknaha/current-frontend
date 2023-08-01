@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { toast } from "react-hot-toast";
-
 import CastList from "../components/lists/CastList";
 import GuestList from "../components/lists/GuestList";
 import CrewList from "../components/lists/CrewList";

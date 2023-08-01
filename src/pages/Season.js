@@ -57,7 +57,7 @@ const Season = () => {
                                 / 10
                             </div>
                             <div>
-                                {watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins /{" "}
+                                {watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} /{" "}
                                 {seasonEpisodes.episodes.map((e) => e.runtime).reduce((cur, ob) => cur + ob, 0)} mins
                             </div>
                         </div>
