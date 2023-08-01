@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 
 import { getGenres } from "../../../configs/helpers";
 
-const TVTable = ({ watchedSeries }) => {
+const TVTable = ({ watchedSeries }) =>
+{
     const [genreFilter, setGenreFilter] = useState("All");
     const [sort, setSort] = useState("recent");
     const [sortDirection, setSortDirection] = useState("desc");
 
     const [series, setSeries] = useState();
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         let filteredSeries = [];
 
         if (genreFilter === "All") filteredSeries = watchedSeries;
@@ -30,7 +32,8 @@ const TVTable = ({ watchedSeries }) => {
         setSeries(sortedSeries);
     }, [genreFilter, sort, sortDirection, watchedSeries]);
 
-    const handleSortDirection = () => {
+    const handleSortDirection = () =>
+    {
         if (sortDirection === "desc") setSortDirection("aesc");
         else setSortDirection("desc");
     };
@@ -46,7 +49,7 @@ const TVTable = ({ watchedSeries }) => {
                     >
                         <option value="All">All</option>
                         {getGenres(watchedSeries).map((genre) => (
-                            <option value={genre}>{genre}</option>
+                            <option key={genre} value={genre}>{genre}</option>
                         ))}
                     </select>
                 </div>
@@ -71,6 +74,7 @@ const TVTable = ({ watchedSeries }) => {
                             <th className="px-6 py-3 text-left font-bold text-gray-700">Runtime</th>
                             <th className="px-6 py-3 text-left font-bold text-gray-700">Status</th>
                             <th className="px-6 py-3 text-left font-bold text-gray-700">Progress</th>
+                            <th className="px-6 py-3 text-left font-bold text-gray-700">Date Added</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,13 +91,14 @@ const TVTable = ({ watchedSeries }) => {
                                     </td>
 
                                     <td className="px-6 py-4 whitespace-nowrap">{tv.genres.join(", ")}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{tv.episode_run_time}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{tv.episode_run_time ? tv.episode_run_time : "NA"}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{tv.status}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         {tv.episodes.length === tv.number_of_episodes
                                             ? "Completed"
                                             : "Currently Watching"}
                                     </td>
+                                    <td>{moment(tv.createdAt).fromNow()}</td>
                                 </tr>
                             ))}
                     </tbody>
