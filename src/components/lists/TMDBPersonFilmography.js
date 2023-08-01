@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-const TMDBPersonFilmography = ({ filmography }) => {
+const TMDBPersonFilmography = ({ filmography }) =>
+{
     const [media, setMedia] = useState("all");
     const [filteredMovies, setFilteredMovies] = useState([]);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         let entity = [];
         if (media === "all") entity = filmography;
         else if (media === "movies") entity = filmography.filter((m) => m.media_type === "movie");
@@ -60,12 +62,12 @@ const TMDBPersonFilmography = ({ filmography }) => {
                                                 ? moment(entity.release_date).format("YYYY")
                                                 : "-"
                                             : entity.first_air_date
-                                            ? moment(entity.first_air_date).format("YYYY")
-                                            : "-"}
+                                                ? moment(entity.first_air_date).format("YYYY")
+                                                : "-"}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap ">
                                         <Link
-                                            to={`/movies/${entity.id}`}
+                                            to={entity.media_type === "movie" ? `/movies/${entity.id}` : `/tv/${entity.id}`}
                                             className=" hover:underline hover:text-blue-800"
                                         >
                                             {entity.media_type === "movie" ? entity.title : entity.name}

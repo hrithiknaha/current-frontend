@@ -90,7 +90,7 @@ const Series = () => {
                                     / 10
                                 </p>
                                 &#x2022;
-                                <p>{watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins</p>
+                                <p>{watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins </p>
                             </div>
                         ) : (
                             <button
