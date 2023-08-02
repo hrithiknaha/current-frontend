@@ -4,7 +4,7 @@ import moment from "moment";
 
 const MovieList = ({ movies }) => {
     return (
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="flex flex-wrap justify-between gap-4 mb-8">
             {movies.map((movie) => {
                 return (
                     <Link
