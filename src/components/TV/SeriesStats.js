@@ -45,6 +45,13 @@ const SeriesStats = ({ series, selected }) => {
                     <p className="text-3xl font-bold text-blue-500">{series.totalWatchedThisYear}</p>
                 </div>
             </div>
+            <div className="flex flex-col gap-4 mt-16 items-center">
+                <BarChart width={1000} height={300} data={series.lastTwentyWeekWatchedDataset}>
+                    <XAxis dataKey="name" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#172554" />
+                </BarChart>
+            </div>
             <div className="flex gap-4 mt-8 justify-between">
                 <div className="flex flex-col justify-center items-center">
                     <PieChart width={400} height={400}>
@@ -85,7 +92,6 @@ const SeriesStats = ({ series, selected }) => {
                     <XAxis dataKey="name" />
                     <Tooltip />
                     <Bar dataKey="count" fill="#172554" />
-                    <Legend />
                 </BarChart>
             </div>
             <div className="flex gap-4 mt-8 justify-between">
@@ -124,6 +130,7 @@ const SeriesStats = ({ series, selected }) => {
             <div className="flex justify-between items-start mt-8">
                 <StatTable dataset={series.productionCompaniesSeriesDataset} header="Production Company" />
                 <StatTable dataset={series.networkSeriesDataset} header="Network Company" />
+                <StatTable dataset={series.castEpisodeDataset} header="Characters" />
             </div>
         </div>
     );
