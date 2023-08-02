@@ -21,7 +21,7 @@ const MovieTable = ({ watchedMovies }) => {
         else if (ratingFilter === "8")
             filteredMovies = watchedMovies.filter((movie) => movie.rating >= 8 && movie.rating <= 10);
 
-        const sortedMovies = filteredMovies;
+        const sortedMovies = [...filteredMovies];
 
         if (sort === "recent")
             if (sortDirection === "aesc") sortedMovies.sort((a, b) => (a.date_watched > b.date_watched ? 1 : -1));
@@ -41,11 +41,10 @@ const MovieTable = ({ watchedMovies }) => {
         <div>
             <div className="flex items-center space-x-4 justify-end mb-8">
                 <div className="flex items-center space-x-2">
-                    <span className="text-gray-600">Filter by:</span>
+                    <span className="text-gray-600">Filter by Rating:</span>
                     <select
                         onChange={(e) => setRatingFilter(e.target.value)}
-                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500"
-                    >
+                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
                         <option value="0">All</option>
                         <option value="8">Mindblowing</option>
                         <option value="6">Its Alright</option>
@@ -57,8 +56,7 @@ const MovieTable = ({ watchedMovies }) => {
                     <span className="text-gray-600">Sort by:</span>
                     <select
                         onChange={(e) => setSort(e.target.value)}
-                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500"
-                    >
+                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
                         <option value="recent">Most Recent</option>
                         <option value="rating">Top Rated</option>
                     </select>
@@ -82,8 +80,7 @@ const MovieTable = ({ watchedMovies }) => {
                                     <td className="px-6 py-4 whitespace-nowrap ">
                                         <Link
                                             to={`/movies/${movie.movie_id}`}
-                                            className="text-blue-800 hover:underline hover:text-blue-400"
-                                        >
+                                            className="text-blue-800 hover:underline hover:text-blue-400">
                                             {movie.title}
                                         </Link>
                                     </td>
