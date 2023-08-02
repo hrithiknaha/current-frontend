@@ -17,7 +17,7 @@ const TVTable = ({ watchedSeries }) => {
         if (genreFilter === "All") filteredSeries = watchedSeries;
         else filteredSeries = watchedSeries.filter((tv) => tv.genres.includes(genreFilter));
 
-        const sortedSeries = filteredSeries;
+        const sortedSeries = [...filteredSeries];
 
         if (sort === "recent")
             if (sortDirection === "aesc") sortedSeries.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
