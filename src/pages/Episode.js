@@ -67,18 +67,15 @@ const Episode = () => {
         setIsSending(true);
         const axiosInstance = axiosPrivateInstance(auth);
 
-        const date_timestamp = new Date();
-        const day = date_timestamp.getDate();
-        const month = date_timestamp.getMonth() + 1;
-        const year = date_timestamp.getFullYear();
-
         const payload = {
             series_id: tvId,
-            date_watched: `${year}-${month}-${day}`,
+            date_watched: new Date(),
             rating,
             episode_number: episodeNumber,
             season_number: seasonNumber,
         };
+
+        console.log(payload);
 
         axiosInstance
             .post(`/api/series/watch`, payload)

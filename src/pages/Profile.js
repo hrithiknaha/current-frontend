@@ -56,11 +56,18 @@ const Profile = () => {
                                     </button>
                                 </Link>
                             ) : (
-                                <Link to="/tv/list">
-                                    <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
-                                        TV Shows Info
-                                    </button>
-                                </Link>
+                                <>
+                                    <Link to="/tv/list">
+                                        <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                            TV Shows Info
+                                        </button>
+                                    </Link>
+                                    <Link to="/tv/episodes/list">
+                                        <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                            Episodes Info
+                                        </button>
+                                    </Link>
+                                </>
                             )}
                         </div>
                     </div>
