@@ -52,6 +52,23 @@ const SeriesStats = ({ series, selected }) => {
                     <Bar dataKey="count" fill="#172554" />
                 </BarChart>
             </div>
+            <div className="flex flex-col gap-4 mt-16 items-center">
+                <BarChart width={1000} height={300} data={series.weekdaySeriesDataset}>
+                    <XAxis dataKey="day" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#172554" />
+                </BarChart>
+                <BarChart width={1000} height={300} data={series.monthSeriesDataset}>
+                    <XAxis dataKey="month" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#172554" />
+                </BarChart>
+                <BarChart width={1000} height={300} data={series.hourOfDaySeriesDataset}>
+                    <XAxis dataKey="hour" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#172554" />
+                </BarChart>
+            </div>
             <div className="flex gap-4 mt-8 justify-between">
                 <div className="flex flex-col justify-center items-center">
                     <PieChart width={400} height={400}>
@@ -95,42 +112,36 @@ const SeriesStats = ({ series, selected }) => {
                 </BarChart>
             </div>
             <div className="flex gap-4 mt-8 justify-between">
-                <div className="flex flex-col justify-center items-center">
-                    <PieChart width={400} height={400}>
-                        <Pie
-                            dataKey="count"
-                            data={series.originCountrySeriesDataset}
-                            innerRadius={60}
-                            outerRadius={100}>
-                            {series.originCountrySeriesDataset.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend />
-                    </PieChart>
-                </div>
-                <div className="flex flex-col items-center">
-                    <PieChart width={400} height={400}>
-                        <Pie
-                            dataKey="count"
-                            data={series.productionCountriesSeriesDataset}
-                            innerRadius={60}
-                            outerRadius={100}>
-                            {series.productionCountriesSeriesDataset.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend />
-                    </PieChart>
-                </div>
+                <PieChart width={400} height={400}>
+                    <Pie dataKey="count" data={series.originCountrySeriesDataset} innerRadius={60} outerRadius={100}>
+                        {series.originCountrySeriesDataset.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                </PieChart>
+
+                <PieChart width={400} height={400}>
+                    <Pie
+                        dataKey="count"
+                        data={series.productionCountriesSeriesDataset}
+                        innerRadius={60}
+                        outerRadius={100}>
+                        {series.productionCountriesSeriesDataset.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                </PieChart>
             </div>
 
             <div className="flex justify-between items-start mt-8">
                 <StatTable dataset={series.productionCompaniesSeriesDataset} header="Production Company" />
                 <StatTable dataset={series.networkSeriesDataset} header="Network Company" />
                 <StatTable dataset={series.castEpisodeDataset} header="Characters" />
+                <StatTable dataset={series.seriesEpisodesDataset} header="Series Episodes" />
             </div>
         </div>
     );
