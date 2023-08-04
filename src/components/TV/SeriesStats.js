@@ -137,7 +137,7 @@ const SeriesStats = ({ series, selected }) => {
                 </PieChart>
             </div>
 
-            <div className="flex justify-between items-start mt-8">
+            <div className="flex justify-between gap-4 items-start mt-8">
                 <StatTable dataset={series.productionCompaniesSeriesDataset} header="Production Company" />
                 <StatTable dataset={series.networkSeriesDataset} header="Network Company" />
                 <StatTable dataset={series.castEpisodeDataset} header="Characters" />
