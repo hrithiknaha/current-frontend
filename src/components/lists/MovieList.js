@@ -8,9 +8,9 @@ const MovieList = ({ movies }) => {
             {movies.map((movie) => {
                 return (
                     <Link
+                        key={movie.movie_id}
                         to={`/movies/${movie.movie_id}`}
-                        className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
-                        key={movie.id}>
+                        className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative">
                         <h2 className="text-xl font-bold mb-4">{movie.title}</h2>
                         <p className="text-gray-600 text-sm">
                             Release Date: {moment(movie.release_date).format("YYYY-MM-DD")}

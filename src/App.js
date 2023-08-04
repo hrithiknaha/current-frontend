@@ -24,11 +24,11 @@ function App() {
             <Toaster />
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
                     <Route path="search" element={<Search />} />
                     <Route path="" element={<PrivateRoute />}>
+                        <Route index element={<Home />} />
                         <Route path="movies/list" element={<MovieList />} />
                         <Route path="movies/:movieId" element={<Movie />} />
                         <Route path="tv/list" element={<TVList />} />

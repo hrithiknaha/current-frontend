@@ -46,25 +46,25 @@ const SeriesStats = ({ series, selected }) => {
                 </div>
             </div>
             <div className="flex flex-col gap-4 mt-16 items-center">
-                <BarChart width={1000} height={300} data={series.lastTwentyWeekWatchedDataset}>
+                <BarChart width={1200} height={300} data={series.lastTwentyWeekWatchedDataset}>
                     <XAxis dataKey="name" />
                     <Tooltip />
                     <Bar dataKey="count" fill="#172554" />
                 </BarChart>
             </div>
             <div className="flex flex-col gap-4 mt-16 items-center">
-                <BarChart width={1000} height={300} data={series.weekdaySeriesDataset}>
+                <BarChart width={1200} height={300} data={series.weekdaySeriesDataset}>
                     <XAxis dataKey="day" />
                     <Tooltip />
                     <Bar dataKey="count" fill="#172554" />
                 </BarChart>
-                <BarChart width={1000} height={300} data={series.monthSeriesDataset}>
+                <BarChart width={1200} height={300} data={series.monthSeriesDataset}>
                     <XAxis dataKey="month" />
                     <Tooltip />
                     <Bar dataKey="count" fill="#172554" />
                 </BarChart>
-                <BarChart width={1000} height={300} data={series.hourOfDaySeriesDataset}>
-                    <XAxis dataKey="hour" />
+                <BarChart width={1200} height={300} data={series.hourOfDaySeriesDataset}>
+                    <XAxis dataKey="hour" interval={0} />
                     <Tooltip />
                     <Bar dataKey="count" fill="#172554" />
                 </BarChart>
@@ -137,7 +137,7 @@ const SeriesStats = ({ series, selected }) => {
                 </PieChart>
             </div>
 
-            <div className="flex justify-between items-start mt-8">
+            <div className="flex justify-between gap-4 items-start mt-8">
                 <StatTable dataset={series.productionCompaniesSeriesDataset} header="Production Company" />
                 <StatTable dataset={series.networkSeriesDataset} header="Network Company" />
                 <StatTable dataset={series.castEpisodeDataset} header="Characters" />
