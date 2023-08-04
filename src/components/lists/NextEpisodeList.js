@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const NextEpisodeCard = ({ series, nextEpisode, watchedEpisodes }) => {
+const NextEpisodeList = ({ series, nextEpisode, watchedEpisodes }) => {
     const totalEpisodes = series.number_of_episodes;
     const watchedPercentage = (watchedEpisodes.length / totalEpisodes) * 100;
 
@@ -19,4 +19,4 @@ const NextEpisodeCard = ({ series, nextEpisode, watchedEpisodes }) => {
     );
 };
 
-export default NextEpisodeCard;
+export default NextEpisodeList;

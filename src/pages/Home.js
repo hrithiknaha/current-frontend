@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { axiosPublicInstance, axiosPrivateInstance } from "../configs/axios";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
-import NextEpisodeCard from "../components/NextEpisodeCard";
+import NextEpisodeList from "../components/lists/NextEpisodeList";
 
 function Home() {
     const [trending, setTrending] = useState();
@@ -131,7 +131,7 @@ function Home() {
                             ) : (
                                 nextDetails.map((data) => {
                                     return (
-                                        <NextEpisodeCard
+                                        <NextEpisodeList
                                             key={data.seriesDetails.id}
                                             series={data.seriesDetails}
                                             nextEpisode={data.nextEpisode}
