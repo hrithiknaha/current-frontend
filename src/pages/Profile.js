@@ -106,9 +106,9 @@ const Profile = () => {
                                             Watching Now
                                         </h1>
                                         <SeriesList
-                                            series={user.series.filter(
-                                                (s) => s.episodes.length !== s.number_of_episodes
-                                            )}
+                                            series={user.series
+                                                .filter((s) => s.episodes.length !== s.number_of_episodes)
+                                                .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                         />
                                     </div>
                                     <div>
@@ -116,9 +116,9 @@ const Profile = () => {
                                             Completed
                                         </h1>
                                         <SeriesList
-                                            series={user.series.filter(
-                                                (s) => s.episodes.length === s.number_of_episodes
-                                            )}
+                                            series={user.series
+                                                .filter((s) => s.episodes.length === s.number_of_episodes)
+                                                .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                         />
                                     </div>
                                 </div>
