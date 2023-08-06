@@ -3,7 +3,7 @@ import { PieChart, Pie, Legend, Tooltip, Cell, XAxis, Bar, BarChart } from "rech
 import StatTable from "../profile/StatTable";
 import { convertMinutesToMonthsDaysHours } from "../../configs/helpers";
 
-const COLORS = ["#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa"];
+const COLORS = ["#EA1179", "#FD8D14", "#F11A7B", "#6528F7", "#1A5D1A", "#F24C3D", "#17594A"];
 
 const SeriesStats = ({ series, selected }) => {
     return (
@@ -20,7 +20,7 @@ const SeriesStats = ({ series, selected }) => {
                     <p className="text-3xl font-bold text-blue-500">{series.totalSeries}</p>
                 </div>
                 <div className="bg-white shadow-md rounded-lg p-6 w-60">
-                    <h2 className="text-xl font-semibold mb-4">Average Episodes Rating</h2>
+                    <h2 className="text-xl font-semibold mb-4">Episodes Rating</h2>
                     <p className="text-3xl font-bold text-blue-500">{series.avgRatingSeries?.toFixed(2)}</p>
                 </div>
 
@@ -51,8 +51,6 @@ const SeriesStats = ({ series, selected }) => {
                     <Tooltip />
                     <Bar dataKey="count" fill="#172554" />
                 </BarChart>
-            </div>
-            <div className="flex flex-col gap-4 mt-16 items-center">
                 <BarChart width={1200} height={300} data={series.weekdaySeriesDataset}>
                     <XAxis dataKey="day" />
                     <Tooltip />

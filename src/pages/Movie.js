@@ -62,15 +62,10 @@ const Movie = () => {
         setIsSending(true);
         const axiosInstance = axiosPrivateInstance(auth);
 
-        const date_timestamp = new Date();
-        const day = date_timestamp.getDate();
-        const month = date_timestamp.getMonth() + 1;
-        const year = date_timestamp.getFullYear();
-
         const payload = {
             movie_id: movieId,
             rating,
-            date_watched: `${year}-${month}-${day}`,
+            date_watched: new Date(),
         };
 
         axiosInstance

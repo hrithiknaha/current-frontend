@@ -3,7 +3,7 @@ import { PieChart, Pie, Legend, Tooltip, Cell, XAxis, Bar, BarChart } from "rech
 import StatTable from "../profile/StatTable";
 import { convertMinutesToMonthsDaysHours } from "../../configs/helpers";
 
-const COLORS = ["#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa"];
+const COLORS = ["#EA1179", "#FD8D14", "#F11A7B", "#6528F7", "#1A5D1A", "#F24C3D", "#17594A"];
 
 const MovieStats = ({ movies, selected }) => {
     return (
@@ -16,7 +16,7 @@ const MovieStats = ({ movies, selected }) => {
                     </p>
                 </div>
                 <div className="bg-white shadow-md rounded-lg p-6 w-60">
-                    <h2 className="text-xl font-semibold mb-4">Average {selected} Rating</h2>
+                    <h2 className="text-xl font-semibold mb-4">{selected} Rating</h2>
                     <p className="text-3xl font-bold text-blue-500">{movies.avgRatingMovie?.toFixed(2)}</p>
                 </div>
                 <div className="bg-white shadow-md rounded-lg p-6 w-60 ">
@@ -42,7 +42,7 @@ const MovieStats = ({ movies, selected }) => {
             </div>
             <div className="flex gap-4 my-8 justify-between">
                 <div className="flex flex-col justify-center items-center">
-                    <PieChart width={400} height={400}>
+                    <PieChart width={400} height={350}>
                         <Pie dataKey="count" data={movies.genreMovieDataset} innerRadius={60} outerRadius={100}>
                             {movies.genreMovieDataset.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -53,7 +53,7 @@ const MovieStats = ({ movies, selected }) => {
                     </PieChart>
                 </div>
                 <div className="flex flex-col items-center">
-                    <PieChart width={400} height={400}>
+                    <PieChart width={400} height={350}>
                         <Pie dataKey="count" data={movies.languageMovieDataset} innerRadius={60} outerRadius={100}>
                             {movies.languageMovieDataset.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -64,7 +64,7 @@ const MovieStats = ({ movies, selected }) => {
                     </PieChart>
                 </div>
                 <div className="flex flex-col items-center">
-                    <PieChart width={400} height={400}>
+                    <PieChart width={400} height={350}>
                         <Pie
                             dataKey="count"
                             data={movies.productionCountriesMovieDataset}
@@ -78,6 +78,28 @@ const MovieStats = ({ movies, selected }) => {
                         <Legend />
                     </PieChart>
                 </div>
+            </div>
+            <div className="flex flex-col gap-4 mt-16 items-center">
+                <BarChart width={1200} height={300} data={movies.lastTwentyWeekMoviesDataset}>
+                    <XAxis dataKey="name" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#172554" />
+                </BarChart>
+                <BarChart width={1200} height={300} data={movies.weekdayMoviesDataset}>
+                    <XAxis dataKey="day" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#172554" />
+                </BarChart>
+                <BarChart width={1200} height={300} data={movies.monthMoviesDataset}>
+                    <XAxis dataKey="month" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#172554" />
+                </BarChart>
+                <BarChart width={1200} height={300} data={movies.hourOfDayMoviesDataset}>
+                    <XAxis dataKey="hour" interval={0} />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#172554" />
+                </BarChart>
             </div>
             <div className="flex flex-col gap-4 my-24 items-center">
                 <BarChart width={1000} height={300} data={movies.releaseYearMovieDataset}>
