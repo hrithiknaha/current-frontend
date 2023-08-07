@@ -98,6 +98,12 @@ const Episode = () => {
                 <div className="container mx-auto py-16">
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+                        <p>
+                            S
+                            <span>
+                                {seasonNumber} | E<span>{episodeNumber}</span>
+                            </span>
+                        </p>
                     </div>
                     <div className="flex items-center text-gray-600 text-sm mb-1">
                         {moment(tmdbEpisode.air_date).format("YYYY-MM-DD")} &#x2022; {tmdbEpisode.runtime} min
