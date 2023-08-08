@@ -142,9 +142,7 @@ const Episode = () => {
                 <div className="container mx-auto py-16">
                     {episodeCountDetails && (
                         <div className="pb-4 flex justify-between">
-                            {isSending ? (
-                                <Skeleton width={"10rem"} />
-                            ) : hasPreviousEpisode ? (
+                            {hasPreviousEpisode ? (
                                 <Link
                                     to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
                                     className="text-blue-500  pb-4">
@@ -153,16 +151,12 @@ const Episode = () => {
                             ) : (
                                 <div></div>
                             )}
-                            {isSending ? (
-                                <Skeleton width={"10rem"} />
-                            ) : (
-                                hasNextEpisode && (
-                                    <Link
-                                        to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
-                                        className="text-blue-500  pb-4">
-                                        ➡️ Next Episode
-                                    </Link>
-                                )
+                            {hasNextEpisode && (
+                                <Link
+                                    to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
+                                    className="text-blue-500  pb-4">
+                                    ➡️ Next Episode
+                                </Link>
                             )}
                         </div>
                     )}
