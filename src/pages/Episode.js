@@ -132,9 +132,7 @@ const Episode = () => {
 
                     <div className="mt-8">
                         <CastList casts={tmdbEpisode.credits.cast} />
-
                         <GuestList guests={tmdbEpisode.guest_stars} />
-
                         <CrewList
                             crews={tmdbEpisode.credits.crew.filter(
                                 (c) =>
