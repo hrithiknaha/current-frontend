@@ -62,7 +62,7 @@ const Series = () => {
 
     const handleSubmit = () => {
         const axiosInstance = axiosPrivateInstance(auth);
-        const payload = { series_id: tvId };
+        const payload = { series_id: extractSeriesIdFromURL(tvId) };
         axiosInstance
             .post(`/api/series/add`, payload)
             .then(() => {

@@ -12,6 +12,7 @@ import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 import { getVerdict } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
+import { extractSeriesIdFromURL } from "../configs/helpers";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 
@@ -33,7 +34,7 @@ const Movie = () => {
 
     useEffect(() => {
         axiosPublicInstance
-            .get(`/api/tmdb/movies/${movieId}`)
+            .get(`/api/tmdb/movies/${extractSeriesIdFromURL(movieId)}`)
             .then(({ data }) => {
                 setMovie(data);
                 setIsLoading(false);
@@ -44,7 +45,7 @@ const Movie = () => {
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosInstance
-            .get(`/api/movies/${movieId}`)
+            .get(`/api/movies/${extractSeriesIdFromURL(movieId)}`)
             .then(({ data }) => {
                 setIsDetailsLoading(false);
                 setMovieDetails(data[0]);
@@ -63,7 +64,7 @@ const Movie = () => {
         const axiosInstance = axiosPrivateInstance(auth);
 
         const payload = {
-            movie_id: movieId,
+            movie_id: extractSeriesIdFromURL(movieId),
             rating,
             date_watched: new Date(),
         };
