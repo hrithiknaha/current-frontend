@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { toast } from "react-hot-toast";
@@ -11,7 +11,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
-import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
+import { extractSeriesIdFromURL } from "../configs/helpers";
 
 import RateEpisodeForm from "../components/forms/RateEpisodeForm";
 
@@ -34,9 +34,13 @@ const Episode = () => {
 
     const [isSending, setIsSending] = useState(false);
 
+    const [episodeCountDetails, setEpisodeCountDetails] = useState();
+    const [hasPreviousEpisode, setHasPreviousEpisode] = useState(true);
+    const [hasNextEpisode, setHasNextEpisode] = useState(true);
+
     useEffect(() => {
         axiosPublicInstance
-            .get(`/api/tmdb/series/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`)
+            .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}/episode/${episodeNumber}`)
             .then(({ data }) => {
                 setTmdbEpisode(data);
                 setIsLoading(false);
@@ -51,7 +55,7 @@ const Episode = () => {
         const axiosInstance = axiosPrivateInstance(auth);
         if (tmdbEpisode)
             axiosInstance
-                .get(`/api/series/${tvId}/episodes/${tmdbEpisode.id}`)
+                .get(`/api/series/${extractSeriesIdFromURL(tvId)}/episodes/${tmdbEpisode.id}`)
                 .then(({ data }) => {
                     setEpisodeDetails(data);
                     setIsDetailsLoading(false);
@@ -63,6 +67,28 @@ const Episode = () => {
                     console.log(error);
                 });
     }, [tvId, tmdbEpisode, hasRated]);
+
+    useEffect(() => {
+        setIsLoading(true);
+        setIsDetailsLoading(true);
+        setHasNextEpisode(true);
+        setHasPreviousEpisode(true);
+        setEpisodeDetails([]);
+
+        axiosPublicInstance
+            .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`)
+            .then(({ data }) => {
+                setEpisodeCountDetails(data.episodes);
+                if (data?.episodes)
+                    if (parseInt(episodeNumber) === 1) {
+                        setHasPreviousEpisode(false);
+                        setHasNextEpisode(true);
+                    } else if (parseInt(episodeNumber) === data.episodes[data.episodes.length - 1].episode_number) {
+                        setHasPreviousEpisode(true);
+                        setHasNextEpisode(false);
+                    }
+            });
+    }, [tvId, episodeNumber]);
 
     const handleWatch = (e) => {
         e.preventDefault();
@@ -98,6 +124,26 @@ const Episode = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
+                    {episodeCountDetails && (
+                        <div className="pb-4 flex justify-between">
+                            {hasPreviousEpisode ? (
+                                <Link
+                                    to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
+                                    className="text-blue-500  pb-4">
+                                    ⬅️ Previous Episode
+                                </Link>
+                            ) : (
+                                <div></div>
+                            )}
+                            {hasNextEpisode && (
+                                <Link
+                                    to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
+                                    className="text-blue-500  pb-4">
+                                    ➡️ Next Episode
+                                </Link>
+                            )}
+                        </div>
+                    )}
                     <h1 className="text-gray-600 text-sm">
                         S{seasonNumber} | E{episodeNumber}
                     </h1>
