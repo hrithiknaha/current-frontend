@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import CastList from "../components/lists/CastList";
 import GuestList from "../components/lists/GuestList";
 import CrewList from "../components/lists/CrewList";
+import axios from "axios";
 
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
@@ -16,6 +17,8 @@ import RatingForm from "../components/forms/RatingForm";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 import RatingDetails from "../components/configs/RatingDetails";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -23,35 +26,49 @@ const Episode = () => {
     const auth = useSelector((state) => state.auth);
 
     const [isLoading, setIsLoading] = useState(true);
-
     const [rating, setRating] = useState();
-
     const [tmdbEpisode, setTmdbEpisode] = useState();
-
     const [isDetailsLoading, setIsDetailsLoading] = useState(true);
     const [episodeDetails, setEpisodeDetails] = useState();
     const [hasRated, setHasRated] = useState(false);
-
     const [isSending, setIsSending] = useState(false);
-
     const [episodeCountDetails, setEpisodeCountDetails] = useState();
     const [hasPreviousEpisode, setHasPreviousEpisode] = useState(true);
     const [hasNextEpisode, setHasNextEpisode] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
+        setRating();
+        setTmdbEpisode();
+        setIsDetailsLoading(true);
+        setEpisodeDetails();
+        setHasRated(false);
+        setIsSending(false);
+        setEpisodeCountDetails();
+        setHasNextEpisode(true);
+        setHasPreviousEpisode(true);
+
+        const cancelTokenSource = axios.CancelToken.source();
         axiosPublicInstance
             .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}/episode/${episodeNumber}`)
             .then(({ data }) => {
                 setTmdbEpisode(data);
                 setIsLoading(false);
             })
-            .catch((err) => {
-                console.log(err);
-                setIsLoading(false);
+            .catch((error) => {
+                if (!axios.isCancel(error)) {
+                    console.log(error);
+                    setIsLoading(false);
+                }
             });
+
+        return () => {
+            cancelTokenSource.cancel("Request canceled due to component unmount or re-run");
+        };
     }, [tvId, seasonNumber, episodeNumber]);
 
     useEffect(() => {
+        const cancelTokenSource = axios.CancelToken.source();
         const axiosInstance = axiosPrivateInstance(auth);
         if (tmdbEpisode)
             axiosInstance
@@ -63,18 +80,18 @@ const Episode = () => {
                     setIsSending(false);
                 })
                 .catch((error) => {
-                    setIsDetailsLoading(false);
-                    console.log(error);
+                    if (!axios.isCancel(error)) {
+                        setIsDetailsLoading(false);
+                        console.log(error);
+                    }
                 });
+
+        return () => {
+            cancelTokenSource.cancel("Request canceled due to component unmount or re-run");
+        };
     }, [tvId, tmdbEpisode, hasRated]);
 
     useEffect(() => {
-        setIsLoading(true);
-        setIsDetailsLoading(true);
-        setHasNextEpisode(true);
-        setHasPreviousEpisode(true);
-        setEpisodeDetails([]);
-
         axiosPublicInstance
             .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`)
             .then(({ data }) => {
@@ -88,7 +105,7 @@ const Episode = () => {
                         setHasNextEpisode(false);
                     }
             });
-    }, [tvId, episodeNumber]);
+    }, [tvId, seasonNumber]);
 
     const handleWatch = (e) => {
         e.preventDefault();
@@ -107,6 +124,7 @@ const Episode = () => {
             .post(`/api/series/watch`, payload)
             .then(() => {
                 setHasRated(true);
+                console.log("Saved");
             })
             .catch((err) => {
                 toast.error("Please add series before playing with its episodes!");
@@ -124,7 +142,9 @@ const Episode = () => {
                 <div className="container mx-auto py-16">
                     {episodeCountDetails && (
                         <div className="pb-4 flex justify-between">
-                            {hasPreviousEpisode ? (
+                            {isSending ? (
+                                <Skeleton width={"10rem"} />
+                            ) : hasPreviousEpisode ? (
                                 <Link
                                     to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
                                     className="text-blue-500  pb-4">
@@ -133,12 +153,16 @@ const Episode = () => {
                             ) : (
                                 <div></div>
                             )}
-                            {hasNextEpisode && (
-                                <Link
-                                    to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
-                                    className="text-blue-500  pb-4">
-                                    ➡️ Next Episode
-                                </Link>
+                            {isSending ? (
+                                <Skeleton width={"10rem"} />
+                            ) : (
+                                hasNextEpisode && (
+                                    <Link
+                                        to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
+                                        className="text-blue-500  pb-4">
+                                        ➡️ Next Episode
+                                    </Link>
+                                )
                             )}
                         </div>
                     )}
