@@ -34,8 +34,14 @@ function Home() {
             if (data.series.length > 0) {
                 const promises = data.series.map((show) => {
                     const series_id = show.series_id;
-                    let seasonNumber = show.episodes[show.episodes?.length - 1].season_number;
-                    let episodeNumber = show.episodes[show.episodes?.length - 1].episode_number;
+
+                    let seasonNumber = 1;
+                    let episodeNumber = 1;
+
+                    if (show.episodes.length > 0) {
+                        seasonNumber = show.episodes[show.episodes?.length - 1].season_number;
+                        episodeNumber = show.episodes[show.episodes?.length - 1].episode_number;
+                    }
 
                     return axiosPublicInstance
                         .get(`/api/tmdb/series/${series_id}`)
@@ -63,6 +69,7 @@ function Home() {
                                     )
                                     .then((nextEpisodeData) => {
                                         const nextEpisode = nextEpisodeData.data;
+                                        console.log({ seriesDetails, nextEpisode, show });
                                         return { seriesDetails, nextEpisode, show };
                                     });
                             } else {
