@@ -10,10 +10,9 @@ const NextEpisodeCard = ({ series, nextEpisode, watchedEpisodes }) => {
             to={`tv/${makeSeriesUrl(series.id, series.name)}/season/${nextEpisode.season_number}/episode/${
                 nextEpisode.episode_number
             }`}
-            className="bg-white rounded-lg shadow-md w-64">
+            className="bg-white overflow-hidden flex-none rounded-lg shadow-md w-64">
             <div className="p-6">
-                <h2 className="text-xl font-bold mb-2">{series.name}</h2>
-                <p>{nextEpisode.name}</p>
+                <h2 className="text-xl font-bold mb-2 line-clamp-1">{series.name}</h2>
                 <p className="text-gray-600">
                     S{nextEpisode.season_number} | E{nextEpisode.episode_number}
                 </p>
