@@ -116,7 +116,7 @@ function Home() {
                 {nextDetails && (
                     <div className="container mx-auto pt-8">
                         <h1 className="text-2xl">Currently Watching</h1>
-                        <div className="pt-2 flex flex-wrap gap-4">
+                        <div className="pt-2 flex overflow-x-auto gap-4">
                             {isSeriesLoading ? <SmallLoadingSpinner /> : <NextEpisodeList nextDetails={nextDetails} />}
                         </div>
                     </div>
