@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { makeSeriesUrl } from "../../configs/helpers";
 
 const NextEpisodeCard = ({ series, nextEpisode, watchedEpisodes }) => {
     const totalEpisodes = series.number_of_episodes;
@@ -6,7 +7,9 @@ const NextEpisodeCard = ({ series, nextEpisode, watchedEpisodes }) => {
 
     return (
         <Link
-            to={`tv/${series.id}/season/${nextEpisode.season_number}/episode/${nextEpisode.episode_number}`}
+            to={`tv/${makeSeriesUrl(series.id, series.name)}/season/${nextEpisode.season_number}/episode/${
+                nextEpisode.episode_number
+            }`}
             className="bg-white rounded-lg shadow-md p-6 w-64">
             <h2 className="text-xl font-bold mb-2">{series.name}</h2>
             <p>{nextEpisode.name}</p>
