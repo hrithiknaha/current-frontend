@@ -47,11 +47,9 @@ const Person = () => {
                                 🚀
                             </a>
                         </h1>
-
                         <div className="text-gray-700 mb-4">
                             <TextWithMultipleParagraphs text={person.biography} />
                         </div>
-
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <h2 className="font-bold mb-1">Date of Birth</h2>
@@ -73,21 +71,18 @@ const Person = () => {
                                 <p className="text-gray-700">{person.known_for_department}</p>
                             </div>
                         </div>
-
                         <TMDBPopularMovieList
                             movies={person.combined_credits.cast.filter(
                                 (movie) =>
                                     movie.media_type === "movie" && movie.vote_average > 7.5 && movie.vote_count > 1000
                             )}
                         />
-
                         <TMDBPopularTVList
                             series={person.combined_credits.cast.filter(
                                 (serie) =>
                                     serie.media_type === "tv" && serie.vote_average > 7.5 && serie.vote_count > 250
                             )}
                         />
-
                         <TMDBPersonFilmography filmography={filmography} />
                     </div>
                 </div>

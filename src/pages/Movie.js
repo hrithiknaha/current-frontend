@@ -13,6 +13,8 @@ import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import { extractSeriesIdFromURL } from "../configs/helpers";
 
+import RatingDetails from "../components/configs/RatingDetails";
+
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 
 const Movie = () => {

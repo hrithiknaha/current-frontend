@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { makeSeriesUrl } from "../../configs/helpers";
 
 const defaultImg = "https://t4.ftcdn.net/jpg/02/17/34/67/240_F_217346782_7XpCTt8bLNJqvVAaDZJwvZjm0epQmj6j.jpg";
 
@@ -12,9 +13,8 @@ const TMDBPopularTVList = ({ series }) => {
                     return (
                         <Link
                             key={serie.id}
-                            to={`/tv/${serie.id}`}
-                            className="bg-white shadow-md rounded-lg overflow-hidden w-40"
-                        >
+                            to={`/tv/${makeSeriesUrl(serie.id, serie.name)}`}
+                            className="bg-white shadow-md rounded-lg overflow-hidden w-40">
                             <img
                                 src={`https://image.tmdb.org/t/p/w300/${serie.poster_path}`}
                                 alt="Poster Image"
