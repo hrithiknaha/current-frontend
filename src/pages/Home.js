@@ -36,7 +36,7 @@ function Home() {
                     const series_id = show.series_id;
 
                     let seasonNumber = 1;
-                    let episodeNumber = 1;
+                    let episodeNumber = 0;
 
                     if (show.episodes.length > 0) {
                         seasonNumber = show.episodes[show.episodes?.length - 1].season_number;
@@ -122,7 +122,7 @@ function Home() {
                     </div>
                 )}
 
-                <div className="container mx-auto pt-8">
+                <div className="container mx-auto py-8">
                     <h1 className="text-2xl">Trending this week</h1>
                     {isLoading ? <SmallLoadingSpinner /> : <TrendingList trending={trending} />}
                 </div>
