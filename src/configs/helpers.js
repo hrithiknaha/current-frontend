@@ -102,3 +102,14 @@ export const convertMinutesToMonthsDaysHours = (minutes) => {
 
     return `${months}M ${days}D ${hours}H`;
 };
+
+export const makeSeriesUrl = (id, name) => {
+    const name_split = name.toLowerCase().split(" ");
+    const elements = [id.toString(), ...name_split];
+    return elements.join("-");
+};
+
+export const extractSeriesIdFromURL = (url) => {
+    const url_extracted = url.split("-");
+    return parseInt(url_extracted[0]);
+};

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { toast } from "react-hot-toast";
@@ -9,11 +9,13 @@ import CrewList from "../components/lists/CrewList";
 
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
+import { extractSeriesIdFromURL } from "../configs/helpers";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
-import RateEpisodeForm from "../components/forms/RateEpisodeForm";
+import RatingForm from "../components/forms/RatingForm";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+import RatingDetails from "../components/configs/RatingDetails";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -32,9 +34,13 @@ const Episode = () => {
 
     const [isSending, setIsSending] = useState(false);
 
+    const [episodeCountDetails, setEpisodeCountDetails] = useState();
+    const [hasPreviousEpisode, setHasPreviousEpisode] = useState(true);
+    const [hasNextEpisode, setHasNextEpisode] = useState(true);
+
     useEffect(() => {
         axiosPublicInstance
-            .get(`/api/tmdb/series/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`)
+            .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}/episode/${episodeNumber}`)
             .then(({ data }) => {
                 setTmdbEpisode(data);
                 setIsLoading(false);
@@ -49,7 +55,7 @@ const Episode = () => {
         const axiosInstance = axiosPrivateInstance(auth);
         if (tmdbEpisode)
             axiosInstance
-                .get(`/api/series/${tvId}/episodes/${tmdbEpisode.id}`)
+                .get(`/api/series/${extractSeriesIdFromURL(tvId)}/episodes/${tmdbEpisode.id}`)
                 .then(({ data }) => {
                     setEpisodeDetails(data);
                     setIsDetailsLoading(false);
@@ -61,6 +67,28 @@ const Episode = () => {
                     console.log(error);
                 });
     }, [tvId, tmdbEpisode, hasRated]);
+
+    useEffect(() => {
+        setIsLoading(true);
+        setIsDetailsLoading(true);
+        setHasNextEpisode(true);
+        setHasPreviousEpisode(true);
+        setEpisodeDetails([]);
+
+        axiosPublicInstance
+            .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`)
+            .then(({ data }) => {
+                setEpisodeCountDetails(data.episodes);
+                if (data?.episodes)
+                    if (parseInt(episodeNumber) === 1) {
+                        setHasPreviousEpisode(false);
+                        setHasNextEpisode(true);
+                    } else if (parseInt(episodeNumber) === data.episodes[data.episodes.length - 1].episode_number) {
+                        setHasPreviousEpisode(true);
+                        setHasNextEpisode(false);
+                    }
+            });
+    }, [tvId, episodeNumber]);
 
     const handleWatch = (e) => {
         e.preventDefault();
@@ -96,36 +124,54 @@ const Episode = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
+                    {episodeCountDetails && (
+                        <div className="pb-4 flex justify-between">
+                            {hasPreviousEpisode ? (
+                                <Link
+                                    to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
+                                    className="text-blue-500  pb-4">
+                                    ⬅️ Previous Episode
+                                </Link>
+                            ) : (
+                                <div></div>
+                            )}
+                            {hasNextEpisode && (
+                                <Link
+                                    to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
+                                    className="text-blue-500  pb-4">
+                                    ➡️ Next Episode
+                                </Link>
+                            )}
+                        </div>
+                    )}
+                    <h1 className="text-gray-600 text-sm">
+                        S{seasonNumber} | E{episodeNumber}
+                    </h1>
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
-                    </div>
-                    <div className="flex items-center text-gray-600 text-sm mb-1">
-                        {moment(tmdbEpisode.air_date).format("YYYY-MM-DD")} &#x2022; {tmdbEpisode.runtime} min
+
+                        {isDetailsLoading ? (
+                            <SmallLoadingSpinner />
+                        ) : hasRated && episodeDetails?.rating ? (
+                            <RatingDetails data={episodeDetails} />
+                        ) : isSending ? (
+                            <SmallLoadingSpinner />
+                        ) : (
+                            <RatingForm setRating={setRating} handleWatch={handleWatch} />
+                        )}
                     </div>
 
-                    <h3 className="mt-8">Overview</h3>
+                    <div className="flex gap-4 items-center justify-between text-gray-600 text-sm mb-1 w-36">
+                        <h1>{moment(tmdbEpisode.air_date).format("YYYY-MM-DD")}</h1>
+                        <h1>{tmdbEpisode.runtime} min</h1>
+                    </div>
+
+                    <h3 className="mt-4">Overview</h3>
                     <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
-
-                    {isDetailsLoading ? (
-                        <SmallLoadingSpinner />
-                    ) : hasRated && episodeDetails?.rating ? (
-                        <div className="text-gray-600 text-sm mb-1">
-                            <p>Metadata</p>
-                            {episodeDetails.rating} &#x2022; {moment(episodeDetails.date_watched).format("YYYY-MM-DD")}
-                        </div>
-                    ) : isSending ? (
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed">
-                            In Progress
-                        </button>
-                    ) : (
-                        <RateEpisodeForm setRating={setRating} handleWatch={handleWatch} />
-                    )}
 
                     <div className="mt-8">
                         <CastList casts={tmdbEpisode.credits.cast} />
-
                         <GuestList guests={tmdbEpisode.guest_stars} />
-
                         <CrewList
                             crews={tmdbEpisode.credits.crew.filter(
                                 (c) =>

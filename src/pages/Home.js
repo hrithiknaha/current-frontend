@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { axiosPublicInstance, axiosPrivateInstance } from "../configs/axios";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 import NextEpisodeList from "../components/lists/NextEpisodeList";
+import TrendingList from "../components/lists/TrendingList";
+import SearchEntity from "../components/forms/SearchEntity";
 
 function Home() {
     const [trending, setTrending] = useState();
@@ -32,8 +34,14 @@ function Home() {
             if (data.series.length > 0) {
                 const promises = data.series.map((show) => {
                     const series_id = show.series_id;
-                    let seasonNumber = show.episodes[show.episodes?.length - 1].season_number;
-                    let episodeNumber = show.episodes[show.episodes?.length - 1].episode_number;
+
+                    let seasonNumber = 1;
+                    let episodeNumber = 0;
+
+                    if (show.episodes.length > 0) {
+                        seasonNumber = show.episodes[show.episodes?.length - 1].season_number;
+                        episodeNumber = show.episodes[show.episodes?.length - 1].episode_number;
+                    }
 
                     return axiosPublicInstance
                         .get(`/api/tmdb/series/${series_id}`)
@@ -61,6 +69,7 @@ function Home() {
                                     )
                                     .then((nextEpisodeData) => {
                                         const nextEpisode = nextEpisodeData.data;
+                                        console.log({ seriesDetails, nextEpisode, show });
                                         return { seriesDetails, nextEpisode, show };
                                     });
                             } else {
@@ -101,71 +110,21 @@ function Home() {
                     <div className="mx-auto container">
                         <h1 className="text-5xl  font-bold text-white mb-4">This is your archive.</h1>
                         <p className="text-xl  text-white">Do what you want with it!</p>
-
-                        <form
-                            className="flex gap-4 items-center justify-between py-8 rounded w-3/4"
-                            onSubmit={handleSubmit}>
-                            <input
-                                type="text"
-                                id="query"
-                                name="query"
-                                className="w-full border border-gray-300 rounded p-2"
-                                placeholder="Search Entities"
-                                onChange={(e) => setQuery(e.target.value)}
-                            />
-
-                            <button
-                                type="submit"
-                                className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
-                                Submit
-                            </button>
-                        </form>
+                        <SearchEntity handleSubmit={handleSubmit} setQuery={setQuery} />
                     </div>
                 </div>
                 {nextDetails && (
                     <div className="container mx-auto pt-8">
                         <h1 className="text-2xl">Currently Watching</h1>
                         <div className="pt-2 flex flex-wrap gap-4">
-                            {isSeriesLoading ? (
-                                <SmallLoadingSpinner />
-                            ) : (
-                                nextDetails.map((data) => {
-                                    return (
-                                        <NextEpisodeList
-                                            key={data.seriesDetails.id}
-                                            series={data.seriesDetails}
-                                            nextEpisode={data.nextEpisode}
-                                            watchedEpisodes={data.show.episodes}
-                                        />
-                                    );
-                                })
-                            )}
+                            {isSeriesLoading ? <SmallLoadingSpinner /> : <NextEpisodeList nextDetails={nextDetails} />}
                         </div>
                     </div>
                 )}
 
-                <div className="container mx-auto pt-8">
+                <div className="container mx-auto py-8">
                     <h1 className="text-2xl">Trending this week</h1>
-                    {isLoading ? (
-                        <SmallLoadingSpinner />
-                    ) : (
-                        <div className="flex overflow-x-auto pt-1">
-                            {trending.map((e) => {
-                                return (
-                                    <Link
-                                        key={e.id}
-                                        to={e.media_type === "movie" ? `movies/${e.id}` : `tv/${e.id}`}
-                                        className="rounded-lg shadow-md overflow-hidden flex-none w-40 h-64 m-2">
-                                        <img
-                                            className="w-full h-full object-cover"
-                                            src={`https://image.tmdb.org/t/p/w300/${e.poster_path}`}
-                                            alt={`${e.title}`}
-                                        />
-                                    </Link>
-                                );
-                            })}
-                        </div>
-                    )}
+                    {isLoading ? <SmallLoadingSpinner /> : <TrendingList trending={trending} />}
                 </div>
             </div>
         </div>

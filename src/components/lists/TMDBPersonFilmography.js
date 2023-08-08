@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { makeSeriesUrl } from "../../configs/helpers";
 
-const TMDBPersonFilmography = ({ filmography }) =>
-{
+const TMDBPersonFilmography = ({ filmography }) => {
     const [media, setMedia] = useState("all");
     const [filteredMovies, setFilteredMovies] = useState([]);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         let entity = [];
         if (media === "all") entity = filmography;
         else if (media === "movies") entity = filmography.filter((m) => m.media_type === "movie");
@@ -25,8 +24,7 @@ const TMDBPersonFilmography = ({ filmography }) =>
                     <span className="text-gray-600">Filter by:</span>
                     <select
                         onChange={(e) => setMedia(e.target.value)}
-                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500"
-                    >
+                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
                         <option value="all">All</option>
                         <option value="movies">Movies</option>
                         <option value="tv">TV Shows</option>
@@ -62,14 +60,17 @@ const TMDBPersonFilmography = ({ filmography }) =>
                                                 ? moment(entity.release_date).format("YYYY")
                                                 : "-"
                                             : entity.first_air_date
-                                                ? moment(entity.first_air_date).format("YYYY")
-                                                : "-"}
+                                            ? moment(entity.first_air_date).format("YYYY")
+                                            : "-"}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap ">
                                         <Link
-                                            to={entity.media_type === "movie" ? `/movies/${entity.id}` : `/tv/${entity.id}`}
-                                            className=" hover:underline hover:text-blue-800"
-                                        >
+                                            to={
+                                                entity.media_type === "movie"
+                                                    ? `/movies/${makeSeriesUrl(entity.id, entity.title)}`
+                                                    : `/tv/${makeSeriesUrl(entity.id, entity.name)}`
+                                            }
+                                            className=" hover:underline hover:text-blue-800">
                                             {entity.media_type === "movie" ? entity.title : entity.name}
                                         </Link>
                                         <br />

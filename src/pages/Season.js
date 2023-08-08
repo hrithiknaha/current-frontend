@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { extractSeriesIdFromURL, makeSeriesUrl } from "../configs/helpers";
 
 import NotFound from "../components/configs/NotFound";
 import EpisodeRow from "../components/TV/EpisodeRow";
@@ -19,23 +20,46 @@ const Season = () => {
     const [seasonEpisodes, setSeasonEpisodes] = useState();
     const [watchedEpisodes, setWatchedEpisodes] = useState();
 
+    const [seasonCountDetails, setSeasonCountDetails] = useState();
+    const [hasPreviousSeason, setHasPreviousSeason] = useState(true);
+    const [hasNextSeason, setHasNextSeason] = useState(true);
+
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosPublicInstance
-            .get(`/api/tmdb/series/${tvId}/season/${seasonNumber}`)
+            .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`)
             .then(({ data }) => {
                 setSeasonEpisodes(data);
 
-                axiosInstance.get(`/api/series/${tvId}/season/${seasonNumber}`).then(({ data }) => {
-                    setWatchedEpisodes(data?.sort((a, b) => (a.episode_number > b.episode_number ? 1 : -1)));
+                axiosInstance
+                    .get(`/api/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`)
+                    .then(({ data }) => {
+                        setWatchedEpisodes(data?.sort((a, b) => (a.episode_number > b.episode_number ? 1 : -1)));
 
-                    setIsLoading(false);
-                });
+                        setIsLoading(false);
+                    });
             })
             .catch((err) => {
                 setIsLoading(false);
                 console.log(err);
             });
+    }, [tvId, seasonNumber]);
+
+    useEffect(() => {
+        setHasNextSeason(true);
+        setHasPreviousSeason(true);
+
+        axiosPublicInstance.get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}`).then(({ data }) => {
+            setSeasonCountDetails(data.seasons);
+            if (data?.seasons)
+                if (parseInt(seasonNumber) === 1) {
+                    setHasPreviousSeason(false);
+                    setHasNextSeason(true);
+                } else if (parseInt(seasonNumber) === data.seasons[data.seasons.length - 1].season_number) {
+                    setHasPreviousSeason(true);
+                    setHasNextSeason(false);
+                }
+        });
     }, [tvId, seasonNumber]);
 
     return (
@@ -46,6 +70,26 @@ const Season = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
+                    {seasonCountDetails && (
+                        <div className="pb-4 flex justify-between">
+                            {hasPreviousSeason ? (
+                                <Link
+                                    to={`/tv/${tvId}/season/${parseInt(seasonNumber) - 1}`}
+                                    className="text-blue-500  pb-4">
+                                    ⬅️ Previous Season
+                                </Link>
+                            ) : (
+                                <div></div>
+                            )}
+                            {hasNextSeason && (
+                                <Link
+                                    to={`/tv/${tvId}/season/${parseInt(seasonNumber) + 1}`}
+                                    className="text-blue-500  pb-4">
+                                    ➡️ Next Season
+                                </Link>
+                            )}
+                        </div>
+                    )}
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">{seasonEpisodes.name}</h1>
                         <div className="flex gap-4 items-center justify-between text-2xl text-blue-500">

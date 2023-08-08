@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { makeSeriesUrl } from "../../configs/helpers";
 
 const SeriesList = ({ series }) => {
     return (
@@ -7,7 +8,7 @@ const SeriesList = ({ series }) => {
             {series.map((series) => {
                 return (
                     <Link
-                        to={`/tv/${series.series_id}`}
+                        to={`/tv/${makeSeriesUrl(series.series_id, series.name)}`}
                         className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative "
                         key={series.series_id}>
                         <h2 className="text-xl font-bold mb-4">{series.name}</h2>

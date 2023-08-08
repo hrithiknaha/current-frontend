@@ -6,9 +6,9 @@ const GuestList = ({ guests }) => {
     return (
         <div className="mt-2 mb-8">
             <h2 className="text-xl font-bold mb-2">Guest Cast</h2>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex overflow-x-auto gap-4">
                 {guests.map((actor) => (
-                    <div key={actor.id} className="bg-white rounded shadow w-36">
+                    <div key={actor.id} className="bg-white overflow-hidden flex-none rounded shadow w-36">
                         <img
                             src={`https://image.tmdb.org/t/p/w300/${actor.profile_path}`}
                             alt={actor.name}
