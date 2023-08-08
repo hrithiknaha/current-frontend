@@ -6,6 +6,8 @@ import { toast } from "react-hot-toast";
 import CastList from "../components/lists/CastList";
 import GuestList from "../components/lists/GuestList";
 import CrewList from "../components/lists/CrewList";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
@@ -96,33 +98,34 @@ const Episode = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
-                    <div className="flex justify-between items-center">
-                        <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
-                        <p>
-                            S
-                            <span>
-                                {seasonNumber} | E<span>{episodeNumber}</span>
-                            </span>
-                        </p>
-                    </div>
-                    <div className="flex items-center text-gray-600 text-sm mb-1">
-                        {moment(tmdbEpisode.air_date).format("YYYY-MM-DD")} &#x2022; {tmdbEpisode.runtime} min
+                    <h1 className="text-gray-600 text-sm">
+                        S{seasonNumber} | E{episodeNumber}
+                    </h1>
+                    <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+
+                    <div className="flex gap-4 items-center justify-between text-gray-600 text-sm mb-1 w-36">
+                        <h1>{moment(tmdbEpisode.air_date).format("YYYY-MM-DD")}</h1>
+                        <h1>{tmdbEpisode.runtime} min</h1>
                     </div>
 
                     <h3 className="mt-8">Overview</h3>
                     <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
 
                     {isDetailsLoading ? (
-                        <SmallLoadingSpinner />
+                        <>
+                            <Skeleton width={"5rem"} />
+                            <Skeleton width={"7rem"} />
+                        </>
                     ) : hasRated && episodeDetails?.rating ? (
                         <div className="text-gray-600 text-sm mb-1">
                             <p>Metadata</p>
                             {episodeDetails.rating} &#x2022; {moment(episodeDetails.date_watched).format("YYYY-MM-DD")}
                         </div>
                     ) : isSending ? (
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed">
-                            In Progress
-                        </button>
+                        <>
+                            <Skeleton width={"5rem"} />
+                            <Skeleton width={"7rem"} />
+                        </>
                     ) : (
                         <RateEpisodeForm setRating={setRating} handleWatch={handleWatch} />
                     )}
