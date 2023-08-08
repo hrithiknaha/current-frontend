@@ -6,16 +6,16 @@ import { toast } from "react-hot-toast";
 import CastList from "../components/lists/CastList";
 import GuestList from "../components/lists/GuestList";
 import CrewList from "../components/lists/CrewList";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import { extractSeriesIdFromURL } from "../configs/helpers";
+import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
-import RateEpisodeForm from "../components/forms/RateEpisodeForm";
+import RatingForm from "../components/forms/RatingForm";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+import RatingDetails from "../components/configs/RatingDetails";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -147,34 +147,27 @@ const Episode = () => {
                     <h1 className="text-gray-600 text-sm">
                         S{seasonNumber} | E{episodeNumber}
                     </h1>
-                    <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+                    <div className="flex justify-between items-center">
+                        <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+
+                        {isDetailsLoading ? (
+                            <SmallLoadingSpinner />
+                        ) : hasRated && episodeDetails?.rating ? (
+                            <RatingDetails data={episodeDetails} />
+                        ) : isSending ? (
+                            <SmallLoadingSpinner />
+                        ) : (
+                            <RatingForm setRating={setRating} handleWatch={handleWatch} />
+                        )}
+                    </div>
 
                     <div className="flex gap-4 items-center justify-between text-gray-600 text-sm mb-1 w-36">
                         <h1>{moment(tmdbEpisode.air_date).format("YYYY-MM-DD")}</h1>
                         <h1>{tmdbEpisode.runtime} min</h1>
                     </div>
 
-                    <h3 className="mt-8">Overview</h3>
+                    <h3 className="mt-4">Overview</h3>
                     <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
-
-                    {isDetailsLoading ? (
-                        <>
-                            <Skeleton width={"5rem"} />
-                            <Skeleton width={"7rem"} />
-                        </>
-                    ) : hasRated && episodeDetails?.rating ? (
-                        <div className="text-gray-600 text-sm mb-1">
-                            <p>Metadata</p>
-                            {episodeDetails.rating} &#x2022; {moment(episodeDetails.date_watched).format("YYYY-MM-DD")}
-                        </div>
-                    ) : isSending ? (
-                        <>
-                            <Skeleton width={"5rem"} />
-                            <Skeleton width={"7rem"} />
-                        </>
-                    ) : (
-                        <RateEpisodeForm setRating={setRating} handleWatch={handleWatch} />
-                    )}
 
                     <div className="mt-8">
                         <CastList casts={tmdbEpisode.credits.cast} />

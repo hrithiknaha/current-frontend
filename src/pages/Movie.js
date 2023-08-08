@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-import RateMovieForm from "../components/forms/RateMovieForm";
+import RatingForm from "../components/forms/RatingForm";
 
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
-import { getVerdict } from "../configs/helpers";
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import { extractSeriesIdFromURL } from "../configs/helpers";
@@ -58,7 +57,7 @@ const Movie = () => {
             });
     }, [hasRated]);
 
-    const submitMovie = (e) => {
+    const handleWatch = (e) => {
         e.preventDefault();
         setIsSending(true);
         const axiosInstance = axiosPrivateInstance(auth);
@@ -85,33 +84,31 @@ const Movie = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
-                    <h1 className="text-4xl mb-1">
-                        <span>{movie.title} </span>
-                        <a href={`https://www.imdb.com/title/${movie.imdb_id}`} target="_blank">
-                            🚀
-                        </a>
-                    </h1>
+                    <div className="flex justify-between items-center">
+                        <h1 className="text-4xl mb-1">
+                            <span>{movie.title} </span>
+                            <a href={`https://www.imdb.com/title/${movie.imdb_id}`} target="_blank">
+                                🚀
+                            </a>
+                        </h1>
+
+                        {isDetailsLoading ? (
+                            <SmallLoadingSpinner />
+                        ) : hasRated && movieDetails?.rating ? (
+                            <RatingDetails data={movieDetails} />
+                        ) : isSending ? (
+                            <SmallLoadingSpinner />
+                        ) : (
+                            <RatingForm setRating={setRating} handleWatch={handleWatch} />
+                        )}
+                    </div>
+
                     <div className="flex items-center text-gray-600 text-sm mb-4">
                         {moment(movie.release_date).format("YYYY-MM-DD")} &#x2022; {movie.runtime} min &#x2022;{" "}
                         {movie.genres.map((genre) => genre.name).join(", ")}
                     </div>
                     <h3>Overview</h3>
                     <p className="text-gray-700 text-sm mb-4">{movie.overview}</p>
-
-                    {isDetailsLoading ? (
-                        <SmallLoadingSpinner />
-                    ) : hasRated && movieDetails?.rating ? (
-                        <div className="flex items-center text-gray-600 text-sm mb-4">
-                            {getVerdict(movieDetails.rating)} &#x2022;{" "}
-                            {moment(movieDetails.date_watched).format("YYYY-MM-DD")}
-                        </div>
-                    ) : isSending ? (
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed">
-                            In Progress
-                        </button>
-                    ) : (
-                        <RateMovieForm submitMovie={submitMovie} setRating={setRating} />
-                    )}
 
                     <CastList casts={movie.credits.cast.filter((cast) => cast.order < 10)} />
                     <CrewList
