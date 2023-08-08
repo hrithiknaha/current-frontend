@@ -92,6 +92,9 @@ const Episode = () => {
     }, [tvId, tmdbEpisode, hasRated]);
 
     useEffect(() => {
+        setHasPreviousEpisode(true);
+        setHasNextEpisode(true);
+
         axiosPublicInstance
             .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`)
             .then(({ data }) => {
@@ -105,7 +108,7 @@ const Episode = () => {
                         setHasNextEpisode(false);
                     }
             });
-    }, [tvId, seasonNumber]);
+    }, [tvId, seasonNumber, episodeNumber]);
 
     const handleWatch = (e) => {
         e.preventDefault();
