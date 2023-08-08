@@ -9,6 +9,7 @@ import NotFound from "../components/configs/NotFound";
 import SeasonRow from "../components/TV/SeasonRow";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import CompletedSeasonRow from "../components/TV/CompletedSeasonRow";
+import { extractSeriesIdFromURL } from "../configs/helpers";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 
@@ -30,7 +31,7 @@ const Series = () => {
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosPublicInstance
-            .get(`/api/tmdb/series/${tvId}`)
+            .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}`)
             .then((res) => {
                 setSeries(res.data);
                 setIsLoading(false);
@@ -41,7 +42,7 @@ const Series = () => {
             });
 
         axiosInstance
-            .get(`/api/series/${tvId}/episodes`)
+            .get(`/api/series/${extractSeriesIdFromURL(tvId)}/episodes`)
             .then(({ data }) => {
                 setWatchedEpisodes(data);
                 setIsDetailsLoading(false);
@@ -49,7 +50,7 @@ const Series = () => {
             .catch((err) => console.log(err));
 
         axiosInstance
-            .get(`/api/series/${tvId}`)
+            .get(`/api/series/${extractSeriesIdFromURL(tvId)}`)
             .then(({ data }) => {
                 if (data?.series_id) setHasSeriesBeenAdded(true);
             })
@@ -69,6 +70,7 @@ const Series = () => {
             })
             .catch((err) => console.log(err));
     };
+
     return (
         <div className="min-h-screen bg-gray-100">
             {isLoading || isDetailsLoading ? (
@@ -86,10 +88,8 @@ const Series = () => {
                                     {(
                                         watchedEpisodes.map((e) => e.rating).reduce((acc, co) => acc + co, 0) /
                                         watchedEpisodes.length
-                                    ).toFixed(2)}{" "}
-                                    / 10
+                                    ).toFixed(2)}
                                 </p>
-                                &#x2022;
                                 <p>{watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins </p>
                             </div>
                         ) : (

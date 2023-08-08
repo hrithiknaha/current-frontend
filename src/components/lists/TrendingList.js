@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { makeSeriesUrl } from "../../configs/helpers";
 
 const TrendingList = ({ trending }) => {
     return (
@@ -7,7 +8,11 @@ const TrendingList = ({ trending }) => {
                 return (
                     <Link
                         key={e.id}
-                        to={e.media_type === "movie" ? `movies/${e.id}` : `tv/${e.id}`}
+                        to={
+                            e.media_type === "movie"
+                                ? `movies/${makeSeriesUrl(e.id, e.title)}`
+                                : `tv/${makeSeriesUrl(e.id, e.name)}`
+                        }
                         className="rounded-lg shadow-md overflow-hidden flex-none w-40 h-64 m-2">
                         <img
                             className="w-full h-full object-cover"
