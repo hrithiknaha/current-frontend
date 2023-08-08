@@ -96,14 +96,12 @@ const Episode = () => {
         const axiosInstance = axiosPrivateInstance(auth);
 
         const payload = {
-            series_id: tvId,
+            series_id: extractSeriesIdFromURL(tvId),
             date_watched: new Date(),
             rating,
             episode_number: episodeNumber,
             season_number: seasonNumber,
         };
-
-        console.log(payload);
 
         axiosInstance
             .post(`/api/series/watch`, payload)
