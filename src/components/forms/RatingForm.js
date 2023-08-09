@@ -14,7 +14,9 @@ const RateForm = ({ setRating, handleWatch }) => {
                 placeholder="Ratings"
                 required
             />
-            <button type="submit" className="w-24  bg-blue-500 text-white  font-semibold  rounded  ">
+            <button
+                type="submit"
+                className="w-24  bg-orange-500 hover:bg-orange-600 text-white  font-semibold  rounded  ">
                 Rate
             </button>
         </form>

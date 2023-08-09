@@ -18,7 +18,7 @@ const NextEpisodeCard = ({ series, nextEpisode, watchedEpisodes }) => {
                 </p>
             </div>
             <div className="h-3 w-full bg-gray-300">
-                <div className="h-3 bg-blue-500" style={{ width: `${watchedPercentage}%` }}></div>
+                <div className="h-3 bg-orange-500" style={{ width: `${watchedPercentage}%` }}></div>
             </div>
         </Link>
     );

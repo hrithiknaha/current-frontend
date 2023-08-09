@@ -12,7 +12,7 @@ const SearchEntity = ({ handleSubmit, setQuery }) => {
 
             <button
                 type="submit"
-                className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                 Submit
             </button>
         </form>
