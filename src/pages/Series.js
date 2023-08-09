@@ -10,10 +10,11 @@ import SeasonRow from "../components/TV/SeasonRow";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import CompletedSeasonRow from "../components/TV/CompletedSeasonRow";
 import { extractSeriesIdFromURL } from "../configs/helpers";
+import RatingAndTimeDetails from "../components/configs/RatingAndTimeDetails";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 
-import { seasonCompleted } from "../configs/helpers";
+import { seasonCompleted, computeSumAndWatchTime, computePercentageCompletion } from "../configs/helpers";
 
 const Series = () => {
     const { tvId } = useParams();
@@ -83,15 +84,13 @@ const Series = () => {
                         <h1 className="text-4xl my-1">{series.name} </h1>
 
                         {hasSeriesBeenAdded ? (
-                            <div className="flex gap-4 items-center justify-between text-2xl text-blue-500">
-                                <p>
-                                    {(
-                                        watchedEpisodes.map((e) => e.rating).reduce((acc, co) => acc + co, 0) /
-                                        watchedEpisodes.length
-                                    ).toFixed(2)}
-                                </p>
-                                <p>{watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} mins </p>
-                            </div>
+                            <RatingAndTimeDetails
+                                data={computeSumAndWatchTime(watchedEpisodes)}
+                                completion={computePercentageCompletion(
+                                    watchedEpisodes.length,
+                                    series.number_of_episodes
+                                )}
+                            />
                         ) : (
                             <button
                                 className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline"
@@ -122,18 +121,12 @@ const Series = () => {
                         </div>
                     </div>
 
-                    <div className="h-1 w-full bg-gray-300 mt-4">
-                        <div
-                            style={{ width: `${(watchedEpisodes.length / series.number_of_episodes) * 100}%` }}
-                            className={`h-full ${
-                                watchedEpisodes.length / series.number_of_episodes < 70 ? "bg-blue-500" : "bg-green-500"
-                            }`}></div>
-                    </div>
-
-                    <div className="mt-4">
-                        <h3>Overview</h3>
-                        <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
-                    </div>
+                    {series.overview && (
+                        <div className="mt-4">
+                            <h3>Overview</h3>
+                            <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
+                        </div>
+                    )}
 
                     <div>
                         <div className="bg-white rounded-lg shadow-md p-4">

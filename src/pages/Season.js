@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { extractSeriesIdFromURL, makeSeriesUrl } from "../configs/helpers";
+import {
+    extractSeriesIdFromURL,
+    extractSeriesNameFromURL,
+    computeSumAndWatchTime,
+    computePercentageCompletion,
+} from "../configs/helpers";
 
 import NotFound from "../components/configs/NotFound";
 import EpisodeRow from "../components/TV/EpisodeRow";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import WatchedEpisodeRow from "../components/TV/WatchedEpisodeRow";
+import RatingAndTimeDetails from "../components/configs/RatingAndTimeDetails";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 
@@ -25,6 +31,11 @@ const Season = () => {
     const [hasNextSeason, setHasNextSeason] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
+        setSeasonEpisodes();
+        setWatchedEpisodes();
+        setSeasonCountDetails();
+
         const axiosInstance = axiosPrivateInstance(auth);
         axiosPublicInstance
             .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`)
@@ -70,74 +81,72 @@ const Season = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
-                    {seasonCountDetails && (
-                        <div className="pb-4 flex justify-between">
-                            {hasPreviousSeason ? (
-                                <Link
-                                    to={`/tv/${tvId}/season/${parseInt(seasonNumber) - 1}`}
-                                    className="text-blue-500  pb-4">
-                                    ⬅️ Previous Season
-                                </Link>
-                            ) : (
-                                <div></div>
-                            )}
-                            {hasNextSeason && (
-                                <Link
-                                    to={`/tv/${tvId}/season/${parseInt(seasonNumber) + 1}`}
-                                    className="text-blue-500  pb-4">
-                                    ➡️ Next Season
-                                </Link>
-                            )}
-                        </div>
-                    )}
-                    <div className="flex justify-between items-center">
-                        <h1 className="text-4xl my-1">{seasonEpisodes.name}</h1>
-                        <div className="flex gap-4 items-center justify-between text-2xl text-blue-500">
-                            <div className="text-2xl text-blue-500">
-                                {(
-                                    watchedEpisodes.map((e) => e.rating).reduce((acc, co) => acc + co, 0) /
-                                    watchedEpisodes.length
-                                ).toFixed(2)}{" "}
-                                / 10
-                            </div>
-                            <div>
-                                {watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0)} /{" "}
-                                {seasonEpisodes.episodes.map((e) => e.runtime).reduce((cur, ob) => cur + ob, 0)} mins
-                            </div>
+                    <div class="flex items-center text-sm font-medium space-x-2 ">
+                        <Link to={`/tv/${tvId}`} class="text-orange-500">
+                            {extractSeriesNameFromURL(tvId)}
+                        </Link>
+                        <span class="text-orange-500">/</span>
+                        <div to={`/tv/${tvId}/season/${seasonNumber}`} class="text-orange-500">
+                            S{seasonNumber}
                         </div>
                     </div>
-
-                    <div className="h-1 w-full bg-gray-300 mt-4">
-                        <div
-                            style={{ width: `${(watchedEpisodes.length / seasonEpisodes.episodes.length) * 100}%` }}
-                            className={`h-full ${
-                                watchedEpisodes.length / seasonEpisodes.episodes.length < 70
-                                    ? "bg-blue-500"
-                                    : "bg-green-500"
-                            }`}></div>
-                    </div>
-
-                    <h3 className="mt-8">Overview</h3>
-                    <p className="text-gray-700 text-sm mb-4">{seasonEpisodes.overview}</p>
-
-                    <div className="my-8 ">
-                        <h1 className="text-2xl">Episodes Yet To Watch</h1>
-                        {seasonEpisodes.episodes
-                            .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
-                            .map((episode) => {
-                                return <EpisodeRow key={episode.id} episode={episode} />;
-                            })}
-                    </div>
-
-                    <div className="my-8 ">
-                        <h1 className="text-2xl">Watched Episodes</h1>
-                        {watchedEpisodes.length ? (
-                            watchedEpisodes.map((episode) => (
-                                <WatchedEpisodeRow key={episode.episode_id} episode={episode} />
-                            ))
-                        ) : (
-                            <p>No Watched episodes</p>
+                    <div className="container mx-auto py-4">
+                        {seasonCountDetails && (
+                            <div className="pb-4 flex justify-between">
+                                {hasPreviousSeason ? (
+                                    <Link
+                                        to={`/tv/${tvId}/season/${parseInt(seasonNumber) - 1}`}
+                                        className="text-orange-500  pb-4">
+                                        ⬅️ Previous Season
+                                    </Link>
+                                ) : (
+                                    <div></div>
+                                )}
+                                {hasNextSeason && (
+                                    <Link
+                                        to={`/tv/${tvId}/season/${parseInt(seasonNumber) + 1}`}
+                                        className="text-orange-500  pb-4">
+                                        ➡️ Next Season
+                                    </Link>
+                                )}
+                            </div>
                         )}
+                        <div className="flex justify-between items-center">
+                            <h1 className="text-4xl my-1">{seasonEpisodes.name}</h1>
+                            <RatingAndTimeDetails
+                                data={computeSumAndWatchTime(watchedEpisodes)}
+                                completion={computePercentageCompletion(
+                                    watchedEpisodes.length,
+                                    seasonEpisodes.episodes.length
+                                )}
+                            />
+                        </div>
+                        {seasonEpisodes.overview && (
+                            <div className="mt-4">
+                                <h3 className="mt-8">Overview</h3>
+                                <p className="text-gray-700 text-sm mb-4">{seasonEpisodes.overview}</p>
+                            </div>
+                        )}
+                        {seasonEpisodes.episodes.length !== watchedEpisodes.length && (
+                            <div className="my-8 ">
+                                <h1 className="text-2xl">Episodes Yet To Watch</h1>
+                                {seasonEpisodes.episodes
+                                    .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
+                                    .map((episode) => {
+                                        return <EpisodeRow key={episode.id} episode={episode} />;
+                                    })}
+                            </div>
+                        )}
+                        <div className="my-8 ">
+                            <h1 className="text-2xl">Watched Episodes</h1>
+                            {watchedEpisodes.length ? (
+                                watchedEpisodes.map((episode) => (
+                                    <WatchedEpisodeRow key={episode.episode_id} episode={episode} />
+                                ))
+                            ) : (
+                                <p>No Watched episodes</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

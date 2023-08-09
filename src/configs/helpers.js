@@ -113,3 +113,33 @@ export const extractSeriesIdFromURL = (url) => {
     const url_extracted = url.split("-");
     return parseInt(url_extracted[0]);
 };
+
+export const extractSeriesNameFromURL = (url) => {
+    const capitalizeWords = (sentence) => {
+        return sentence
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+    };
+
+    const url_extracted = url.split("-");
+    url_extracted.shift();
+    return capitalizeWords(url_extracted.join(" "));
+};
+
+export const computeSumAndWatchTime = (watchedEpisodes) => {
+    if (watchedEpisodes.length > 0) {
+        const totalRating = watchedEpisodes.map((e) => e.rating).reduce((acc, co) => acc + co, 0);
+        const totalEpisodes = watchedEpisodes.length;
+
+        const totalRuntime = watchedEpisodes.map((e) => e.runtime).reduce((acc, co) => acc + co, 0);
+
+        return { rating: (totalRating / totalEpisodes).toFixed(2), runtime: totalRuntime };
+    } else {
+        return { rating: 0, runtime: 0 };
+    }
+};
+
+export const computePercentageCompletion = (watchedEpisodes, allEpisodes) => {
+    return ((watchedEpisodes / allEpisodes) * 100).toFixed(2);
+};
