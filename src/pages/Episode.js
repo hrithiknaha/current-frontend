@@ -10,7 +10,7 @@ import axios from "axios";
 
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
-import { extractSeriesIdFromURL } from "../configs/helpers";
+import { extractSeriesIdFromURL, extractSeriesNameFromURL } from "../configs/helpers";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 
 import RatingForm from "../components/forms/RatingForm";
@@ -143,64 +143,78 @@ const Episode = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-16">
-                    {episodeCountDetails && (
-                        <div className="pb-4 flex justify-between">
-                            {hasPreviousEpisode ? (
-                                <Link
-                                    to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
-                                    className="text-orange-500  pb-4">
-                                    ⬅️ Previous Episode
-                                </Link>
+                    <div class="flex items-center text-sm font-medium space-x-2 ">
+                        <Link to={`/tv/${tvId}`} class="text-orange-500">
+                            {extractSeriesNameFromURL(tvId)}
+                        </Link>
+                        <span class="text-orange-500">/</span>
+                        <Link to={`/tv/${tvId}/season/${seasonNumber}`} class="text-orange-500">
+                            S{seasonNumber}
+                        </Link>
+                        <span class="text-orange-500">/</span>
+                        <span class="text-orange-500">E{episodeNumber}</span>
+                    </div>
+                    <div className="container mx-auto py-4">
+                        {episodeCountDetails && (
+                            <div className="pb-4 flex justify-between">
+                                {hasPreviousEpisode ? (
+                                    <Link
+                                        to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
+                                        className="text-orange-500  pb-4">
+                                        ⬅️ Previous Episode
+                                    </Link>
+                                ) : (
+                                    <div></div>
+                                )}
+                                {hasNextEpisode && (
+                                    <Link
+                                        to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
+                                        className="text-orange-500  pb-4">
+                                        ➡️ Next Episode
+                                    </Link>
+                                )}
+                            </div>
+                        )}
+
+                        <h1 className="text-gray-600 text-sm">
+                            S{seasonNumber} | E{episodeNumber}
+                        </h1>
+                        <div className="flex justify-between items-center">
+                            <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+
+                            {isDetailsLoading ? (
+                                <SmallLoadingSpinner />
+                            ) : hasRated && episodeDetails?.rating ? (
+                                <RatingDetails data={episodeDetails} />
+                            ) : isSending ? (
+                                <SmallLoadingSpinner />
                             ) : (
-                                <div></div>
-                            )}
-                            {hasNextEpisode && (
-                                <Link
-                                    to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
-                                    className="text-orange-500  pb-4">
-                                    ➡️ Next Episode
-                                </Link>
+                                <RatingForm setRating={setRating} handleWatch={handleWatch} />
                             )}
                         </div>
-                    )}
-                    <h1 className="text-gray-600 text-sm">
-                        S{seasonNumber} | E{episodeNumber}
-                    </h1>
-                    <div className="flex justify-between items-center">
-                        <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
 
-                        {isDetailsLoading ? (
-                            <SmallLoadingSpinner />
-                        ) : hasRated && episodeDetails?.rating ? (
-                            <RatingDetails data={episodeDetails} />
-                        ) : isSending ? (
-                            <SmallLoadingSpinner />
-                        ) : (
-                            <RatingForm setRating={setRating} handleWatch={handleWatch} />
-                        )}
-                    </div>
+                        <div className="flex gap-4 items-center justify-between text-gray-600 text-sm mb-1 w-36">
+                            <h1>{moment(tmdbEpisode.air_date).format("YYYY-MM-DD")}</h1>
+                            <h1>{tmdbEpisode.runtime} min</h1>
+                        </div>
 
-                    <div className="flex gap-4 items-center justify-between text-gray-600 text-sm mb-1 w-36">
-                        <h1>{moment(tmdbEpisode.air_date).format("YYYY-MM-DD")}</h1>
-                        <h1>{tmdbEpisode.runtime} min</h1>
-                    </div>
+                        <h3 className="mt-4">Overview</h3>
+                        <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
 
-                    <h3 className="mt-4">Overview</h3>
-                    <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
-
-                    <div className="mt-8">
-                        <CastList casts={tmdbEpisode.credits.cast} />
-                        <GuestList guests={tmdbEpisode.guest_stars} />
-                        <CrewList
-                            crews={tmdbEpisode.credits.crew.filter(
-                                (c) =>
-                                    c.job === "Writer" ||
-                                    c.job === "Director" ||
-                                    c.job === "Screenplay" ||
-                                    c.job === "Director of Photography" ||
-                                    c.job === "Original Music Composer"
-                            )}
-                        />
+                        <div className="mt-8">
+                            <CastList casts={tmdbEpisode.credits.cast} />
+                            <GuestList guests={tmdbEpisode.guest_stars} />
+                            <CrewList
+                                crews={tmdbEpisode.credits.crew.filter(
+                                    (c) =>
+                                        c.job === "Writer" ||
+                                        c.job === "Director" ||
+                                        c.job === "Screenplay" ||
+                                        c.job === "Director of Photography" ||
+                                        c.job === "Original Music Composer"
+                                )}
+                            />
+                        </div>
                     </div>
                 </div>
             )}
