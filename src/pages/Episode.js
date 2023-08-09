@@ -148,7 +148,7 @@ const Episode = () => {
                             {hasPreviousEpisode ? (
                                 <Link
                                     to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
-                                    className="text-blue-500  pb-4">
+                                    className="text-orange-500  pb-4">
                                     ⬅️ Previous Episode
                                 </Link>
                             ) : (
@@ -157,7 +157,7 @@ const Episode = () => {
                             {hasNextEpisode && (
                                 <Link
                                     to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
-                                    className="text-blue-500  pb-4">
+                                    className="text-orange-500  pb-4">
                                     ➡️ Next Episode
                                 </Link>
                             )}

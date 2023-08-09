@@ -86,14 +86,14 @@ const Search = () => {
                     />
                     <button
                         type="submit"
-                        className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                        className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                         Submit
                     </button>
                 </form>
                 {movies && shows ? (
                     <div className="flex gap-4">
                         <div className="flex flex-col justify-between w-80 h-full shadow rounded">
-                            <h1 className="text-xl p-4 bg-blue-500 text-white rounded-t">Search Results</h1>
+                            <h1 className="text-xl p-4 bg-orange-500 text-white rounded-t">Search Results</h1>
                             <div>
                                 <div
                                     onClick={selectMovies}
@@ -103,7 +103,7 @@ const Search = () => {
                                             : "hover:bg-gray-200 hover:cursor-pointer"
                                     } pt-4 p-3`}>
                                     <p>Movies</p>
-                                    <p className="bg-blue-500 px-2 rounded text-white">{movies.length}</p>
+                                    <p className="bg-orange-500 px-2 rounded text-white">{movies.length}</p>
                                 </div>
                                 <div
                                     onClick={selectShows}
@@ -111,7 +111,7 @@ const Search = () => {
                                         selected === "series" ? "bg-gray-200" : "hover:bg-gray-200 hover:cursor-pointer"
                                     } pt-4 p-3`}>
                                     <p>TV Shows</p>
-                                    <p className="bg-blue-500 px-2 rounded text-white">{shows.length}</p>
+                                    <p className="bg-orange-500 px-2 rounded text-white">{shows.length}</p>
                                 </div>
                             </div>
                         </div>

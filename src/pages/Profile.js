@@ -45,25 +45,25 @@ const Profile = () => {
 
                         <div className="flex gap-4">
                             <Link to="stats">
-                                <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                                     Stats
                                 </button>
                             </Link>
                             {selected === "movies" ? (
                                 <Link to="/movies/list">
-                                    <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                    <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                                         Movies Info
                                     </button>
                                 </Link>
                             ) : (
                                 <>
                                     <Link to="/tv/list">
-                                        <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                        <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                                             TV Shows Info
                                         </button>
                                     </Link>
                                     <Link to="/tv/episodes/list">
-                                        <button className="bg-white hover:bg-blue-500 text-blue-500 hover:text-white font-semibold py-2 px-4 rounded outline">
+                                        <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                                             Episodes Info
                                         </button>
                                     </Link>
@@ -74,7 +74,7 @@ const Profile = () => {
 
                     <div className="flex gap-4 py-8">
                         <div className="flex flex-col justify-between w-80 h-full shadow rounded">
-                            <h1 className="text-xl p-4 bg-blue-500 text-white rounded-t">Search Results</h1>
+                            <h1 className="text-xl p-4 bg-orange-500 text-white rounded-t">Search Results</h1>
                             <div>
                                 <div
                                     onClick={selectMovies}
@@ -84,7 +84,7 @@ const Profile = () => {
                                             : "hover:bg-gray-200 hover:cursor-pointer"
                                     } pt-4 p-3`}>
                                     <p>Movies</p>
-                                    <p className="bg-blue-500 px-2 rounded text-white">{user.movies.length}</p>
+                                    <p className="bg-orange-500 px-2 rounded text-white">{user.movies.length}</p>
                                 </div>
                                 <div
                                     onClick={selectShows}
@@ -92,7 +92,7 @@ const Profile = () => {
                                         selected === "series" ? "bg-gray-200" : "hover:bg-gray-200 hover:cursor-pointer"
                                     } pt-4 p-3`}>
                                     <p>TV Shows</p>
-                                    <p className="bg-blue-500 px-2 rounded text-white">{user.series.length}</p>
+                                    <p className="bg-orange-500 px-2 rounded text-white">{user.series.length}</p>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +102,7 @@ const Profile = () => {
                             ) : (
                                 <div>
                                     <div>
-                                        <h1 className="inline-block bg-blue-500 text-white px-4 py-2 mb-4 rounded-lg">
+                                        <h1 className="inline-block bg-orange-500 text-white px-4 py-2 mb-4 rounded-lg">
                                             Watching Now
                                         </h1>
                                         <SeriesList
@@ -114,7 +114,7 @@ const Profile = () => {
                                     {user.series.filter((s) => s.episodes.length === s.number_of_episodes).length >
                                         0 && (
                                         <div>
-                                            <h1 className="inline-block bg-green-500 text-white px-4 py-2 mb-4 rounded-lg">
+                                            <h1 className="inline-block bg-orange-500 text-white px-4 py-2 mb-4 rounded-lg">
                                                 Completed
                                             </h1>
                                             <SeriesList

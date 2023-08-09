@@ -106,7 +106,7 @@ function Home() {
     return (
         <div className="min-h-screen  bg-gray-100">
             <div>
-                <div className="bg-gradient-to-r from-blue-500 to-blue-500 py-20">
+                <div className="bg-gradient-to-r from-red-500 to-orange-500 py-20">
                     <div className="mx-auto container">
                         <h1 className="text-5xl  font-bold text-white mb-4">This is your archive.</h1>
                         <p className="text-xl  text-white">Do what you want with it!</p>
