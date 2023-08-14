@@ -17,6 +17,7 @@ import MovieList from "./pages/MovieList";
 import TVList from "./pages/TVList";
 import Search from "./pages/Search";
 import EpisodeList from "./pages/EpisodeList";
+import Friends from "./pages/Friends";
 
 function App() {
     return (
@@ -38,6 +39,7 @@ function App() {
                         <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
                         <Route path="person/:personId" element={<Person />} />
                         <Route path="profile/:username" element={<Profile />} />
+                        <Route path="profile/:username/friends" element={<Friends />} />
                         <Route path="profile/:username/stats" element={<Stats />} />
                     </Route>
                 </Route>
