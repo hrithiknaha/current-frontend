@@ -69,7 +69,6 @@ function Home() {
                                     )
                                     .then((nextEpisodeData) => {
                                         const nextEpisode = nextEpisodeData.data;
-                                        console.log({ seriesDetails, nextEpisode, show });
                                         return { seriesDetails, nextEpisode, show };
                                     });
                             } else {

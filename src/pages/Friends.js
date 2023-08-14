@@ -27,7 +27,7 @@ const Friends = () => {
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosInstance
-            .get(`/api/users/{${username}}/friends`)
+            .get(`/api/users/${username}/friends`)
             .then(({ data }) => {
                 setFriends(data);
                 setIsLoading(false);
