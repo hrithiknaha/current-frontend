@@ -13,11 +13,14 @@ const Profile = () => {
     const auth = useSelector((state) => state.auth);
 
     const [isLoading, setIsLoading] = useState(true);
-    const [user, setUser] = useState();
+    const [loggedUser, setLoggedUser] = useState();
 
     const [userQuery, setUserQuery] = useState();
     const [searchUser, setSearchUser] = useState();
-    const [requestedFollow, setRequestedFollow] = useState();
+
+    const [user, setUser] = useState();
+
+    const [requestSent, setRequestSent] = useState(false);
 
     const [selected, setSelected] = useState("movies");
 
@@ -39,10 +42,17 @@ const Profile = () => {
             .get(`/api/users/${username}`)
             .then(({ data }) => {
                 setUser(data);
-                setIsLoading(false);
+
+                axiosInstance
+                    .get(`/api/users/${auth.username}`)
+                    .then(({ data }) => {
+                        setLoggedUser(data);
+                        setIsLoading(false);
+                    })
+                    .catch((err) => console.log(err));
             })
             .catch((err) => console.log(err));
-    }, [username]);
+    }, [auth.username, username, requestSent]);
 
     const handleSearchUser = (e) => {
         e.preventDefault();
@@ -64,17 +74,27 @@ const Profile = () => {
             .catch((err) => console.log(err));
     };
 
-    // const handleFollowUser = () => {
-    //     setRequestedFollow(true);
-    //     const axiosInstance = axiosPrivateInstance(auth);
+    const handleFollowUser = () => {
+        const axiosInstance = axiosPrivateInstance(auth);
 
-    //     axiosInstance
-    //         .get(`/api/users/follow/${username}`)
-    //         .then(() => {
-    //             setRequestedFollow(false);
-    //         })
-    //         .catch((err) => console.log(err));
-    // };
+        axiosInstance
+            .get(`/api/users/follow/${username}`)
+            .then(() => {
+                setRequestSent((prev) => !prev);
+            })
+            .catch((err) => console.log(err));
+    };
+
+    const handleUnfollowUser = () => {
+        const axiosInstance = axiosPrivateInstance(auth);
+
+        axiosInstance
+            .get(`/api/users/follow/${username}/remove`)
+            .then(() => {
+                setRequestSent((prev) => !prev);
+            })
+            .catch((err) => console.log(err));
+    };
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -83,31 +103,33 @@ const Profile = () => {
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl my-1">Hi, {user.username}</h1>
 
-                        {/* {auth.username === username ? (
+                        {auth.username === username ? (
                             <p></p>
-                        ) : Boolean(user.following.filter((user) => user.username === username).length) ? (
-                            <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
+                        ) : Boolean(loggedUser?.following.filter((user) => user.username === username).length) ? (
+                            <button
+                                onClick={handleUnfollowUser}
+                                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
                                 Unfollow
                             </button>
                         ) : (
                             <button
                                 onClick={handleFollowUser}
-                                class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
+                                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
                                 Follow
                             </button>
-                        )} */}
+                        )}
                     </div>
 
                     <div className="flex justify-between items-center gap-4 py-4">
                         <div className="flex justify-between items-center gap-4">
-                            <Link to="friends" class=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
-                                <h2 class="text-sm">Followers</h2>
-                                <p class="text-m font-bold text-center">{user.followers.length}</p>
+                            <Link to="friends" className=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
+                                <h2 className="text-sm">Followers</h2>
+                                <p className="text-m font-bold text-center">{user.followers.length}</p>
                             </Link>
 
-                            <Link to="friends" class=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
-                                <h2 class="text-sm">Following</h2>
-                                <p class="text-m font-bold text-center">{user.following.length}</p>
+                            <Link to="friends" className=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
+                                <h2 className="text-sm">Following</h2>
+                                <p className="text-m font-bold text-center">{user.following.length}</p>
                             </Link>
                         </div>
 
@@ -205,8 +227,8 @@ const Profile = () => {
                                                 .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                         />
                                     </div>
-                                    {user.series.filter((s) => s.episodes.length === s.number_of_episodes).length >
-                                        0 && (
+                                    {uloggedUserser.series.filter((s) => s.episodes.length === s.number_of_episodes)
+                                        .length > 0 && (
                                         <div>
                                             <h1 className="inline-block bg-orange-500 text-white px-4 py-2 mb-4 rounded-lg">
                                                 Completed
