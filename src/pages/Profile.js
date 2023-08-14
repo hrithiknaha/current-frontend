@@ -158,19 +158,19 @@ const Profile = () => {
                                 </button>
                             </Link>
                             {selected === "movies" ? (
-                                <Link to="/movies/list">
+                                <Link to={`/movies/list/${username}`}>
                                     <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                                         Movies Info
                                     </button>
                                 </Link>
                             ) : (
                                 <>
-                                    <Link to="/tv/list">
+                                    <Link to={`/tv/list/${username}`}>
                                         <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                                             TV Shows Info
                                         </button>
                                     </Link>
-                                    <Link to="/tv/episodes/list">
+                                    <Link to={`/tv/episodes/list/${username}`}>
                                         <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                                             Episodes Info
                                         </button>
@@ -227,7 +227,7 @@ const Profile = () => {
                                                 .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                         />
                                     </div>
-                                    {uloggedUserser.series.filter((s) => s.episodes.length === s.number_of_episodes)
+                                    {loggedUser.series.filter((s) => s.episodes.length === s.number_of_episodes)
                                         .length > 0 && (
                                         <div>
                                             <h1 className="inline-block bg-orange-500 text-white px-4 py-2 mb-4 rounded-lg">
