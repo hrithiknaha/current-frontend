@@ -7,6 +7,7 @@ import CastList from "../components/lists/CastList";
 import GuestList from "../components/lists/GuestList";
 import CrewList from "../components/lists/CrewList";
 import axios from "axios";
+import { ArrowRight, ArrowLeft } from "react-feather";
 
 import NotFound from "../components/configs/NotFound";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
@@ -160,8 +161,9 @@ const Episode = () => {
                                 {hasPreviousEpisode ? (
                                     <Link
                                         to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
-                                        className="text-orange-500  pb-4">
-                                        ⬅️ Previous Episode
+                                        className="text-orange-500 pb-4 flex gap-2">
+                                        <ArrowLeft />
+                                        Previous Episode
                                     </Link>
                                 ) : (
                                     <div></div>
@@ -169,8 +171,9 @@ const Episode = () => {
                                 {hasNextEpisode && (
                                     <Link
                                         to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
-                                        className="text-orange-500  pb-4">
-                                        ➡️ Next Episode
+                                        className="text-orange-500 pb-4 flex gap-2">
+                                        Next Episode
+                                        <ArrowRight />
                                     </Link>
                                 )}
                             </div>

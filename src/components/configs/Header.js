@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
+import { Home } from "react-feather";
 
 import { logoutUser } from "../../redux/actions/auth";
 
@@ -14,7 +15,8 @@ const Header = ({ user, logoutUser }) => {
     return (
         <nav className="bg-gradient-to-r from-red-500 to-orange-500 p-4">
             <div className="container mx-auto flex justify-between items-center">
-                <Link to="/" className="text-white text-lg font-semibold">
+                <Link to="/" className="text-white text-lg font-semibold flex gap-2">
+                    <Home />
                     Current
                 </Link>
 

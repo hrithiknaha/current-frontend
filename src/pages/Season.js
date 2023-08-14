@@ -7,6 +7,7 @@ import {
     computeSumAndWatchTime,
     computePercentageCompletion,
 } from "../configs/helpers";
+import { ArrowRight, ArrowLeft } from "react-feather";
 
 import NotFound from "../components/configs/NotFound";
 import EpisodeRow from "../components/TV/EpisodeRow";
@@ -96,8 +97,8 @@ const Season = () => {
                                 {hasPreviousSeason ? (
                                     <Link
                                         to={`/tv/${tvId}/season/${parseInt(seasonNumber) - 1}`}
-                                        className="text-orange-500  pb-4">
-                                        ⬅️ Previous Season
+                                        className="text-orange-500 pb-4 flex gap-2">
+                                        <ArrowLeft /> Previous Season
                                     </Link>
                                 ) : (
                                     <div></div>
@@ -105,8 +106,9 @@ const Season = () => {
                                 {hasNextSeason && (
                                     <Link
                                         to={`/tv/${tvId}/season/${parseInt(seasonNumber) + 1}`}
-                                        className="text-orange-500  pb-4">
-                                        ➡️ Next Season
+                                        className="text-orange-500 pb-4 flex gap-2">
+                                        Next Season
+                                        <ArrowRight />
                                     </Link>
                                 )}
                             </div>
