@@ -21,6 +21,7 @@ const Profile = () => {
     const [user, setUser] = useState();
 
     const [requestSent, setRequestSent] = useState(false);
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
 
     const [selected, setSelected] = useState("movies");
 
@@ -76,22 +77,26 @@ const Profile = () => {
 
     const handleFollowUser = () => {
         const axiosInstance = axiosPrivateInstance(auth);
+        setButtonDisabled(true);
 
         axiosInstance
             .get(`/api/users/follow/${username}`)
             .then(() => {
                 setRequestSent((prev) => !prev);
+                setButtonDisabled(false);
             })
             .catch((err) => console.log(err));
     };
 
     const handleUnfollowUser = () => {
         const axiosInstance = axiosPrivateInstance(auth);
+        setButtonDisabled(true);
 
         axiosInstance
             .get(`/api/users/follow/${username}/remove`)
             .then(() => {
                 setRequestSent((prev) => !prev);
+                setButtonDisabled(false);
             })
             .catch((err) => console.log(err));
     };
@@ -107,12 +112,16 @@ const Profile = () => {
                             <p></p>
                         ) : Boolean(loggedUser?.following.filter((user) => user.username === username).length) ? (
                             <button
+                                style={{ backgroundColor: isButtonDisabled ? "bg-gray-500" : "bg-orange-500" }}
+                                disabled={isButtonDisabled}
                                 onClick={handleUnfollowUser}
-                                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
+                                className=" hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
                                 Unfollow
                             </button>
                         ) : (
                             <button
+                                style={{ backgroundColor: isButtonDisabled ? "bg-gray-500" : "bg-orange-500" }}
+                                disabled={isButtonDisabled}
                                 onClick={handleFollowUser}
                                 className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
                                 Follow
