@@ -17,6 +17,7 @@ import MovieList from "./pages/MovieList";
 import TVList from "./pages/TVList";
 import Search from "./pages/Search";
 import EpisodeList from "./pages/EpisodeList";
+import Friends from "./pages/Friends";
 
 function App() {
     return (
@@ -29,15 +30,16 @@ function App() {
                     <Route path="search" element={<Search />} />
                     <Route path="" element={<PrivateRoute />}>
                         <Route index element={<Home />} />
-                        <Route path="movies/list" element={<MovieList />} />
+                        <Route path="movies/list/:username" element={<MovieList />} />
                         <Route path="movies/:movieId" element={<Movie />} />
-                        <Route path="tv/list" element={<TVList />} />
-                        <Route path="tv/episodes/list" element={<EpisodeList />} />
+                        <Route path="tv/list/:username" element={<TVList />} />
+                        <Route path="tv/episodes/list/:username" element={<EpisodeList />} />
                         <Route path="tv/:tvId" element={<Series />} />
                         <Route path="tv/:tvId/season/:seasonNumber" element={<Season />} />
                         <Route path="tv/:tvId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
                         <Route path="person/:personId" element={<Person />} />
                         <Route path="profile/:username" element={<Profile />} />
+                        <Route path="profile/:username/friends" element={<Friends />} />
                         <Route path="profile/:username/stats" element={<Stats />} />
                     </Route>
                 </Route>

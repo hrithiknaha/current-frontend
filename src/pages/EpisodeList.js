@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import { useParams } from "react-router-dom";
+
 import { axiosPrivateInstance } from "../configs/axios";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import EpisodeTable from "../components/episode/EpisodeTable";
 
 const EpisodeList = () => {
+    const { username } = useParams();
+
     const [watchedEpisodes, setWatchedEpisodes] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -15,7 +19,7 @@ const EpisodeList = () => {
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosInstance
-            .get("/api/episodes")
+            .get(`/api/episodes/${username}`)
             .then(({ data }) => {
                 setWatchedEpisodes(data);
                 setIsLoading(false);
@@ -36,7 +40,7 @@ const EpisodeList = () => {
                     ) : watchedEpisodes ? (
                         <EpisodeTable watchedEpisodes={watchedEpisodes} />
                     ) : (
-                        <p>No Movies</p>
+                        <p>No Episodes</p>
                     )}
                 </div>
             </div>

@@ -43,6 +43,8 @@ function Home() {
                         episodeNumber = show.episodes[show.episodes?.length - 1].episode_number;
                     }
 
+                    if (show.number_of_episodes === show.episodes.length) return null;
+
                     return axiosPublicInstance
                         .get(`/api/tmdb/series/${series_id}`)
                         .then((response) => {
@@ -69,7 +71,6 @@ function Home() {
                                     )
                                     .then((nextEpisodeData) => {
                                         const nextEpisode = nextEpisodeData.data;
-                                        console.log({ seriesDetails, nextEpisode, show });
                                         return { seriesDetails, nextEpisode, show };
                                     });
                             } else {

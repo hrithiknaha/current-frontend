@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { axiosPrivateInstance } from "../configs/axios";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
@@ -7,6 +8,8 @@ import LoadingSpinner from "../components/configs/LoadingSpinner";
 import MovieTable from "../components/movie/MovieTable";
 
 const MovieList = () => {
+    const { username } = useParams();
+
     const [watchedMovies, setWatchedMovies] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -15,7 +18,7 @@ const MovieList = () => {
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosInstance
-            .get("/api/movies")
+            .get(`/api/movies/user/${username}`)
             .then(({ data }) => {
                 setWatchedMovies(data);
                 setIsLoading(false);

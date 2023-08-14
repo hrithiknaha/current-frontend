@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import MovieStats from "../components/movie/MovieStats";
 import SeriesStats from "../components/TV/SeriesStats";
@@ -8,6 +9,8 @@ import LoadingSpinner from "../components/configs/LoadingSpinner";
 import { axiosPrivateInstance } from "../configs/axios";
 
 const Stats = () => {
+    const { username } = useParams();
+
     const [series, setSeries] = useState();
     const [movies, setMovies] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +28,7 @@ const Stats = () => {
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosInstance
-            .get(`/api/stats`)
+            .get(`/api/stats/${username}`)
             .then(({ data }) => {
                 setSeries(data.series);
                 setMovies(data.movies);

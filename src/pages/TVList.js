@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { axiosPrivateInstance } from "../configs/axios";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
@@ -7,6 +8,8 @@ import LoadingSpinner from "../components/configs/LoadingSpinner";
 import TVTable from "../components/TV/TVTable";
 
 const TVList = () => {
+    const { username } = useParams();
+
     const [watchedSeries, setWatchedSeries] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -15,7 +18,7 @@ const TVList = () => {
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
         axiosInstance
-            .get("/api/series")
+            .get(`/api/series/user/${username}`)
             .then(({ data }) => {
                 setWatchedSeries(data);
                 setIsLoading(false);
@@ -36,7 +39,7 @@ const TVList = () => {
                     ) : watchedSeries ? (
                         <TVTable watchedSeries={watchedSeries} />
                     ) : (
-                        <p>No Movies</p>
+                        <p>No Series</p>
                     )}
                 </div>
             </div>
