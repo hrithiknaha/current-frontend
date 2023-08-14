@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Tv } from "react-feather";
 
 import { axiosPublicInstance, axiosPrivateInstance } from "../configs/axios";
 import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
@@ -109,7 +110,10 @@ function Home() {
             <div>
                 <div className="bg-gradient-to-r from-red-500 to-orange-500 py-20">
                     <div className="mx-auto container">
-                        <h1 className="text-5xl  font-bold text-white mb-4">This is your archive.</h1>
+                        <h1 className="text-5xl font-bold text-white mb-4 flex gap-4 items-center">
+                            <Tv size={48} />
+                            This is your archive.
+                        </h1>
                         <p className="text-xl  text-white">Do what you want with it!</p>
                         <SearchEntity handleSubmit={handleSubmit} setQuery={setQuery} />
                     </div>
