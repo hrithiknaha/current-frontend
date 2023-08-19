@@ -137,13 +137,13 @@ const Episode = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100 px-4 lg:px-0">
             {isLoading ? (
                 <LoadingSpinner />
             ) : !tmdbEpisode ? (
                 <NotFound />
             ) : (
-                <div className="container mx-auto py-16">
+                <div className="container mx-auto py-8 lg:py-12">
                     <div class="flex items-center text-sm font-medium space-x-2 ">
                         <Link to={`/tv/${tvId}`} class="text-orange-500">
                             {extractSeriesNameFromURL(tvId)}
@@ -179,10 +179,12 @@ const Episode = () => {
                             </div>
                         )}
 
-                        <h1 className="text-gray-600 text-sm">
-                            S{seasonNumber} | E{episodeNumber}
-                        </h1>
-                        <div className="flex justify-between items-center">
+                        <div className="text-center lg:text-left">
+                            <h1 className="text-gray-600 text-sm">
+                                S{seasonNumber} | E{episodeNumber}
+                            </h1>
+                        </div>
+                        <div className="flex flex-col gap-4 my-2 lg:flex-row lg:my-0 justify-between items-center">
                             <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
 
                             {isDetailsLoading ? (
@@ -196,15 +198,17 @@ const Episode = () => {
                             )}
                         </div>
 
-                        <div className="flex gap-4 items-center justify-between text-gray-600 text-sm mb-1 w-36">
+                        <div className="mt-4 lg:mt-0 flex gap-4 items-center justify-between text-gray-600 text-sm mb-1 w-full lg:w-36">
                             <h1>{moment(tmdbEpisode.air_date).format("YYYY-MM-DD")}</h1>
                             <h1>{tmdbEpisode.runtime} min</h1>
                         </div>
 
-                        <h3 className="mt-4">Overview</h3>
-                        <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
+                        <div className="mt-4">
+                            <h3 className="bg-gray-100 font-bold">Overview</h3>
+                            <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
+                        </div>
 
-                        <div className="mt-8">
+                        <div className="mt-4">
                             <CastList casts={tmdbEpisode.credits.cast} />
                             <GuestList guests={tmdbEpisode.guest_stars} />
                             <CrewList

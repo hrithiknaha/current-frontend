@@ -102,11 +102,11 @@ const Profile = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100 px-4 lg:px-0">
             {!isLoading ? (
-                <div className="container mx-auto py-16">
+                <div className="container mx-auto py-8 lg:py-12">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-4xl my-1">Hi, {user.username}</h1>
+                        <h1 className="text-2xl lg:text-4xl my-1">Hi, {user.username}</h1>
 
                         {auth.username === username ? (
                             <p></p>
@@ -115,7 +115,7 @@ const Profile = () => {
                                 style={{ backgroundColor: isButtonDisabled ? "bg-gray-500" : "bg-orange-500" }}
                                 disabled={isButtonDisabled}
                                 onClick={handleUnfollowUser}
-                                className=" hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
+                                className=" bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
                                 Unfollow
                             </button>
                         ) : (
@@ -129,7 +129,7 @@ const Profile = () => {
                         )}
                     </div>
 
-                    <div className="flex justify-between items-center gap-4 py-4">
+                    <div className="flex flex-col justify-between items-start lg:flex-row gap-4 py-4">
                         <div className="flex justify-between items-center gap-4">
                             <Link to="friends" className=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
                                 <h2 className="text-sm">Followers</h2>
@@ -142,7 +142,9 @@ const Profile = () => {
                             </Link>
                         </div>
 
-                        <form className="flex gap-4 items-center justify-center rounded" onSubmit={handleSearchUser}>
+                        <form
+                            className="w-full lg:w-80 flex gap-4 items-center justify-center rounded"
+                            onSubmit={handleSearchUser}>
                             <input
                                 type="text"
                                 id="query"
@@ -176,7 +178,7 @@ const Profile = () => {
                                 <>
                                     <Link to={`/tv/list/${username}`}>
                                         <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
-                                            TV Shows Info
+                                            Shows Info
                                         </button>
                                     </Link>
                                     <Link to={`/tv/episodes/list/${username}`}>
@@ -191,14 +193,14 @@ const Profile = () => {
 
                     {searchUser && (
                         <Link to={`/profile/${searchUser.username}`}>
-                            <div className="bg-white rounded-lg shadow-md p-6 text-center w-48 mx-auto">
+                            <div className="bg-white rounded-lg shadow-md p-4 text-center w-48 mx-auto">
                                 <span className="font-semibold"></span> {searchUser.username}
                             </div>
                         </Link>
                     )}
 
-                    <div className="flex gap-4 py-8">
-                        <div className="flex flex-col justify-between w-80 h-full shadow rounded">
+                    <div className="flex flex-col lg:flex-row gap-4 py-8">
+                        <div className="flex flex-col justify-between w-full lg:w-80 h-full shadow rounded">
                             <h1 className="text-xl p-4 bg-orange-500 text-white rounded-t">Search Results</h1>
                             <div>
                                 <div
@@ -221,7 +223,7 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full">
+                        <div className="w-full mt-4 lg:mt-0">
                             {selected === "movies" ? (
                                 <MovieList movies={user.movies} />
                             ) : (

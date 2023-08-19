@@ -1,6 +1,8 @@
 const SearchEntity = ({ handleSubmit, setQuery }) => {
     return (
-        <form className="flex gap-4 items-center justify-between py-8 rounded w-3/4" onSubmit={handleSubmit}>
+        <form
+            className="flex gap-4 items-center justify-between py-4 lg:py-8 lg:px-0 lg:w-3/4 rounded w-full px-4"
+            onSubmit={handleSubmit}>
             <input
                 type="text"
                 id="query"

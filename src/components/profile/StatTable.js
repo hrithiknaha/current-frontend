@@ -2,7 +2,7 @@ import React from "react";
 
 const StatTable = ({ dataset, header }) => {
     return (
-        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg w-full lg:w-1/3">
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-orange-500">
                     <tr>

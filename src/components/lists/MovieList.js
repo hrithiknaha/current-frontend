@@ -11,7 +11,7 @@ const MovieList = ({ movies }) => {
                     <Link
                         key={movie.movie_id}
                         to={`/movies/${makeSeriesUrl(movie.movie_id, movie.title)}`}
-                        className="bg-white rounded-lg shadow-md p-6 w-80 inline-block relative">
+                        className="bg-white rounded-lg shadow-md p-4 lg:p-6 w-full lg:w-80 inline-block relative">
                         <h2 className="text-xl font-bold mb-4">{movie.title}</h2>
                         <p className="text-gray-600 text-sm">
                             Release Date: {moment(movie.release_date).format("YYYY-MM-DD")}

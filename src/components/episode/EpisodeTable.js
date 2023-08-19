@@ -41,31 +41,36 @@ const EpisodeTable = ({ watchedEpisodes }) => {
 
     return (
         <div>
-            <div className="flex items-center space-x-4 justify-end mb-8">
-                <div className="flex items-center space-x-2">
-                    <span className="text-gray-600">Filter by Rating:</span>
-                    <select
-                        onChange={(e) => setRatingFilter(e.target.value)}
-                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
-                        <option value="0">All</option>
-                        <option value="8">Mindblowing</option>
-                        <option value="6">Its Alright</option>
-                        <option value="4">Headache</option>
-                        <option value="2">Delete It</option>
-                    </select>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <span className="text-gray-600">Sort by:</span>
-                    <select
-                        onChange={(e) => setSort(e.target.value)}
-                        className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
-                        <option value="recent">Most Recent</option>
-                        <option value="runtime">Runtime</option>
-                    </select>
-                    <button onClick={handleSortDirection}>{sortDirection === "desc" ? "⬇️" : "⬆️"}</button>
+            <div className="flex flex-col lg:flex-row items-center justify-between mb-8">
+                <h1 className="pb-4 text-2xl">My Episodes Ratings</h1>
+                <div className="flex flex-col gap-2 lg:flex-row w-full lg:w-1/2  lg:justify-end">
+                    <div className="flex gap-2 w-full lg:w-1/2 items-center justify-between">
+                        <div className="text-gray-600 justify-end">Filter by Rating:</div>
+                        <select
+                            onChange={(e) => setRatingFilter(e.target.value)}
+                            className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
+                            <option value="0">All</option>
+                            <option value="8">Mindblowing</option>
+                            <option value="6">Its Alright</option>
+                            <option value="4">Headache</option>
+                            <option value="2">Delete It</option>
+                        </select>
+                    </div>
+                    <div className="flex gap-2 w-full lg:w-1/2 items-center justify-between">
+                        <span className="text-gray-600">Sort by:</span>
+                        <div className="flex gap-4">
+                            <select
+                                onChange={(e) => setSort(e.target.value)}
+                                className="block appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:border-indigo-500">
+                                <option value="recent">Most Recent</option>
+                                <option value="runtime">Runtime</option>
+                            </select>
+                            <button onClick={handleSortDirection}>{sortDirection === "desc" ? "⬇️" : "⬆️"}</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="bg-white shadow-md rounded my-6">
+            <div className="bg-white shadow-md rounded my-6  overflow-x-scroll">
                 <table className="w-full whitespace-nowrap">
                     <thead>
                         <tr className="bg-gray-100">

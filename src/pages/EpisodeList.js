@@ -31,10 +31,9 @@ const EpisodeList = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <div className="container mx-auto py-16">
+        <div className="min-h-screen bg-gray-100 px-4 lg:px-0">
+            <div className="container mx-auto py-8 lg:py-12">
                 <div>
-                    <h1 className="pb-4 text-2xl">My Episodes Ratings</h1>
                     {isLoading ? (
                         <LoadingSpinner />
                     ) : watchedEpisodes ? (
