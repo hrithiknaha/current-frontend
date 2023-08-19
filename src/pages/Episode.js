@@ -185,7 +185,7 @@ const Episode = () => {
                             </h1>
                         </div>
                         <div className="flex flex-col gap-4 my-2 lg:flex-row lg:my-0 justify-between items-center">
-                            <h1 className="text-4xl my-1">{tmdbEpisode.name}</h1>
+                            <h1 className="text-center lg:text-left text-4xl my-1">{tmdbEpisode.name}</h1>
 
                             {isDetailsLoading ? (
                                 <SmallLoadingSpinner />

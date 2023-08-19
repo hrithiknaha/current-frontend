@@ -105,7 +105,7 @@ const Movie = () => {
                         )}
                     </div>
 
-                    <div className="flex justify-between lg:w-72 text-gray-600 text-sm mb-4">
+                    <div className="flex flex-wrap justify-between lg:w-72 text-gray-600 text-sm mb-4">
                         <div>{moment(movie.release_date).format("YYYY-MM-DD")}</div>
                         <div>{movie.runtime} min</div>
                         <div>{movie.genres.map((genre) => genre.name).join(", ")}</div>
