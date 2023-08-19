@@ -109,8 +109,8 @@ function Home() {
         <div className="min-h-screen  bg-gray-100">
             <div>
                 <div className="bg-gradient-to-r from-red-500 to-orange-500 py-20">
-                    <div className="mx-auto container">
-                        <h1 className="text-5xl font-bold text-white mb-4 flex gap-4 items-center">
+                    <div className="mx-auto container flex flex-col items-center lg:items-start">
+                        <h1 className="text-2xl lg:text-5xl font-bold text-white mb-2 lg:mb-4 flex items-center justify-center gap-4">
                             <Tv size={48} />
                             This is your archive.
                         </h1>
@@ -119,16 +119,16 @@ function Home() {
                     </div>
                 </div>
                 {nextDetails && (
-                    <div className="container mx-auto pt-8">
-                        <h1 className="text-2xl">Currently Watching</h1>
+                    <div className="container mx-auto pt-8 px-4 lg:px-0">
+                        <h1 className="text-center lg:text-left text-2xl pb-2">Currently Watching</h1>
                         <div className="pt-2 flex overflow-x-auto gap-4">
                             {isSeriesLoading ? <SmallLoadingSpinner /> : <NextEpisodeList nextDetails={nextDetails} />}
                         </div>
                     </div>
                 )}
 
-                <div className="container mx-auto py-8">
-                    <h1 className="text-2xl">Trending this week</h1>
+                <div className="container mx-auto py-8 px-4 lg:px-0">
+                    <h1 className="text-center lg:text-left text-2xl pb-2">Trending this week</h1>
                     {isLoading ? <SmallLoadingSpinner /> : <TrendingList trending={trending} />}
                 </div>
             </div>

@@ -79,14 +79,14 @@ const Movie = () => {
     };
 
     return (
-        <div className="bg-gray-100 min-h-screen ">
+        <div className="bg-gray-100 min-h-screen px-4 lg:px-0">
             {isLoading ? (
                 <LoadingSpinner />
             ) : !movie ? (
                 <NotFound />
             ) : (
-                <div className="container mx-auto py-16">
-                    <div className="flex justify-between items-center">
+                <div className="container mx-auto py-8 lg:py-12">
+                    <div className="flex flex-col pb-2 gap-4 my-4 lg:flex-row lg:my-0 justify-between items-center">
                         <h1 className="text-4xl mb-1">
                             <span>{movie.title} </span>
                             <a href={`https://www.imdb.com/title/${movie.imdb_id}`} target="_blank">
@@ -105,12 +105,16 @@ const Movie = () => {
                         )}
                     </div>
 
-                    <div className="flex items-center text-gray-600 text-sm mb-4">
-                        {moment(movie.release_date).format("YYYY-MM-DD")} &#x2022; {movie.runtime} min &#x2022;{" "}
-                        {movie.genres.map((genre) => genre.name).join(", ")}
+                    <div className="flex justify-between lg:w-72 text-gray-600 text-sm mb-4">
+                        <div>{moment(movie.release_date).format("YYYY-MM-DD")}</div>
+                        <div>{movie.runtime} min</div>
+                        <div>{movie.genres.map((genre) => genre.name).join(", ")}</div>
                     </div>
-                    <h3>Overview</h3>
-                    <p className="text-gray-700 text-sm mb-4">{movie.overview}</p>
+
+                    <div className="py-4">
+                        <h3 className="bg-gray-100 font-bold">Overview</h3>
+                        <p className="text-gray-700 text-sm mb-4">{movie.overview}</p>
+                    </div>
 
                     <CastList casts={movie.credits.cast.filter((cast) => cast.order < 10)} />
                     <CrewList

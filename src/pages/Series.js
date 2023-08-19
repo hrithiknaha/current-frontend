@@ -73,14 +73,14 @@ const Series = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="bg-gray-100 min-h-screen px-4 lg:px-0">
             {isLoading || isDetailsLoading ? (
                 <LoadingSpinner />
             ) : !series ? (
                 <NotFound />
             ) : (
-                <div className="container mx-auto py-16">
-                    <div className="flex justify-between items-center">
+                <div className="container mx-auto py-8 lg:py-12">
+                    <div className="flex flex-col pb-2 gap-4 my-4 lg:flex-row lg:my-0 justify-between items-center">
                         <h1 className="text-4xl my-1">{series.name} </h1>
 
                         {hasSeriesBeenAdded ? (
@@ -101,12 +101,12 @@ const Series = () => {
                     </div>
 
                     <div className="my-4">
-                        <div className="flex items-center gap-4 text-gray-600 text-sm mb-1">
-                            <span>{moment(series.first_air_date).format("YYYY-MM-DD")}</span>
-                            {series.episode_run_time && <span>{series.episode_run_time} min</span>}
-                            <span>{series.genres.map((genre) => genre.name).join(", ")}</span>
+                        <div className="flex justify-between lg:w-96 text-gray-600 text-sm mb-4">
+                            <div>{moment(series.first_air_date).format("YYYY-MM-DD")}</div>
+                            <div>{series.episode_run_time && <span>{series.episode_run_time} min</span>}</div>
+                            <div>{series.genres.map((genre) => genre.name).join(", ")}</div>
                         </div>
-                        <div className="flex gap-4 items-center mb-4">
+                        <div className="flex gap-4 justify-between lg:justify-start items-center mb-4">
                             <span
                                 className={
                                     series.status === "Canceled"
@@ -121,27 +121,29 @@ const Series = () => {
                         </div>
                     </div>
 
-                    {series.overview && (
-                        <div className="mt-4">
-                            <h3>Overview</h3>
-                            <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
-                        </div>
-                    )}
+                    <div>
+                        {series.overview && (
+                            <div className="py-4">
+                                <h3 className="bg-gray-100 font-bold">Overview</h3>
+                                <p className="text-gray-700 text-sm mb-4">{series.overview}</p>
+                            </div>
+                        )}
+                    </div>
 
                     <div>
-                        <div className="bg-white rounded-lg shadow-md p-4">
-                            <h2 className="text-lg font-semibold mb-2">Metadata</h2>
+                        <div className="bg-white rounded-lg shadow-md p-4 max-w-lg">
+                            <h2 className="text-lg font-semibold">Metadata</h2>
                             <div className="flex items-center justify-between">
-                                <div className="mr-4">
-                                    <p className="text-gray-600">Number of Seasons:</p>
+                                <div className="text-center">
+                                    <p className="text-gray-600">Seasons:</p>
                                     <p className="text-2xl font-semibold">{series.number_of_seasons}</p>
                                 </div>
-                                <div>
-                                    <p className="text-gray-600">Total Episodes:</p>
+                                <div className="text-center">
+                                    <p className="text-gray-600">Episodes:</p>
                                     <p className="text-2xl font-semibold">{series.number_of_episodes}</p>
                                 </div>
-                                <div>
-                                    <p className="text-gray-600">Episodes Watched:</p>
+                                <div className="text-center">
+                                    <p className="text-gray-600">Watched:</p>
                                     {watchedEpisodes && (
                                         <p className="text-2xl font-semibold">{watchedEpisodes.length}</p>
                                     )}
@@ -150,7 +152,7 @@ const Series = () => {
                         </div>
 
                         <div className="my-8">
-                            <h1 className="text-2xl">Seasons</h1>
+                            <h3 className="bg-gray-100 font-bold">Seasons</h3>
                             {series.seasons
                                 .filter(
                                     (season) => season.name != "Specials" && !seasonCompleted(season, watchedEpisodes)
@@ -167,7 +169,7 @@ const Series = () => {
                                 })}
                         </div>
                         <div className="my-8 ">
-                            <h1 className="text-2xl">Completed Seasons</h1>
+                            <h3 className="bg-gray-100 font-bold">Completed Seasons</h3>
                             {series.seasons.filter((season) => seasonCompleted(season, watchedEpisodes)).length > 0 ? (
                                 series.seasons
                                     .filter((season) => seasonCompleted(season, watchedEpisodes))

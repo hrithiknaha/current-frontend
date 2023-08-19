@@ -72,7 +72,7 @@ const Search = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100 px-4 lg:px-0">
             <div className="container mx-auto">
                 <form className="flex gap-4 items-center justify-center py-8 rounded" onSubmit={handleSubmit}>
                     <input
@@ -91,9 +91,11 @@ const Search = () => {
                     </button>
                 </form>
                 {movies && shows ? (
-                    <div className="flex gap-4">
-                        <div className="flex flex-col justify-between w-80 h-full shadow rounded">
-                            <h1 className="text-xl p-4 bg-orange-500 text-white rounded-t">Search Results</h1>
+                    <div className="flex flex-col lg:flex-row gap-4">
+                        <div className="flex flex-col justify-between w-full lg:w-80 h-full shadow rounded">
+                            <h1 className="text-lg lg:text-xl p-3 lg:p-4 bg-orange-500 text-white rounded-t">
+                                Search Results
+                            </h1>
                             <div>
                                 <div
                                     onClick={selectMovies}
@@ -101,7 +103,7 @@ const Search = () => {
                                         selected === "movies"
                                             ? "bg-gray-200 "
                                             : "hover:bg-gray-200 hover:cursor-pointer"
-                                    } pt-4 p-3`}>
+                                    } pt-4 p-2 lg:p-3`}>
                                     <p>Movies</p>
                                     <p className="bg-orange-500 px-2 rounded text-white">{movies.length}</p>
                                 </div>
@@ -109,7 +111,7 @@ const Search = () => {
                                     onClick={selectShows}
                                     className={`flex items-center justify-between ${
                                         selected === "series" ? "bg-gray-200" : "hover:bg-gray-200 hover:cursor-pointer"
-                                    } pt-4 p-3`}>
+                                    } pt-4 p-2 lg:p-3`}>
                                     <p>TV Shows</p>
                                     <p className="bg-orange-500 px-2 rounded text-white">{shows.length}</p>
                                 </div>

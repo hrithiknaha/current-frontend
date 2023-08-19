@@ -75,13 +75,13 @@ const Season = () => {
     }, [tvId, seasonNumber]);
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100 px-4 lg:px-0">
             {isLoading ? (
                 <LoadingSpinner />
             ) : !seasonEpisodes && !watchedEpisodes ? (
                 <NotFound />
             ) : (
-                <div className="container mx-auto py-16">
+                <div className="container mx-auto py-8 lg:py-12">
                     <div class="flex items-center text-sm font-medium space-x-2 ">
                         <Link to={`/tv/${tvId}`} class="text-orange-500">
                             {extractSeriesNameFromURL(tvId)}
@@ -113,7 +113,7 @@ const Season = () => {
                                 )}
                             </div>
                         )}
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col gap-4 my-2 lg:flex-row lg:my-0 justify-between items-center">
                             <h1 className="text-4xl my-1">{seasonEpisodes.name}</h1>
                             <RatingAndTimeDetails
                                 data={computeSumAndWatchTime(watchedEpisodes)}
@@ -125,13 +125,13 @@ const Season = () => {
                         </div>
                         {seasonEpisodes.overview && (
                             <div className="mt-4">
-                                <h3 className="mt-8">Overview</h3>
+                                <h3 className="bg-gray-100 font-bold">Overview</h3>
                                 <p className="text-gray-700 text-sm mb-4">{seasonEpisodes.overview}</p>
                             </div>
                         )}
                         {seasonEpisodes.episodes.length !== watchedEpisodes.length && (
                             <div className="my-8 ">
-                                <h1 className="text-2xl">Episodes Yet To Watch</h1>
+                                <h3 className="bg-gray-100 font-bold">Episodes</h3>
                                 {seasonEpisodes.episodes
                                     .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
                                     .map((episode) => {
@@ -140,7 +140,7 @@ const Season = () => {
                             </div>
                         )}
                         <div className="my-8 ">
-                            <h1 className="text-2xl">Watched Episodes</h1>
+                            <h3 className="bg-gray-100 font-bold">Watched Episodes</h3>
                             {watchedEpisodes.length ? (
                                 watchedEpisodes.map((episode) => (
                                     <WatchedEpisodeRow key={episode.episode_id} episode={episode} />

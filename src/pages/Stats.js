@@ -37,15 +37,15 @@ const Stats = () => {
             .catch((err) => console.log(err));
     }, []);
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100 px-4 lg:px-0">
             {!isLoading ? (
-                <div className="container mx-auto py-16">
+                <div className="container mx-auto py-8 lg:py-12">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-4xl my-1">{selected}</h1>
+                        <h1 className="text-2xl lg:text-4xl my-1">{selected}</h1>
 
                         <button
                             onClick={handleStatToggle}
-                            className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
+                            className="text-sm lg:text-base bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
                             Switch to {selected === "Movies" ? "Series" : "Movies"}
                         </button>
                     </div>

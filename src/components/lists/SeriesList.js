@@ -9,7 +9,7 @@ const SeriesList = ({ series }) => {
                 return (
                     <Link
                         to={`/tv/${makeSeriesUrl(series.series_id, series.name)}`}
-                        className="bg-white rounded-lg shadow-md w-80 inline-block relative overflow-hidden"
+                        className="bg-white rounded-lg shadow-md w-full lg:w-80 inline-block relative overflow-hidden"
                         key={series.series_id}>
                         <div className="p-6">
                             <h2 className="text-xl font-bold mb-4 line-clamp-1">{series.name}</h2>

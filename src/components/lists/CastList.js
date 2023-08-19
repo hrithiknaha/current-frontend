@@ -5,8 +5,8 @@ const defaultImg = "https://t4.ftcdn.net/jpg/02/17/34/67/240_F_217346782_7XpCTt8
 
 const CastList = ({ casts }) => {
     return (
-        <div className="mt-2 mb-8">
-            <h2 className="text-xl font-bold mb-2">Cast</h2>
+        <div className="py-4">
+            <h3 className="bg-gray-100 font-bold py-2">Casts</h3>
             {casts.length > 0 ? (
                 <div className="flex overflow-x-auto  gap-4">
                     {casts.map((actor) => (
