@@ -2,7 +2,7 @@ import React from "react";
 
 const RateForm = ({ setRating, handleWatch }) => {
     return (
-        <form onSubmit={handleWatch} className="flex gap-4 justify-between w-80 h-10">
+        <form onSubmit={handleWatch} className="flex gap-4 justify-between w-full lg:w-80 h-10">
             <input
                 min={0}
                 max={10}
@@ -10,7 +10,7 @@ const RateForm = ({ setRating, handleWatch }) => {
                 name="rate"
                 id="rate"
                 onChange={(e) => setRating(e.target.value)}
-                className=" px-4 py-2 w-56 h-full border rounded mb-4"
+                className=" px-4 py-2 w-full lg:w-56 h-full border rounded mb-4"
                 placeholder="Ratings"
                 required
             />
