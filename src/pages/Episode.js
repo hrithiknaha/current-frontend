@@ -18,8 +18,6 @@ import RatingForm from "../components/forms/RatingForm";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 import RatingDetails from "../components/configs/RatingDetails";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -131,7 +129,7 @@ const Episode = () => {
                 console.log("Saved");
             })
             .catch((err) => {
-                toast.error("Please add series before playing with its episodes!");
+                toast.error(err.response.data.status_message);
                 console.log(err);
             });
     };
