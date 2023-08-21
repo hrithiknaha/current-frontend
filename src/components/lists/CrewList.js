@@ -13,7 +13,7 @@ const CrewList = ({ crews }) => {
                         <Link
                             to={`/person/${crew.id}`}
                             key={crew.id}
-                            className="bg-gray-100 overflow-hidden flex-none rounded shadow w-36">
+                            className="bg-gray-100 overflow-hidden flex-none rounded-sm shadow w-24 lg:w-36">
                             <img
                                 src={`https://image.tmdb.org/t/p/w300/${crew.profile_path}`}
                                 alt={crew.name}
