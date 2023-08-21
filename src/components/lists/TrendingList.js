@@ -13,7 +13,7 @@ const TrendingList = ({ trending }) => {
                                 ? `movies/${makeSeriesUrl(e.id, e.title)}`
                                 : `tv/${makeSeriesUrl(e.id, e.name)}`
                         }
-                        className="rounded-lg shadow overflow-hidden flex-none w-40 h-64 m-2">
+                        className="rounded-lg shadow overflow-hidden flex-none w:20 h-32 lg:w-40 lg:h-64 m-2">
                         <img
                             className="w-full h-full object-cover"
                             src={`https://image.tmdb.org/t/p/w300/${e.poster_path}`}
