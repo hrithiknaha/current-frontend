@@ -1,65 +1,32 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import moment from "moment";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
+import SeasonRow from "../components/TV/SeasonRow";
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/configs/NotFound";
-import SeasonRow from "../components/TV/SeasonRow";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import CompletedSeasonRow from "../components/TV/CompletedSeasonRow";
-import { extractSeriesIdFromURL } from "../configs/helpers";
 import RatingAndTimeDetails from "../components/configs/RatingAndTimeDetails";
 
-import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+import { axiosPrivateInstance } from "../configs/axios";
 
+import { useSeries, useSeriesWatchedEpisodes, useHasSeriesAdded } from "../hooks/useSeries";
+
+import { extractSeriesIdFromURL } from "../configs/helpers";
 import { seasonCompleted, computeSumAndWatchTime, computePercentageCompletion } from "../configs/helpers";
 
 const Series = () => {
     const { tvId } = useParams();
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    const [series, setSeries] = useState();
-
-    const [watchedEpisodes, setWatchedEpisodes] = useState();
-    const [isDetailsLoading, setIsDetailsLoading] = useState(true);
-    const [hasSeriesBeenAdded, setHasSeriesBeenAdded] = useState();
-
     const auth = useSelector((state) => state.auth);
 
-    useEffect(() => {
-        const axiosInstance = axiosPrivateInstance(auth);
-        axiosPublicInstance
-            .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}`)
-            .then((res) => {
-                setSeries(res.data);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                setIsLoading(false);
-                console.log(err);
-            });
+    const [hasSeriesBeenAdded, setHasSeriesBeenAdded] = useState(false);
 
-        axiosInstance
-            .get(`/api/series/${extractSeriesIdFromURL(tvId)}/episodes`)
-            .then(({ data }) => {
-                setWatchedEpisodes(data);
-                setIsDetailsLoading(false);
-            })
-            .catch((err) => console.log(err));
-
-        axiosInstance
-            .get(`/api/series/${extractSeriesIdFromURL(tvId)}`)
-            .then(({ data }) => {
-                if (data?.series_id) setHasSeriesBeenAdded(true);
-            })
-            .catch((err) => {
-                console.log(err);
-                setHasSeriesBeenAdded(false);
-            });
-    }, [tvId]);
+    const { series, isLoading } = useSeries(tvId);
+    const { watchedEpisodes, isDetailsLoading } = useSeriesWatchedEpisodes(tvId);
+    useHasSeriesAdded(tvId, setHasSeriesBeenAdded);
 
     const handleSubmit = () => {
         const axiosInstance = axiosPrivateInstance(auth);
