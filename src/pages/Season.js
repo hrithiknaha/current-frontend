@@ -82,18 +82,18 @@ const Season = () => {
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-8 lg:py-12">
-                    <div class="flex items-center text-sm font-medium space-x-2 ">
-                        <Link to={`/tv/${tvId}`} class="text-orange-500">
-                            {extractSeriesNameFromURL(tvId)}
-                        </Link>
-                        <span class="text-orange-500">/</span>
-                        <div to={`/tv/${tvId}/season/${seasonNumber}`} class="text-orange-500">
-                            S{seasonNumber}
+                    <div className="bg-white rounded-lg shadow-md p-4">
+                        <div className="flex items-center text-sm font-medium space-x-2 ">
+                            <Link to={`/tv/${tvId}`} className="text-orange-500">
+                                {extractSeriesNameFromURL(tvId)}
+                            </Link>
+                            <span className="text-orange-500">/</span>
+                            <div to={`/tv/${tvId}/season/${seasonNumber}`} className="text-orange-500">
+                                S{seasonNumber}
+                            </div>
                         </div>
-                    </div>
-                    <div className="container mx-auto py-4">
                         {seasonCountDetails && (
-                            <div className="pb-4 flex justify-between">
+                            <div className="pt-4 flex justify-between">
                                 {hasPreviousSeason ? (
                                     <Link
                                         to={`/tv/${tvId}/season/${parseInt(seasonNumber) - 1}`}
@@ -125,30 +125,30 @@ const Season = () => {
                         </div>
                         {seasonEpisodes.overview && (
                             <div className="mt-4">
-                                <h3 className="bg-gray-100 font-bold">Overview</h3>
+                                <h3 className="font-bold">Overview</h3>
                                 <p className="text-gray-700 text-sm mb-4">{seasonEpisodes.overview}</p>
                             </div>
                         )}
-                        {seasonEpisodes.episodes.length !== watchedEpisodes.length && (
-                            <div className="my-8 ">
-                                <h3 className="bg-gray-100 font-bold">Episodes</h3>
-                                {seasonEpisodes.episodes
-                                    .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
-                                    .map((episode) => {
-                                        return <EpisodeRow key={episode.id} episode={episode} />;
-                                    })}
-                            </div>
-                        )}
+                    </div>
+                    {seasonEpisodes.episodes.length !== watchedEpisodes.length && (
                         <div className="my-8 ">
-                            <h3 className="bg-gray-100 font-bold">Watched Episodes</h3>
-                            {watchedEpisodes.length ? (
-                                watchedEpisodes.map((episode) => (
-                                    <WatchedEpisodeRow key={episode.episode_id} episode={episode} />
-                                ))
-                            ) : (
-                                <p>No Watched episodes</p>
-                            )}
+                            <h3 className="bg-gray-100 font-bold">Episodes</h3>
+                            {seasonEpisodes.episodes
+                                .filter((episode) => !watchedEpisodes.find((e) => e.episode_id === episode.id))
+                                .map((episode) => {
+                                    return <EpisodeRow key={episode.id} episode={episode} />;
+                                })}
                         </div>
+                    )}
+                    <div className="my-8 ">
+                        <h3 className="bg-gray-100 font-bold">Watched Episodes</h3>
+                        {watchedEpisodes.length ? (
+                            watchedEpisodes.map((episode) => (
+                                <WatchedEpisodeRow key={episode.episode_id} episode={episode} />
+                            ))
+                        ) : (
+                            <p>No Watched episodes</p>
+                        )}
                     </div>
                 </div>
             )}
