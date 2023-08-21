@@ -119,7 +119,7 @@ function Home() {
                     </div>
                 </div>
                 {nextDetails && (
-                    <div className="container mx-auto pt-8 px-4 lg:px-0">
+                    <div className="container mx-auto pt-12 lg:pt-8 px-4 lg:px-0">
                         <h1 className="text-center lg:text-left text-2xl pb-2">Currently Watching</h1>
                         <div className="pt-2 flex overflow-x-auto gap-4">
                             {isSeriesLoading ? <SmallLoadingSpinner /> : <NextEpisodeList nextDetails={nextDetails} />}
@@ -127,7 +127,7 @@ function Home() {
                     </div>
                 )}
 
-                <div className="container mx-auto py-8 px-4 lg:px-0">
+                <div className="container mx-auto pt-12 lg:pt-8 px-4 lg:px-0">
                     <h1 className="text-center lg:text-left text-2xl pb-2">Trending this week</h1>
                     {isLoading ? <SmallLoadingSpinner /> : <TrendingList trending={trending} />}
                 </div>
