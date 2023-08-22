@@ -3,7 +3,7 @@ import { makeSeriesUrl } from "../../configs/helpers";
 
 const TrendingList = ({ trending }) => {
     return (
-        <div className="flex overflow-x-auto pt-1">
+        <div className="flex overflow-x-auto pt-1 pb-8">
             {trending.map((e) => {
                 return (
                     <Link

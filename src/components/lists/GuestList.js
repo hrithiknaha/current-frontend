@@ -5,14 +5,16 @@ const defaultImg = "https://t4.ftcdn.net/jpg/02/17/34/67/240_F_217346782_7XpCTt8
 const GuestList = ({ guests }) => {
     return (
         <div className="mt-2 mb-8">
-            <h3 className="bg-gray-100 font-bold py-2">Guest Casts</h3>
+            <h3 className="font-bold py-2">Guest Casts</h3>
             <div className="flex overflow-x-auto gap-4">
                 {guests.map((actor) => (
-                    <div key={actor.id} className="bg-white overflow-hidden flex-none rounded shadow w-36">
+                    <div
+                        key={actor.id}
+                        className="bg-gray-100 overflow-hidden flex-none rounded-lg shadow w-24 lg:w-36 h-56 lg:h-72">
                         <img
                             src={`https://image.tmdb.org/t/p/w300/${actor.profile_path}`}
                             alt={actor.name}
-                            className="rounded-t w-full"
+                            className="rounded-t w-full h-3/5 lg:h-52 object-cover"
                             onError={(e) => (e.target.src = defaultImg)}
                         />
                         <div className="p-3">
