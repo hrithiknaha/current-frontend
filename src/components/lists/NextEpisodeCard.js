@@ -10,15 +10,14 @@ const NextEpisodeCard = ({ series, nextEpisode, watchedEpisodes }) => {
             to={`tv/${makeSeriesUrl(series.id, series.name)}/season/${nextEpisode.season_number}/episode/${
                 nextEpisode.episode_number
             }`}
-            className="bg-white overflow-hidden flex-none rounded-lg shadow-md w-40 lg:w-64">
-            <div className="p-4 lg:p-6">
-                <h2 className="text-base lg:text-2xl font-bold mb-1 lg:mb-2 line-clamp-1">{series.name}</h2>
-                <p className="text-xs lg:text-base text-gray-600">
-                    S{nextEpisode.season_number} | E{nextEpisode.episode_number}
-                </p>
-            </div>
-            <div className="h-3 w-full bg-gray-300">
-                <div className="h-3 bg-orange-500" style={{ width: `${watchedPercentage}%` }}></div>
+            className="bg-white overflow-hidden flex-none rounded-lg shadow-md w-20 h-32 lg:w-40 lg:h-64">
+            <img
+                className="object-cover"
+                src={`https://image.tmdb.org/t/p/w300/${series.poster_path}`}
+                alt={`${series.title}`}
+            />
+            <div className="h-4 w-full bg-gray-300">
+                <div className="h-4 bg-orange-500" style={{ width: `${watchedPercentage}%` }}></div>
             </div>
         </Link>
     );
