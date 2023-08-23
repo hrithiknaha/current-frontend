@@ -114,7 +114,7 @@ function Home() {
                             <Tv size={48} />
                             This is your archive.
                         </h1>
-                        <p className="text-xl  text-white">Do what you want with it!</p>
+                        <p className="text-xl  text-white">Do what you want!</p>
                         <SearchEntity handleSubmit={handleSubmit} setQuery={setQuery} />
                     </div>
                 </div>
