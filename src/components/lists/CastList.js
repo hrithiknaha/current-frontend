@@ -17,7 +17,7 @@ const CastList = ({ casts }) => {
                             <img
                                 src={`https://image.tmdb.org/t/p/w300/${actor.profile_path}`}
                                 alt={actor.name}
-                                className="rounded-t w-full"
+                                className="rounded-t w-full h-3/5 lg:h-52 object-cover"
                                 onError={(e) => (e.target.src = defaultImg)}
                             />
                             <div className="p-3">
