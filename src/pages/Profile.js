@@ -241,7 +241,7 @@ const Profile = () => {
                                     {loggedUser.series.filter((s) => s.episodes.length === s.number_of_episodes)
                                         .length > 0 && (
                                         <div>
-                                            <h1 className="inline-block bg-orange-500 text-white px-4 py-2 mb-4 rounded-lg">
+                                            <h1 className="inline-block bg-purple-500 text-white px-4 py-2 mb-4 rounded-lg">
                                                 Completed
                                             </h1>
                                             <SeriesList
