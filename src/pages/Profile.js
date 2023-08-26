@@ -152,7 +152,6 @@ const Profile = () => {
                                 className="w-full border border-gray-300 rounded p-2"
                                 placeholder="Search User"
                                 onChange={(e) => setUserQuery(e.target.value)}
-                                value={userQuery}
                                 required
                             />
                             <button
