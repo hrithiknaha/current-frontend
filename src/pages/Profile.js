@@ -157,20 +157,20 @@ const Profile = () => {
                             />
                             <button
                                 type="submit"
-                                className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
+                                className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
                                 Submit
                             </button>
                         </form>
 
                         <div className="flex gap-4 items-center">
                             <Link to="stats">
-                                <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
+                                <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
                                     Stats
                                 </button>
                             </Link>
                             {selected === "movies" ? (
                                 <Link to={`/movies/list/${username}`}>
-                                    <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
+                                    <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
                                         Movies Info
                                     </button>
                                 </Link>
