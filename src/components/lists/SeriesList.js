@@ -9,7 +9,7 @@ const SeriesList = ({ series }) => {
                 return (
                     <Link
                         to={`/tv/${makeSeriesUrl(series.series_id, series.name)}`}
-                        className="rounded-lg shadow overflow-hidden flex-none w-32 h-48 lg:w-40 lg:h-64 m-2"
+                        className="rounded-lg shadow overflow-hidden flex-none w-32 h-48 lg:w-40 lg:h-64"
                         key={series.series_id}>
                         <img
                             className="object-cover"
@@ -18,7 +18,11 @@ const SeriesList = ({ series }) => {
                         />
                         <div className="h-4 w-full bg-gray-300">
                             <div
-                                className="h-4 bg-orange-500"
+                                className={
+                                    series.episodes.length === series.number_of_episodes
+                                        ? "h-4 bg-purple-500"
+                                        : "h-4 bg-orange-500"
+                                }
                                 style={{
                                     width: `${(series.episodes.length / series.number_of_episodes) * 100}%`,
                                 }}></div>
