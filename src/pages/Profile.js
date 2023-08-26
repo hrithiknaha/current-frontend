@@ -225,7 +225,7 @@ const Profile = () => {
                         </div>
                         <div className="w-full mt-4 lg:mt-0">
                             {selected === "movies" ? (
-                                <MovieList movies={user.movies} />
+                                <MovieList movies={user.movies.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))} />
                             ) : (
                                 <div>
                                     <div>
