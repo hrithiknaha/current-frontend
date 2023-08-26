@@ -53,6 +53,7 @@ const Series = () => {
 
                             {hasSeriesBeenAdded ? (
                                 <RatingAndTimeDetails
+                                    status={series.status}
                                     data={computeSumAndWatchTime(watchedEpisodes)}
                                     completion={computePercentageCompletion(
                                         watchedEpisodes.length,
@@ -80,10 +81,10 @@ const Series = () => {
                                 <div
                                     className={
                                         series.status === "Canceled"
-                                            ? "bg-purple-500 text-white inline-block px-2 py-1 rounded-lg"
-                                            : series.status === "Ended"
                                             ? "bg-red-500 text-white inline-block px-2 py-1 rounded-lg"
-                                            : "bg-green-500 text-white inline-block px-2 py-1 rounded-lg"
+                                            : series.status === "Ended"
+                                            ? "bg-purple-500 text-white inline-block px-2 py-1 rounded-lg"
+                                            : "bg-orange-500 text-white inline-block px-2 py-1 rounded-lg"
                                     }>
                                     {series.status}
                                 </div>
@@ -103,7 +104,7 @@ const Series = () => {
                     </div>
 
                     <div className="mt-8">
-                        <div className="bg-white rounded-lg shadow-md p-4 max-w-lg">
+                        <div className="bg-white rounded-lg shadow-md p-4 max-w-md">
                             <h2 className="text-lg font-semibold">Metadata</h2>
                             <div className="flex items-center justify-between">
                                 <div className="text-center">

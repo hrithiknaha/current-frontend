@@ -143,16 +143,16 @@ const Episode = () => {
             ) : (
                 <div className="container mx-auto py-8 lg:py-12">
                     <div className="bg-white shadow-md rounded-lg p-8">
-                        <div class="flex items-center text-sm font-medium space-x-2 ">
-                            <Link to={`/tv/${tvId}`} class="text-orange-500">
+                        <div className="flex items-center text-sm font-medium space-x-2 ">
+                            <Link to={`/tv/${tvId}`} className="text-orange-500">
                                 {extractSeriesNameFromURL(tvId)}
                             </Link>
-                            <span class="text-orange-500">/</span>
-                            <Link to={`/tv/${tvId}/season/${seasonNumber}`} class="text-orange-500">
+                            <span className="text-orange-500">/</span>
+                            <Link to={`/tv/${tvId}/season/${seasonNumber}`} className="text-orange-500">
                                 S{seasonNumber}
                             </Link>
-                            <span class="text-orange-500">/</span>
-                            <span class="text-orange-500">E{episodeNumber}</span>
+                            <span className="text-orange-500">/</span>
+                            <span className="text-orange-500">E{episodeNumber}</span>
                         </div>
                         <div className="container mx-auto py-4">
                             {episodeCountDetails && (

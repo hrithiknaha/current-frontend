@@ -5,17 +5,18 @@ import { makeSeriesUrl } from "../../configs/helpers";
 
 const MovieList = ({ movies }) => {
     return (
-        <div className="flex flex-wrap justify-between gap-4 mb-8">
+        <div className="flex flex-wrap justify-between lg:justify-start gap-4 mb-8">
             {movies.map((movie) => {
                 return (
                     <Link
                         key={movie.movie_id}
                         to={`/movies/${makeSeriesUrl(movie.movie_id, movie.title)}`}
-                        className="bg-white rounded-lg shadow-md p-4 lg:p-6 w-full lg:w-80 inline-block relative">
-                        <h2 className="text-xl font-bold mb-4">{movie.title}</h2>
-                        <p className="text-gray-600 text-sm">
-                            Release Date: {moment(movie.release_date).format("YYYY-MM-DD")}
-                        </p>
+                        className="rounded-lg shadow overflow-hidden flex-none w-32 h-48 lg:w-40 lg:h-64">
+                        <img
+                            className="w-full h-full object-cover"
+                            src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+                            alt={`${movie.title}`}
+                        />
                     </Link>
                 );
             })}

@@ -152,25 +152,24 @@ const Profile = () => {
                                 className="w-full border border-gray-300 rounded p-2"
                                 placeholder="Search User"
                                 onChange={(e) => setUserQuery(e.target.value)}
-                                value={userQuery}
                                 required
                             />
                             <button
                                 type="submit"
-                                className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
+                                className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
                                 Submit
                             </button>
                         </form>
 
                         <div className="flex gap-4 items-center">
                             <Link to="stats">
-                                <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
+                                <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
                                     Stats
                                 </button>
                             </Link>
                             {selected === "movies" ? (
                                 <Link to={`/movies/list/${username}`}>
-                                    <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
+                                    <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
                                         Movies Info
                                     </button>
                                 </Link>
@@ -200,7 +199,7 @@ const Profile = () => {
                     )}
 
                     <div className="flex flex-col lg:flex-row gap-4 py-8">
-                        <div className="flex flex-col justify-between w-full lg:w-80 h-full shadow rounded">
+                        <div className="flex flex-col justify-between w-full lg:w-60 h-full shadow rounded">
                             <h1 className="text-xl p-4 bg-orange-500 text-white rounded-t">Search Results</h1>
                             <div>
                                 <div
@@ -225,7 +224,7 @@ const Profile = () => {
                         </div>
                         <div className="w-full mt-4 lg:mt-0">
                             {selected === "movies" ? (
-                                <MovieList movies={user.movies} />
+                                <MovieList movies={user.movies.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))} />
                             ) : (
                                 <div>
                                     <div>
@@ -238,15 +237,40 @@ const Profile = () => {
                                                 .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                         />
                                     </div>
-                                    {loggedUser.series.filter((s) => s.episodes.length === s.number_of_episodes)
-                                        .length > 0 && (
+                                    {loggedUser.series.filter(
+                                        (s) =>
+                                            s.episodes.length === s.number_of_episodes &&
+                                            s.status === "Returning Series"
+                                    ).length > 0 && (
                                         <div>
-                                            <h1 className="inline-block bg-orange-500 text-white px-4 py-2 mb-4 rounded-lg">
+                                            <h1 className="inline-block bg-green-500 text-white px-4 py-2 mb-4 rounded-lg">
+                                                Up To Date
+                                            </h1>
+                                            <SeriesList
+                                                series={user.series
+                                                    .filter(
+                                                        (s) =>
+                                                            s.episodes.length === s.number_of_episodes &&
+                                                            s.status === "Returning Series"
+                                                    )
+                                                    .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
+                                            />
+                                        </div>
+                                    )}
+                                    {loggedUser.series.filter(
+                                        (s) => s.episodes.length === s.number_of_episodes && s.status === "Ended"
+                                    ).length > 0 && (
+                                        <div>
+                                            <h1 className="inline-block bg-purple-500 text-white px-4 py-2 mb-4 rounded-lg">
                                                 Completed
                                             </h1>
                                             <SeriesList
                                                 series={user.series
-                                                    .filter((s) => s.episodes.length === s.number_of_episodes)
+                                                    .filter(
+                                                        (s) =>
+                                                            s.episodes.length === s.number_of_episodes &&
+                                                            s.status === "Ended"
+                                                    )
                                                     .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                             />
                                         </div>

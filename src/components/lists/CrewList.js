@@ -38,7 +38,7 @@ const CrewList = ({ crews }) => {
                             <img
                                 src={`https://image.tmdb.org/t/p/w300/${crew.profile_path}`}
                                 alt={crew.name}
-                                className="rounded-t w-full h-3/5 lg:h-52 object-cover"
+                                className="rounded-t w-full object-cover"
                                 onError={(e) => (e.target.src = defaultImg)}
                             />
                             <div className="p-3">
