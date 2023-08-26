@@ -200,7 +200,7 @@ const Profile = () => {
                     )}
 
                     <div className="flex flex-col lg:flex-row gap-4 py-8">
-                        <div className="flex flex-col justify-between w-full lg:w-80 h-full shadow rounded">
+                        <div className="flex flex-col justify-between w-full lg:w-60 h-full shadow rounded">
                             <h1 className="text-xl p-4 bg-orange-500 text-white rounded-t">Search Results</h1>
                             <div>
                                 <div
@@ -238,15 +238,40 @@ const Profile = () => {
                                                 .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                         />
                                     </div>
-                                    {loggedUser.series.filter((s) => s.episodes.length === s.number_of_episodes)
-                                        .length > 0 && (
+                                    {loggedUser.series.filter(
+                                        (s) =>
+                                            s.episodes.length === s.number_of_episodes &&
+                                            s.status === "Returning Series"
+                                    ).length > 0 && (
+                                        <div>
+                                            <h1 className="inline-block bg-green-500 text-white px-4 py-2 mb-4 rounded-lg">
+                                                Up To Date
+                                            </h1>
+                                            <SeriesList
+                                                series={user.series
+                                                    .filter(
+                                                        (s) =>
+                                                            s.episodes.length === s.number_of_episodes &&
+                                                            s.status === "Returning Series"
+                                                    )
+                                                    .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
+                                            />
+                                        </div>
+                                    )}
+                                    {loggedUser.series.filter(
+                                        (s) => s.episodes.length === s.number_of_episodes && s.status === "Ended"
+                                    ).length > 0 && (
                                         <div>
                                             <h1 className="inline-block bg-purple-500 text-white px-4 py-2 mb-4 rounded-lg">
                                                 Completed
                                             </h1>
                                             <SeriesList
                                                 series={user.series
-                                                    .filter((s) => s.episodes.length === s.number_of_episodes)
+                                                    .filter(
+                                                        (s) =>
+                                                            s.episodes.length === s.number_of_episodes &&
+                                                            s.status === "Ended"
+                                                    )
                                                     .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                             />
                                         </div>
