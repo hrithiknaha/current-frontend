@@ -19,7 +19,11 @@ const SeriesList = ({ series }) => {
                         <div className="h-4 w-full bg-gray-300">
                             <div
                                 className={
-                                    series.episodes.length === series.number_of_episodes
+                                    series.episodes.length === series.number_of_episodes &&
+                                    series.status === "Returning Series"
+                                        ? "h-4 bg-green-500"
+                                        : series.episodes.length === series.number_of_episodes &&
+                                          (series.status === "Ended" || series.status === "Canceled")
                                         ? "h-4 bg-purple-500"
                                         : "h-4 bg-orange-500"
                                 }
