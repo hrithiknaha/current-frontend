@@ -52,7 +52,7 @@ const Person = () => {
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <h2 className="font-bold mb-1">Date of Birth</h2>
+                                <h2 className="font-bold mb-1">DOB</h2>
                                 <p className="text-gray-700">{person.birthday}</p>
                             </div>
 
