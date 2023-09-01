@@ -28,7 +28,7 @@ export const useSeriesWatchedEpisodes = (tvId) => {
     const [watchedEpisodes, setWatchedEpisodes] = useState();
     const [isDetailsLoading, setIsDetailsLoading] = useState(true);
 
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);
@@ -45,7 +45,7 @@ export const useSeriesWatchedEpisodes = (tvId) => {
 };
 
 export const useHasSeriesAdded = (tvId, setHasSeriesBeenAdded) => {
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);

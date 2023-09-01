@@ -10,7 +10,7 @@ import MovieList from "../components/lists/MovieList";
 
 const Profile = () => {
     const { username } = useParams();
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     const [isLoading, setIsLoading] = useState(true);
     const [loggedUser, setLoggedUser] = useState();

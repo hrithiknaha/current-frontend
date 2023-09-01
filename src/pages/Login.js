@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { loginUser } from "../redux/actions/auth";
+import { loginUser } from "../redux/features/auth/authSlice";
 
 import LoginUser from "../components/forms/LoginForm";
 
@@ -15,7 +15,10 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        dispatch(loginUser(username, password, navigate));
+
+        const payload = { username, password };
+        dispatch(loginUser(payload));
+        navigate("/");
     };
 
     return <LoginUser handleLogin={handleLogin} setUsername={setUsername} setPassword={setPassword} />;

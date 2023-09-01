@@ -2,15 +2,14 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 
-import { REFRESH_USER } from "../redux/actions/types";
-import { retrieveAccessToken, isTokenExpired } from "../configs/helpers";
+import { isTokenExpired } from "../configs/helpers";
 
-import { axiosPublicInstance } from "../configs/axios";
+import { refreshUser } from "../redux/features/auth/authSlice";
 
 const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState();
 
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
     const { exp } = auth;
 
     const dispatch = useDispatch();
@@ -18,17 +17,7 @@ const useAuth = () => {
     useEffect(() => {
         if (auth?.token) {
             if (isTokenExpired(exp)) {
-                console.log("Token is invalid. Refreshing token");
-                axiosPublicInstance
-                    .get("/api/auth/refresh", { withCredentials: true })
-                    .then(({ data }) => {
-                        localStorage.setItem("token", data.accessToken);
-                        setIsAuthenticated(true);
-                        console.log("Token updated in localstorage");
-                        const { username, token, exp } = retrieveAccessToken();
-                        dispatch({ type: REFRESH_USER, payload: { username, token, exp } });
-                    })
-                    .catch((err) => console.log(err));
+                dispatch(refreshUser(setIsAuthenticated));
             } else {
                 console.log("Token is valid");
                 setIsAuthenticated(true);

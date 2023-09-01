@@ -8,7 +8,7 @@ const RegisterForm = ({ handleRegisration, setFirstname, setLastname, setUsernam
                 <h2 className="text-2xl font-semibold text-center mb-6">Register</h2>
                 <form onSubmit={handleRegisration}>
                     <div className="mb-4">
-                        <label for="firstname" className="block text-gray-700 font-semibold">
+                        <label htmlFor="firstname" className="block text-gray-700 font-semibold">
                             Firstname
                         </label>
                         <input
@@ -21,7 +21,7 @@ const RegisterForm = ({ handleRegisration, setFirstname, setLastname, setUsernam
                         />
                     </div>
                     <div className="mb-4">
-                        <label for="lastname" className="block text-gray-700 font-semibold">
+                        <label htmlFor="lastname" className="block text-gray-700 font-semibold">
                             Lastname
                         </label>
                         <input
@@ -34,7 +34,7 @@ const RegisterForm = ({ handleRegisration, setFirstname, setLastname, setUsernam
                         />
                     </div>
                     <div className="mb-4">
-                        <label for="username" className="block text-gray-700 font-semibold">
+                        <label htmlFor="username" className="block text-gray-700 font-semibold">
                             Username
                         </label>
                         <input
@@ -47,7 +47,7 @@ const RegisterForm = ({ handleRegisration, setFirstname, setLastname, setUsernam
                         />
                     </div>
                     <div className="mb-4">
-                        <label for="password" className="block text-gray-700 font-semibold">
+                        <label htmlFor="password" className="block text-gray-700 font-semibold">
                             Password
                         </label>
                         <input

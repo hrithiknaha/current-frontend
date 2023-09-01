@@ -1,15 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Home } from "react-feather";
 
-import { logoutUser } from "../../redux/actions/auth";
+import { logoutUser } from "../../redux/features/auth/authSlice";
 
-const Header = ({ user, logoutUser }) => {
+const Header = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const auth = useSelector((state) => state.auth.user);
+    const loading = useSelector((state) => state.auth.loading);
 
     const handleLogout = () => {
-        console.log("Logging out user.");
-        logoutUser(navigate);
+        dispatch(logoutUser());
+
+        if (!loading) navigate("/");
     };
 
     return (
@@ -20,10 +24,10 @@ const Header = ({ user, logoutUser }) => {
                     Current
                 </Link>
 
-                {user.username ? (
+                {auth.username ? (
                     <div className="flex justify-between items-center w-48">
-                        <Link to={`/profile/${user.username}`} className="text-white text-lg hover:underline">
-                            {user.username}
+                        <Link to={`/profile/${auth.username}`} className="text-white text-lg hover:underline">
+                            {auth.username}
                         </Link>
                         <button
                             onClick={handleLogout}
@@ -43,6 +47,4 @@ const Header = ({ user, logoutUser }) => {
     );
 };
 
-const mapStateToProps = (state) => ({ user: state.auth });
-
-export default connect(mapStateToProps, { logoutUser })(Header);
+export default Header;
