@@ -19,7 +19,7 @@ import { useMovieTMDB, useMovieDetails } from "../hooks/useMovie";
 
 const Movie = () => {
     const { movieId } = useParams();
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     const [rating, setRating] = useState();
 

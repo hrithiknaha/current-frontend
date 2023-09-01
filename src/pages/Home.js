@@ -19,7 +19,7 @@ function Home() {
     const [isSeriesLoading, setIsSeriesLoading] = useState(true);
 
     const navigate = useNavigate();
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     useEffect(() => {
         axiosPublicInstance.get("/api/tmdb/trending").then(({ data }) => {

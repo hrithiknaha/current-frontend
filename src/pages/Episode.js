@@ -22,7 +22,7 @@ import RatingDetails from "../components/configs/RatingDetails";
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
 
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     const [isLoading, setIsLoading] = useState(true);
     const [rating, setRating] = useState();

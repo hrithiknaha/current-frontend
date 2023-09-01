@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { registerUser } from "../redux/actions/auth";
+import { registerUser } from "../redux/features/auth/authSlice";
 
 import RegisterUser from "../components/forms/RegisterForm";
 
@@ -17,7 +17,16 @@ function Register() {
 
     const handleRegisration = (e) => {
         e.preventDefault();
-        dispatch(registerUser(firstname, lastname, username, password, navigate));
+
+        const payload = {
+            firstname,
+            lastname,
+            username,
+            password,
+        };
+        dispatch(registerUser(payload));
+
+        navigate("/");
     };
 
     return (

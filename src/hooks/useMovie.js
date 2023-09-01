@@ -25,7 +25,7 @@ export const useMovieDetails = (movieId, setIsSending, hasRated) => {
     const [isDetailsLoading, setIsDetailsLoading] = useState(true);
     const [movieDetails, setMovieDetails] = useState();
 
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);

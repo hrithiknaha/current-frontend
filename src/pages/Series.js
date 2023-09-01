@@ -20,7 +20,7 @@ import { seasonCompleted, computeSumAndWatchTime, computePercentageCompletion } 
 
 const Series = () => {
     const { tvId } = useParams();
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     const [hasSeriesBeenAdded, setHasSeriesBeenAdded] = useState(false);
 

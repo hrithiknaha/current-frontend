@@ -16,7 +16,7 @@ const Stats = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [selected, setSelected] = useState("Movies");
 
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     const handleStatToggle = () => {
         setSelected((prevState) => {
