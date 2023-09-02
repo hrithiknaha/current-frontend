@@ -27,8 +27,6 @@ export const registerUser = createAsyncThunk("auth/register", (payload) => {
 });
 
 export const loginUser = createAsyncThunk("auth/login", (payload) => {
-    console.log("Logging user", payload);
-
     return axiosPublicInstance.post("/api/auth/login", payload).then(({ data }) => {
         const token = data.accessToken;
 
@@ -86,16 +84,20 @@ const authSlice = createSlice({
         });
         builder.addCase(refreshUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.isAuthenticated = true;
-            state.username = action.payload.username;
-            state.token = action.payload.token;
-            state.exp = action.payload.exp;
+            state.user.isAuthenticated = true;
+            state.user.username = action.payload.username;
+            state.user.token = action.payload.token;
+            state.user.exp = action.payload.exp;
+        });
+        builder.addCase(logoutUser.pending, (state) => {
+            state.loading = true;
         });
         builder.addCase(logoutUser.fulfilled, (state) => {
-            state.isAuthenticated = false;
-            state.username = null;
-            state.token = null;
-            state.exp = null;
+            state.loading = false;
+            state.user.isAuthenticated = false;
+            state.user.username = null;
+            state.user.token = null;
+            state.user.exp = null;
         });
     },
 });

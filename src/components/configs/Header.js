@@ -7,13 +7,12 @@ import { logoutUser } from "../../redux/features/auth/authSlice";
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const auth = useSelector((state) => state.auth.user);
-    const loading = useSelector((state) => state.auth.loading);
+    const user = useSelector((state) => state.auth.user);
 
     const handleLogout = () => {
-        dispatch(logoutUser());
-
-        if (!loading) navigate("/");
+        dispatch(logoutUser()).then(() => {
+            navigate("/login");
+        });
     };
 
     return (
@@ -24,10 +23,10 @@ const Header = () => {
                     Current
                 </Link>
 
-                {auth.username ? (
+                {user.username ? (
                     <div className="flex justify-between items-center w-48">
-                        <Link to={`/profile/${auth.username}`} className="text-white text-lg hover:underline">
-                            {auth.username}
+                        <Link to={`/profile/${user.username}`} className="text-white text-lg hover:underline">
+                            {user.username}
                         </Link>
                         <button
                             onClick={handleLogout}

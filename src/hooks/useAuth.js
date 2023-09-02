@@ -10,24 +10,21 @@ const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState();
 
     const auth = useSelector((state) => state.auth.user);
-    const { exp } = auth;
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (auth?.token) {
-            if (isTokenExpired(exp)) {
+        if (auth.token) {
+            if (isTokenExpired(auth.exp)) {
                 dispatch(refreshUser(setIsAuthenticated));
             } else {
-                console.log("Token is valid");
                 setIsAuthenticated(true);
             }
         } else {
             toast.success("Please login first!");
-            console.log("User logged out");
             setIsAuthenticated(false);
         }
-    }, [exp]);
+    }, [auth.exp]);
 
     return { isAuthenticated };
 };
