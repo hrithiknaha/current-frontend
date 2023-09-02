@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { loginUser } from "../redux/features/auth/authSlice";
@@ -17,8 +17,9 @@ const Login = () => {
         e.preventDefault();
 
         const payload = { username, password };
-        dispatch(loginUser(payload));
-        navigate("/");
+        dispatch(loginUser(payload)).then(() => {
+            navigate("/");
+        });
     };
 
     return <LoginUser handleLogin={handleLogin} setUsername={setUsername} setPassword={setPassword} />;

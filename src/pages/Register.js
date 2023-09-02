@@ -24,9 +24,9 @@ function Register() {
             username,
             password,
         };
-        dispatch(registerUser(payload));
-
-        navigate("/");
+        dispatch(registerUser(payload)).then(() => {
+            navigate("/");
+        });
     };
 
     return (
