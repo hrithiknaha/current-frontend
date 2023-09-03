@@ -20,7 +20,7 @@ import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 const Season = () => {
     const { tvId, seasonNumber } = useParams();
 
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     const [isLoading, setIsLoading] = useState(true);
 

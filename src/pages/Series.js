@@ -26,6 +26,7 @@ const Series = () => {
 
     const { series, isLoading } = useSeries(tvId);
     const { watchedEpisodes, isDetailsLoading } = useSeriesWatchedEpisodes(tvId);
+
     useHasSeriesAdded(tvId, setHasSeriesBeenAdded);
 
     const handleSubmit = () => {
