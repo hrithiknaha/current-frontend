@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
+import moment from "moment";
 
 import { isTokenExpired } from "../configs/helpers";
 
-import { refreshUser } from "../redux/features/auth/authSlice";
+import { refreshUser, logoutUser } from "../redux/features/auth/authSlice";
 
 const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState();
@@ -16,7 +17,7 @@ const useAuth = () => {
     useEffect(() => {
         if (auth.token) {
             if (isTokenExpired(auth.exp)) {
-                dispatch(refreshUser(setIsAuthenticated));
+                dispatch(logoutUser());
             } else {
                 setIsAuthenticated(true);
             }
