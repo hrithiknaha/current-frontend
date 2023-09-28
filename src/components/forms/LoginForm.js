@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const LoginForm = ({ handleLogin, setUsername, setPassword }) => {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 lg:px-0">
-            <div className="max-w-md w-full px-6 py-8 bg-white shadow-md">
-                <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+        <div className="container mx-auto  min-h-screen flex flex-col items-center p-8 py-40">
+            <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
+                <h2 className="text-2xl font-semibold mb-4">Login</h2>
                 <form onSubmit={handleLogin}>
                     <div className="mb-4">
                         <label htmlFor="username" className="block text-gray-700 font-semibold">
@@ -35,7 +35,7 @@ const LoginForm = ({ handleLogin, setUsername, setPassword }) => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded">
                         Login
                     </button>
                 </form>
