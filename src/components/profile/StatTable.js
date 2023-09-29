@@ -2,7 +2,7 @@ import React from "react";
 
 const StatTable = ({ dataset, header }) => {
     return (
-        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg w-full lg:w-1/3">
+        <div className="shadow overflow-hidden border-b border-gray-200 rounded-lg w-full lg:w-1/3">
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-orange-500">
                     <tr>
@@ -21,12 +21,8 @@ const StatTable = ({ dataset, header }) => {
                 <tbody className="bg-white divide-y divide-gray-200">
                     {dataset.slice(0, 10).map((e) => (
                         <tr key={e.name}>
-                            <td className="px-6 py-4 whitespace-normal">
-                                <div className="text-sm text-gray-900">{e.name}</div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="text-sm text-gray-900">{e.count}</div>
-                            </td>
+                            <td className="text-sm text-gray-900 px-6 py-4 whitespace-normal">{e.name}</td>
+                            <td className="text-sm text-gray-900 px-6 py-4 whitespace-nowrap">{e.count}</td>
                         </tr>
                     ))}
                 </tbody>

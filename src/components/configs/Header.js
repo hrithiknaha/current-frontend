@@ -68,19 +68,19 @@ const Header = () => {
                                     Stats
                                 </Link>
                                 <Link
-                                    to={`/movies/list/${user.username}`}
+                                    to={`/profile/${user.username}/movie-list`}
                                     onClick={toggleDropdown}
                                     className="text-sm w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                     Movie List
                                 </Link>
                                 <Link
-                                    to={`/tv/list/${user.username}`}
+                                    to={`/profile/${user.username}/tv-list`}
                                     onClick={toggleDropdown}
                                     className="text-sm w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                     Show List
                                 </Link>
                                 <Link
-                                    to={`/tv/episodes/list/${user.username}`}
+                                    to={`/profile/${user.username}/tv-episodes-list`}
                                     onClick={toggleDropdown}
                                     className="text-sm w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                     Episode List

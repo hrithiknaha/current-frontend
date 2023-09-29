@@ -40,9 +40,9 @@ const MovieTable = ({ watchedMovies }) => {
     return (
         <div>
             <div className="flex flex-col lg:flex-row items-center justify-between mb-8">
-                <h1 className="pb-4 text-2xl">My Ratings</h1>
+                <h1 className="pb-4 text-2xl">My Movies Ratings</h1>
                 <div className="flex flex-col gap-2 lg:flex-row w-full lg:w-1/2  lg:justify-end">
-                    <div className="flex gap-2 w-full lg:w-1/2 items-center justify-between">
+                    <div className="flex gap-2 w-full lg:w-1/2 items-center justify-center">
                         <span className="text-gray-600">Filter by Rating:</span>
                         <select
                             onChange={(e) => setRatingFilter(e.target.value)}
@@ -54,7 +54,7 @@ const MovieTable = ({ watchedMovies }) => {
                             <option value="2">Delete It</option>
                         </select>
                     </div>
-                    <div className="flex gap-2 w-full lg:w-1/2 items-center justify-between">
+                    <div className="flex gap-2 w-full lg:w-1/2 items-center justify-center">
                         <span className="text-gray-600">Sort by:</span>
                         <div className="flex gap-4">
                             <select
@@ -68,33 +68,41 @@ const MovieTable = ({ watchedMovies }) => {
                     </div>
                 </div>
             </div>
-            <div className="bg-white shadow-md rounded my-6  overflow-x-scroll">
-                <table className="w-full whitespace-nowrap">
-                    <thead>
-                        <tr className="bg-gray-100">
-                            <th className="px-6 py-3 text-left font-bold text-gray-700">Title</th>
-                            <th className="px-6 py-3 text-left font-bold text-gray-700">Genre</th>
-                            <th className="px-6 py-3 text-left font-bold text-gray-700">Rated On</th>
-                            <th className="px-6 py-3 text-left font-bold text-gray-700">Rating</th>
+            <div className="bg-white shadow-md rounded-lg my-6 overflow-x-scroll">
+                <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-orange-500">
+                        <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                Title
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                Genre
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                Rated On
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                Rating
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="bg-white divide-y divide-gray-200">
                         {movies &&
                             movies.map((movie, index) => (
                                 <tr key={movie.movie_id} className={`bg-gray-${index % 2 === 0 ? 50 : 100}`}>
-                                    <td className="px-6 py-4 whitespace-nowrap ">
+                                    <td className="text-sm px-6 py-4 whitespace-normal">
                                         <Link
                                             to={`/movies/${movie.movie_id}`}
-                                            className="text-blue-800 hover:underline hover:text-blue-400">
+                                            className="text-sm text-gray-900 hover:underline hover:text-blue-400">
                                             {movie.title}
                                         </Link>
                                     </td>
 
-                                    <td className="px-6 py-4 whitespace-nowrap">{movie.genres.join(", ")}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
+                                    <td className="text-sm px-6 py-4 whitespace-normal">{movie.genres.join(", ")}</td>
+                                    <td className="text-sm px-6 py-4 whitespace-normal">
                                         {moment(movie.date_watched).format("DD-MM-YYYY")}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{movie.rating}</td>
+                                    <td className="text-sm px-6 py-4 whitespace-normal">{movie.rating}</td>
                                 </tr>
                             ))}
                     </tbody>

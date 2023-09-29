@@ -122,13 +122,8 @@ const SeriesStats = ({ series, selected }) => {
             <div className="flex flex-col items-center w-full h-64 mt-16">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={series.lastTwentyWeekWatchedDataset}>
-                        <XAxis
-                            dataKey="name"
-                            style={{
-                                fontSize: "0.7rem",
-                            }}
-                        />
-                        <YAxis width={20} />
+                        <XAxis dataKey="name" style={{ fontSize: "0.7rem" }} />
+                        <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                         <Tooltip />
                         <Bar dataKey="count" fill="#f95d6a" />
                     </BarChart>
@@ -138,14 +133,8 @@ const SeriesStats = ({ series, selected }) => {
             <div className="flex flex-col items-center w-full h-64 mt-16">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={series.hourOfDaySeriesDataset}>
-                        <XAxis
-                            dataKey="hour"
-                            interval={0}
-                            style={{
-                                fontSize: "0.5rem",
-                            }}
-                        />
-                        <YAxis width={20} style={{ fontSize: "0.5rem" }} />
+                        <XAxis dataKey="hour" interval={0} style={{ fontSize: "0.7rem" }} />
+                        <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                         <Tooltip />
                         <Bar dataKey="count" fill="#f95d6a" />
                     </BarChart>
@@ -157,13 +146,8 @@ const SeriesStats = ({ series, selected }) => {
                 <div className="flex flex-col items-center w-full lg:w-2/5 h-64 mt-16">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={series.weekdaySeriesDataset}>
-                            <XAxis
-                                dataKey="day"
-                                style={{
-                                    fontSize: "0.7rem",
-                                }}
-                            />
-                            <YAxis width={20} />
+                            <XAxis dataKey="day" style={{ fontSize: "0.7rem" }} />
+                            <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                             <Tooltip />
                             <Bar dataKey="count" fill="#f95d6a" />
                         </BarChart>
@@ -173,13 +157,8 @@ const SeriesStats = ({ series, selected }) => {
                 <div className="flex flex-col items-center w-full lg:w-3/5 h-64 mt-16">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={series.monthSeriesDataset}>
-                            <XAxis
-                                dataKey="month"
-                                style={{
-                                    fontSize: "0.7rem",
-                                }}
-                            />
-                            <YAxis width={20} />
+                            <XAxis dataKey="month" style={{ fontSize: "0.7rem" }} />
+                            <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                             <Tooltip />
                             <Bar dataKey="count" fill="#f95d6a" />
                         </BarChart>
@@ -191,13 +170,8 @@ const SeriesStats = ({ series, selected }) => {
             <div className="flex flex-col items-center w-full h-64 mt-16">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={series.releaseYearSeriesDataset}>
-                        <XAxis
-                            dataKey="name"
-                            style={{
-                                fontSize: "0.7rem",
-                            }}
-                        />
-                        <YAxis width={20} />
+                        <XAxis dataKey="name" style={{ fontSize: "0.7rem" }} />
+                        <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                         <Tooltip />
                         <Bar dataKey="count" fill="#f95d6a" />
                     </BarChart>
