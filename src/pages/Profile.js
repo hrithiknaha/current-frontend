@@ -104,45 +104,21 @@ const Profile = () => {
                         )}
                     </div>
 
-                    <div className="flex flex-col justify-between items-start lg:flex-row gap-4 py-4">
+                    <div className="flex flex-col lg:flex-row gap-4 py-4">
+                        {/* Followers */}
                         <div className="flex justify-between items-center gap-4">
-                            <Link to="friends" className=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
+                            <Link
+                                to="friends"
+                                className="flex gap-4 justify-between flex-1 bg-white px-4 py-2 rounded-lg shadow-md">
                                 <h2 className="text-sm">Followers</h2>
-                                <p className="text-m font-bold text-center">{user.followers.length}</p>
+                                <p className="text-sm  text-center">{user.followers.length}</p>
                             </Link>
-
-                            <Link to="friends" className=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
+                            <Link
+                                to="friends"
+                                className="flex gap-4 justify-between flex-1 bg-white px-4 py-2 rounded-lg shadow-md">
                                 <h2 className="text-sm">Following</h2>
-                                <p className="text-m font-bold text-center">{user.following.length}</p>
+                                <p className="text-sm  text-center">{user.following.length}</p>
                             </Link>
-                        </div>
-
-                        <div className="flex gap-4 items-center">
-                            <Link to="stats">
-                                <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
-                                    Stats
-                                </button>
-                            </Link>
-                            {selected === "movies" ? (
-                                <Link to={`/movies/list/${username}`}>
-                                    <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
-                                        Movies Info
-                                    </button>
-                                </Link>
-                            ) : (
-                                <>
-                                    <Link to={`/tv/list/${username}`}>
-                                        <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
-                                            Shows Info
-                                        </button>
-                                    </Link>
-                                    <Link to={`/tv/episodes/list/${username}`}>
-                                        <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
-                                            Episodes Info
-                                        </button>
-                                    </Link>
-                                </>
-                            )}
                         </div>
                     </div>
 
