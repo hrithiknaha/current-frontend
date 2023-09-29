@@ -15,9 +15,6 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [loggedUser, setLoggedUser] = useState();
 
-    const [userQuery, setUserQuery] = useState();
-    const [searchUser, setSearchUser] = useState();
-
     const [user, setUser] = useState();
 
     const [requestSent, setRequestSent] = useState(false);
@@ -34,8 +31,6 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        setSearchUser(null);
-        setUserQuery(null);
         setIsLoading(true);
 
         const axiosInstance = axiosPrivateInstance(auth);
@@ -54,26 +49,6 @@ const Profile = () => {
             })
             .catch((err) => console.log(err));
     }, [auth.username, username, requestSent]);
-
-    const handleSearchUser = (e) => {
-        e.preventDefault();
-        const axiosInstance = axiosPrivateInstance(auth);
-
-        const payload = {
-            username: userQuery,
-        };
-
-        console.log("Sending request");
-
-        axiosInstance
-            .post(`/api/users`, payload)
-            .then(({ data }) => {
-                if (data?.username) {
-                    setSearchUser(data);
-                } else setSearchUser(null);
-            })
-            .catch((err) => console.log(err));
-    };
 
     const handleFollowUser = () => {
         const axiosInstance = axiosPrivateInstance(auth);
@@ -129,74 +104,23 @@ const Profile = () => {
                         )}
                     </div>
 
-                    <div className="flex flex-col justify-between items-start lg:flex-row gap-4 py-4">
+                    <div className="flex flex-col lg:flex-row gap-4 py-4">
+                        {/* Followers */}
                         <div className="flex justify-between items-center gap-4">
-                            <Link to="friends" className=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
+                            <Link
+                                to="friends"
+                                className="flex gap-4 justify-between flex-1 bg-white px-4 py-2 rounded-lg shadow-md">
                                 <h2 className="text-sm">Followers</h2>
-                                <p className="text-m font-bold text-center">{user.followers.length}</p>
+                                <p className="text-sm  text-center">{user.followers.length}</p>
                             </Link>
-
-                            <Link to="friends" className=" mx-auto bg-white px-4 py-2 rounded-lg shadow-md">
+                            <Link
+                                to="friends"
+                                className="flex gap-4 justify-between flex-1 bg-white px-4 py-2 rounded-lg shadow-md">
                                 <h2 className="text-sm">Following</h2>
-                                <p className="text-m font-bold text-center">{user.following.length}</p>
+                                <p className="text-sm  text-center">{user.following.length}</p>
                             </Link>
-                        </div>
-
-                        <form
-                            className="w-full lg:w-80 flex gap-4 items-center justify-center rounded"
-                            onSubmit={handleSearchUser}>
-                            <input
-                                type="text"
-                                id="query"
-                                name="query"
-                                className="w-full border border-gray-300 rounded p-2"
-                                placeholder="Search User"
-                                onChange={(e) => setUserQuery(e.target.value)}
-                                required
-                            />
-                            <button
-                                type="submit"
-                                className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
-                                Submit
-                            </button>
-                        </form>
-
-                        <div className="flex gap-4 items-center">
-                            <Link to="stats">
-                                <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
-                                    Stats
-                                </button>
-                            </Link>
-                            {selected === "movies" ? (
-                                <Link to={`/movies/list/${username}`}>
-                                    <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
-                                        Movies Info
-                                    </button>
-                                </Link>
-                            ) : (
-                                <>
-                                    <Link to={`/tv/list/${username}`}>
-                                        <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
-                                            Shows Info
-                                        </button>
-                                    </Link>
-                                    <Link to={`/tv/episodes/list/${username}`}>
-                                        <button className="bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
-                                            Episodes Info
-                                        </button>
-                                    </Link>
-                                </>
-                            )}
                         </div>
                     </div>
-
-                    {searchUser && (
-                        <Link to={`/profile/${searchUser.username}`}>
-                            <div className="bg-white rounded-lg shadow-md p-4 text-center w-48 mx-auto">
-                                <span className="font-semibold"></span> {searchUser.username}
-                            </div>
-                        </Link>
-                    )}
 
                     <div className="flex flex-col lg:flex-row gap-4 py-8">
                         <div className="flex flex-col justify-between w-full lg:w-60 h-full shadow rounded">

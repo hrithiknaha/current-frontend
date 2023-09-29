@@ -92,13 +92,8 @@ const MovieStats = ({ movies, selected }) => {
             <div className="flex flex-col items-center w-full h-64 mt-16">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={movies.lastTwentyWeekMoviesDataset}>
-                        <XAxis
-                            dataKey="name"
-                            style={{
-                                fontSize: "0.7rem",
-                            }}
-                        />
-                        <YAxis width={20} style={{ fontSize: "0.5rem" }} />
+                        <XAxis dataKey="name" interval={0} style={{ fontSize: "0.7rem" }} />
+                        <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                         <Tooltip />
                         <Bar dataKey="count" fill="#f95d6a" />
                     </BarChart>
@@ -109,8 +104,8 @@ const MovieStats = ({ movies, selected }) => {
             <div className="flex flex-col items-center w-full h-64 mt-16">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={movies.hourOfDayMoviesDataset}>
-                        <XAxis dataKey="hour" interval={0} style={{ fontSize: "0.5rem" }} />
-                        <YAxis width={20} style={{ fontSize: "0.5rem" }} />
+                        <XAxis dataKey="hour" style={{ fontSize: "0.7rem" }} />
+                        <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                         <Tooltip />
                         <Bar dataKey="count" fill="#f95d6a" />
                     </BarChart>
@@ -122,8 +117,8 @@ const MovieStats = ({ movies, selected }) => {
                 <div className="flex flex-col items-center w-full lg:w-2/5 h-64 mt-16">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={movies.weekdayMoviesDataset}>
-                            <XAxis dataKey="day" interval={0} />
-                            <YAxis width={20} />
+                            <XAxis dataKey="day" interval={0} style={{ fontSize: "0.7rem" }} />
+                            <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                             <Tooltip />
                             <Bar dataKey="count" fill="#f95d6a" />
                         </BarChart>
@@ -134,8 +129,8 @@ const MovieStats = ({ movies, selected }) => {
                 <div className="flex flex-col items-center w-full lg:w-3/5 h-64 mt-16">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={movies.monthMoviesDataset}>
-                            <XAxis dataKey="month" interval={0} />
-                            <YAxis width={20} />
+                            <XAxis dataKey="month" interval={0} style={{ fontSize: "0.7rem" }} />
+                            <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                             <Tooltip />
                             <Bar dataKey="count" fill="#f95d6a" />
                         </BarChart>
@@ -148,13 +143,8 @@ const MovieStats = ({ movies, selected }) => {
             <div className="flex flex-col items-center w-full h-64 mt-16">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={movies.releaseYearMovieDataset}>
-                        <XAxis
-                            dataKey="name"
-                            style={{
-                                fontSize: "0.7rem",
-                            }}
-                        />
-                        <YAxis width={20} />
+                        <XAxis dataKey="name" style={{ fontSize: "0.7rem" }} />
+                        <YAxis width={20} style={{ fontSize: "0.7rem" }} />
                         <Tooltip />
                         <Bar dataKey="count" fill="#f95d6a" />
                     </BarChart>

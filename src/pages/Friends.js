@@ -9,7 +9,7 @@ import { axiosPrivateInstance } from "../configs/axios";
 
 const Friends = () => {
     const { username } = useParams();
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     const [isLoading, setIsLoading] = useState(true);
     const [friends, setFriends] = useState();

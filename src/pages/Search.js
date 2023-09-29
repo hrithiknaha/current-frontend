@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { axiosPublicInstance } from "../configs/axios";
+import { useSelector } from "react-redux";
+import { axiosPublicInstance, axiosPrivateInstance } from "../configs/axios";
 
 import TMDBMovieList from "../components/lists/TMDBMovieList";
 import TMDBTVList from "../components/lists/TMDBTVList";
 
 import LoadingSpinner from "../components/configs/LoadingSpinner";
+import UserList from "../components/lists/UserList";
 
 const Search = () => {
     const [searchParams] = useSearchParams();
+
+    const auth = useSelector((state) => state.auth.user);
+
     const [query, setQuery] = useState(searchParams.get("query"));
     const [movies, setMovies] = useState();
     const [shows, setShows] = useState();
+    const [users, setUsers] = useState();
     const [selected, setSelected] = useState("movies");
 
     const navigate = useNavigate();
@@ -39,6 +45,20 @@ const Search = () => {
                 navigate({ search: `query=${query.toString()}` });
             })
             .catch((err) => console.log(err));
+
+        const usernamePayload = {
+            username: query,
+        };
+
+        const axiosInstance = axiosPrivateInstance(auth);
+
+        axiosInstance
+            .post(`/api/users`, usernamePayload)
+            .then(({ data }) => {
+                setUsers(data);
+                navigate({ search: `query=${query.toString()}` });
+            })
+            .catch((err) => console.log(err));
     };
 
     const selectMovies = (e) => {
@@ -47,6 +67,10 @@ const Search = () => {
 
     const selectShows = (e) => {
         setSelected("series");
+    };
+
+    const selectUsers = (e) => {
+        setSelected("users");
     };
 
     useEffect(() => {
@@ -67,6 +91,20 @@ const Search = () => {
             .post("/api/tmdb/series/search", payload)
             .then(({ data }) => {
                 setShows(data.results);
+            })
+            .catch((err) => console.log(err));
+
+        const usernamePayload = {
+            username: query,
+        };
+
+        const axiosInstance = axiosPrivateInstance(auth);
+
+        axiosInstance
+            .post(`/api/users`, usernamePayload)
+            .then(({ data }) => {
+                setUsers(data);
+                navigate({ search: `query=${query.toString()}` });
             })
             .catch((err) => console.log(err));
     }, []);
@@ -90,7 +128,7 @@ const Search = () => {
                         Submit
                     </button>
                 </form>
-                {movies && shows ? (
+                {movies && shows && users ? (
                     <div className="flex flex-col lg:flex-row gap-4">
                         <div className="flex flex-col justify-between w-full lg:w-80 h-full shadow rounded">
                             <h1 className="text-lg lg:text-xl p-3 lg:p-4 bg-orange-500 text-white rounded-t">
@@ -115,14 +153,28 @@ const Search = () => {
                                     <p>TV Shows</p>
                                     <p className="bg-orange-500 px-2 rounded text-white">{shows.length}</p>
                                 </div>
+                                <div
+                                    onClick={selectUsers}
+                                    className={`flex items-center justify-between ${
+                                        selected === "users" ? "bg-gray-200" : "hover:bg-gray-200 hover:cursor-pointer"
+                                    } pt-4 p-2 lg:p-3`}>
+                                    <p>Users</p>
+                                    <p className="bg-orange-500 px-2 rounded text-white">{users.length}</p>
+                                </div>
                             </div>
                         </div>
                         <div className="w-full">
-                            {selected === "movies" ? <TMDBMovieList movies={movies} /> : <TMDBTVList series={shows} />}
+                            {selected === "movies" ? (
+                                <TMDBMovieList movies={movies} />
+                            ) : selected === "series" ? (
+                                <TMDBTVList series={shows} />
+                            ) : (
+                                <UserList users={users} />
+                            )}
                         </div>
                     </div>
                 ) : (
-                    <LoadingSpinner />
+                    <LoadingSpinner users={users} />
                 )}
             </div>
         </div>

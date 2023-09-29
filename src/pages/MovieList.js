@@ -13,7 +13,7 @@ const MovieList = () => {
     const [watchedMovies, setWatchedMovies] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth.user);
 
     useEffect(() => {
         const axiosInstance = axiosPrivateInstance(auth);

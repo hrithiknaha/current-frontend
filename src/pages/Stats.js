@@ -45,7 +45,7 @@ const Stats = () => {
 
                         <button
                             onClick={handleStatToggle}
-                            className="text-sm lg:text-base bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded outline">
+                            className="text-sm lg:text-base bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded">
                             Switch to {selected === "Movies" ? "Series" : "Movies"}
                         </button>
                     </div>
