@@ -58,36 +58,36 @@ const Header = () => {
                                 <Link
                                     to={`/profile/${user.username}`}
                                     onClick={toggleDropdown}
-                                    className="w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                    className="text-sm w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                     Profile
                                 </Link>
                                 <Link
                                     to={`/profile/${user.username}/stats`}
                                     onClick={toggleDropdown}
-                                    className="w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                    className="text-sm w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                     Stats
                                 </Link>
                                 <Link
                                     to={`/movies/list/${user.username}`}
                                     onClick={toggleDropdown}
-                                    className="w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                    className="text-sm w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                     Movie List
                                 </Link>
                                 <Link
                                     to={`/tv/list/${user.username}`}
                                     onClick={toggleDropdown}
-                                    className="w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                    className="text-sm w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                     Show List
                                 </Link>
                                 <Link
                                     to={`/tv/episodes/list/${user.username}`}
                                     onClick={toggleDropdown}
-                                    className="w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
+                                    className="text-sm w-full block px-4 py-2 text-gray-800 hover:bg-gray-200">
                                     Episode List
                                 </Link>
                                 <button
                                     onClick={handleLogout}
-                                    className="w-full text-left block px-4 py-2 text-red-600 hover:bg-gray-200">
+                                    className="text-sm w-full text-left block px-4 py-2 text-red-600 hover:bg-gray-200">
                                     Logout
                                 </button>
                             </div>
