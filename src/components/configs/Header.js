@@ -54,7 +54,7 @@ const Header = () => {
                             <User className="inline" />
                         </button>
                         {isDropdownOpen && (
-                            <div className="absolute top-10 right-0 bg-white border border-gray-200 shadow-md mt-2 rounded w-40">
+                            <div className="z-50 absolute top-10 right-0 bg-white border border-gray-200 shadow-md mt-2 rounded w-40">
                                 <Link
                                     to={`/profile/${user.username}`}
                                     onClick={toggleDropdown}
