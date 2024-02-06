@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip, Cell, XAxis, Bar, BarChart, YAxis } from "recharts";
-import StatTable from "../profile/StatTable";
+import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell, XAxis, Bar, BarChart, YAxis } from "recharts";
+
 import { convertMinutesToMonthsDaysHours } from "../../configs/helpers";
 import { axiosPrivateInstance } from "../../configs/axios";
 
 import Modal from "../../components/configs/Modal";
+import { ReactTable } from "../configs/ReactTable";
 
 const COLORS = ["#003f5c", "#2f4b7c", "#665191", "#a05195", "#d45087", "#f95d6a", "#ff7c43", "#ffa600"];
 
-const MovieStats = ({ movies, selected }) => {
+const MovieStats = ({ movies }) => {
     const auth = useSelector((state) => state.auth.user);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalLoading, setIsModalLoading] = useState(false);
 
     const [modalText, setModalText] = useState("");
-    const [movieDetails, setMovieDetails] = useState();
+    const [movieDetails, setMovieDetails] = useState([]);
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -129,6 +130,45 @@ const MovieStats = ({ movies, selected }) => {
                     .then(({ data }) => {
                         setMovieDetails(data);
                         setModalText(`Movies produced in ${e.name}`);
+                        setIsModalLoading(false);
+                    })
+                    .catch((err) => console.log(err));
+                break;
+
+            case "ACTORS":
+                const actor = e.name;
+
+                axiosInstance
+                    .get(`/api/stats/${auth.username}/movies/actor/${actor}`)
+                    .then(({ data }) => {
+                        setMovieDetails(data);
+                        setModalText(`${e.name} Movies`);
+                        setIsModalLoading(false);
+                    })
+                    .catch((err) => console.log(err));
+                break;
+
+            case "DIRECTORS":
+                const director = e.name;
+
+                axiosInstance
+                    .get(`/api/stats/${auth.username}/movies/director/${director}`)
+                    .then(({ data }) => {
+                        setMovieDetails(data);
+                        setModalText(`${e.name} Movies`);
+                        setIsModalLoading(false);
+                    })
+                    .catch((err) => console.log(err));
+                break;
+
+            case "PRODUCTION":
+                const production = e.name;
+
+                axiosInstance
+                    .get(`/api/stats/${auth.username}/movies/production/${production}`)
+                    .then(({ data }) => {
+                        setMovieDetails(data);
+                        setModalText(`${e.name} Movies`);
                         setIsModalLoading(false);
                     })
                     .catch((err) => console.log(err));
@@ -310,9 +350,19 @@ const MovieStats = ({ movies, selected }) => {
             </div>
 
             <div className="flex flex-col lg:flex-row gap-4 justify-between items-start my-16">
-                <StatTable dataset={movies.castMovieDataset} header="Actor" />
-                <StatTable dataset={movies.directorMovieDataset} header="Director" />
-                <StatTable dataset={movies.productionCompaniesMovieDataset} header="Production Company" />
+                <ReactTable dataset={movies.castMovieDataset} type="Actors" count="Movies" fetchMovies={fetchMovies} />
+                <ReactTable
+                    dataset={movies.directorMovieDataset}
+                    type="Directors"
+                    count="Movies"
+                    fetchMovies={fetchMovies}
+                />
+                <ReactTable
+                    dataset={movies.productionCompaniesMovieDataset}
+                    type="Production"
+                    count="Movies"
+                    fetchMovies={fetchMovies}
+                />
             </div>
         </div>
     );
