@@ -1,8 +1,9 @@
 import MovieList from "../lists/MovieList";
+import SeriesListNoBar from "../lists/SeriesListNoBar";
 import { X } from "react-feather";
 import SmallLoadingSpinner from "./SmallLoadingSpinner";
 
-const Modal = ({ text, isOpen, onClose, movies, isLoading }) => {
+const Modal = ({ text, isOpen, onClose, shows, movies, isLoading }) => {
     return (
         <>
             <div
@@ -17,7 +18,13 @@ const Modal = ({ text, isOpen, onClose, movies, isLoading }) => {
                         <h2 className="text-xl font-semibold">{text}</h2>
                         <X onClick={onClose} cursor={"pointer"} />
                     </div>
-                    {isLoading ? <SmallLoadingSpinner /> : <MovieList movies={movies} />}
+                    {isLoading ? (
+                        <SmallLoadingSpinner />
+                    ) : movies ? (
+                        <MovieList movies={movies} />
+                    ) : (
+                        <SeriesListNoBar series={shows} />
+                    )}
                 </div>
             </div>
         </>

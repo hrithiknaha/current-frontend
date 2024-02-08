@@ -350,18 +350,13 @@ const MovieStats = ({ movies }) => {
             </div>
 
             <div className="flex flex-col lg:flex-row gap-4 justify-between items-start my-16">
-                <ReactTable dataset={movies.castMovieDataset} type="Actors" count="Movies" fetchMovies={fetchMovies} />
-                <ReactTable
-                    dataset={movies.directorMovieDataset}
-                    type="Directors"
-                    count="Movies"
-                    fetchMovies={fetchMovies}
-                />
+                <ReactTable dataset={movies.castMovieDataset} type="Actors" count="Movies" fetch={fetchMovies} />
+                <ReactTable dataset={movies.directorMovieDataset} type="Directors" count="Movies" fetch={fetchMovies} />
                 <ReactTable
                     dataset={movies.productionCompaniesMovieDataset}
                     type="Production"
                     count="Movies"
-                    fetchMovies={fetchMovies}
+                    fetch={fetchMovies}
                 />
             </div>
         </div>
