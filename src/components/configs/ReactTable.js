@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
 
-export const ReactTable = ({ dataset, type, count, fetchMovies }) => {
+export const ReactTable = ({ dataset, type, count, fetch }) => {
     const [data, setData] = useState(dataset);
 
     const columns = [
@@ -51,7 +51,9 @@ export const ReactTable = ({ dataset, type, count, fetchMovies }) => {
                                         ? "bg-white hover:cursor-pointer hover:bg-gray-300"
                                         : "bg-gray-100 hover:cursor-pointer hover:bg-gray-300"
                                 }
-                                onClick={() => fetchMovies(row.original, type.toUpperCase())}>
+                                onClick={() => {
+                                    if (fetch) return fetch(row.original, type.toUpperCase());
+                                }}>
                                 {row.getVisibleCells().map((cell) => (
                                     <td
                                         key={cell.id}

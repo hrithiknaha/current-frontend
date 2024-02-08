@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowDown } from "react-feather";
 import { makeSeriesUrl } from "../../configs/helpers";
 
 const SeriesList = ({ series }) => {
@@ -27,21 +26,7 @@ const SeriesList = ({ series }) => {
                                 src={`https://image.tmdb.org/t/p/w300/${series.poster_path}`}
                                 alt={`${series.title}`}
                             />
-                            <div className="h-2 w-full bg-gray-300">
-                                <div
-                                    className={
-                                        series.episodes.length === series.number_of_episodes &&
-                                        series.status === "Returning Series"
-                                            ? "h-2 bg-green-500"
-                                            : series.episodes.length === series.number_of_episodes &&
-                                              (series.status === "Ended" || series.status === "Canceled")
-                                            ? "h-2 bg-purple-500"
-                                            : "h-2 bg-orange-500"
-                                    }
-                                    style={{
-                                        width: `${(series.episodes.length / series.number_of_episodes) * 100}%`,
-                                    }}></div>
-                            </div>
+
                             {showEpisodeList && selectedSeries === series.series_id && (
                                 <div className="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-75 p-4 overflow-y-auto">
                                     <ul className="text-xs text-white whitespace-nowrap">
