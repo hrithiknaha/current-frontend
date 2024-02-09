@@ -35,7 +35,7 @@ const MovieStats = ({ movies }) => {
                 const week = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/movies/lastwentyweeks/${week}`)
+                    .get(`/api/stats/${auth.username}/movies/week/${week}`)
                     .then(({ data }) => {
                         setMovieDetails(data);
                         setModalText(`Movies watched in ${e.name}th week`);
@@ -48,7 +48,7 @@ const MovieStats = ({ movies }) => {
                 const hour = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/movies/hourofday/${hour}`)
+                    .get(`/api/stats/${auth.username}/movies/hour/${hour}`)
                     .then(({ data }) => {
                         setMovieDetails(data);
                         setModalText(`Movies watched at ${e.name}th hour`);
@@ -61,7 +61,7 @@ const MovieStats = ({ movies }) => {
                 const day = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/movies/dayofweek/${day}`)
+                    .get(`/api/stats/${auth.username}/movies/day/${day}`)
                     .then(({ data }) => {
                         setMovieDetails(data);
                         setModalText(`Movies watched on ${e.day}`);
@@ -126,7 +126,7 @@ const MovieStats = ({ movies }) => {
                 const country = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/movies/productioncountry/${country}`)
+                    .get(`/api/stats/${auth.username}/movies/production/country/${country}`)
                     .then(({ data }) => {
                         setMovieDetails(data);
                         setModalText(`Movies produced in ${e.name}`);
@@ -165,7 +165,7 @@ const MovieStats = ({ movies }) => {
                 const production = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/movies/production/${production}`)
+                    .get(`/api/stats/${auth.username}/movies/production/company/${production}`)
                     .then(({ data }) => {
                         setMovieDetails(data);
                         setModalText(`${e.name} Movies`);

@@ -74,7 +74,7 @@ const SeriesStats = ({ series }) => {
                 const country = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/shows/origincountry/${country}`)
+                    .get(`/api/stats/${auth.username}/shows/origin/country/${country}`)
                     .then(({ data }) => {
                         setShowDetails(data);
                         setModalText(`Shows watched from ${e.name} country`);
@@ -87,7 +87,7 @@ const SeriesStats = ({ series }) => {
                 const prodCountry = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/shows/productioncountry/${prodCountry}`)
+                    .get(`/api/stats/${auth.username}/shows/production/country/${prodCountry}`)
                     .then(({ data }) => {
                         setShowDetails(data);
                         setModalText(`Shows produced from ${e.name} country`);
@@ -100,7 +100,7 @@ const SeriesStats = ({ series }) => {
                 const week = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/shows/lastwentyweeks/${week}`)
+                    .get(`/api/stats/${auth.username}/shows/week/${week}`)
                     .then(({ data }) => {
                         setShowDetails(data);
                         setModalText(`Shows watched in week ${e.name}`);
@@ -113,7 +113,7 @@ const SeriesStats = ({ series }) => {
                 const hour = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/shows/hourofday/${hour}`)
+                    .get(`/api/stats/${auth.username}/shows/hour/${hour}`)
                     .then(({ data }) => {
                         setShowDetails(data);
                         setModalText(`Shows at ${e.name}th hour`);
@@ -126,7 +126,7 @@ const SeriesStats = ({ series }) => {
                 const day = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/shows/weekday/${day}`)
+                    .get(`/api/stats/${auth.username}/shows/day/${day}`)
                     .then(({ data }) => {
                         setShowDetails(data);
                         setModalText(`Shows watched on ${e.name}`);
@@ -165,7 +165,7 @@ const SeriesStats = ({ series }) => {
                 const production = e.name;
 
                 axiosInstance
-                    .get(`/api/stats/${auth.username}/shows/productioncompany/${production}`)
+                    .get(`/api/stats/${auth.username}/shows/production/company/${production}`)
                     .then(({ data }) => {
                         setShowDetails(data);
                         setModalText(`Shows produced by ${e.name}`);
