@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import { Tv } from "react-feather";
 
 import { axiosPublicInstance, axiosPrivateInstance } from "../configs/axios";
-import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
 import NextEpisodeList from "../components/lists/NextEpisodeList";
 import TrendingList from "../components/lists/TrendingList";
 import SearchEntity from "../components/forms/SearchEntity";
+import SkeletonCardList from "../components/SkeletonCardList";
 
 function Home() {
     const [trending, setTrending] = useState();
@@ -63,16 +63,24 @@ function Home() {
                 </div>
                 {nextDetails && (
                     <div className="container mx-auto pt-12 lg:pt-8 px-4 lg:px-0">
-                        <h1 className="text-center lg:text-left text-2xl pb-2">Currently Watching</h1>
-                        <div className="pt-2 flex overflow-x-auto gap-4">
-                            {isSeriesLoading ? <SmallLoadingSpinner /> : <NextEpisodeList nextDetails={nextDetails} />}
+                        <h1 className="text-center lg:text-left text-2xl">Currently Watching</h1>
+                        <div className="py-2 flex gap-4 overflow-x-auto">
+                            {isSeriesLoading ? (
+                                <SkeletonCardList count={10} />
+                            ) : nextDetails.length > 0 ? (
+                                <NextEpisodeList nextDetails={nextDetails} />
+                            ) : (
+                                <p className="w-full text-center lg:text-left font-thin">No episodes to display</p>
+                            )}
                         </div>
                     </div>
                 )}
 
-                <div className="container mx-auto pt-12 lg:pt-8 px-4 lg:px-0">
-                    <h1 className="text-center lg:text-left text-2xl pb-2">Trending this week</h1>
-                    {isLoading ? <SmallLoadingSpinner /> : <TrendingList trending={trending} />}
+                <div className="container mx-auto pt-12 lg:pt-8 px-4 lg:px-0 pb-8">
+                    <h1 className="text-center lg:text-left text-2xl">Trending this week</h1>
+                    <div className="py-2 flex gap-4 overflow-x-auto">
+                        {isLoading ? <SkeletonCardList count={10} /> : <TrendingList trending={trending} />}
+                    </div>
                 </div>
             </div>
         </div>

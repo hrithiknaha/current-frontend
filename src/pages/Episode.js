@@ -18,6 +18,9 @@ import RatingForm from "../components/forms/RatingForm";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 import RatingDetails from "../components/configs/RatingDetails";
+import SkeletonEpisode from "../components/SkeletonEpisode";
+import DisabledRatingForm from "../components/DisabledRatingForm";
+import SkeletonRatingForm from "../components/SkeletonRatingForm";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -137,7 +140,7 @@ const Episode = () => {
     return (
         <div className="min-h-screen bg-gray-100 px-4 lg:px-0">
             {isLoading ? (
-                <LoadingSpinner />
+                <SkeletonEpisode />
             ) : !tmdbEpisode ? (
                 <NotFound />
             ) : (
@@ -191,11 +194,11 @@ const Episode = () => {
                                 <h1 className="text-center lg:text-left text-4xl my-1">{tmdbEpisode.name}</h1>
 
                                 {isDetailsLoading ? (
-                                    <SmallLoadingSpinner />
+                                    <SkeletonRatingForm />
                                 ) : hasRated && episodeDetails?.rating ? (
                                     <RatingDetails data={episodeDetails} />
                                 ) : isSending ? (
-                                    <SmallLoadingSpinner />
+                                    <DisabledRatingForm />
                                 ) : (
                                     <RatingForm setRating={setRating} handleWatch={handleWatch} />
                                 )}
@@ -212,19 +215,34 @@ const Episode = () => {
                                 <p className="text-gray-700 text-sm mb-4">{tmdbEpisode.overview}</p>
                             </div>
 
-                            <div className="mt-4">
-                                <CastList casts={tmdbEpisode.credits.cast} />
-                                <GuestList guests={tmdbEpisode.guest_stars} />
-                                <CrewList
-                                    crews={tmdbEpisode.credits.crew.filter(
-                                        (c) =>
-                                            c.job === "Writer" ||
-                                            c.job === "Director" ||
-                                            c.job === "Screenplay" ||
-                                            c.job === "Director of Photography" ||
-                                            c.job === "Original Music Composer"
-                                    )}
-                                />
+                            <div className="py-4">
+                                <h3 className="font-bold py-2">Casts</h3>
+                                <div className="flex overflow-x-auto gap-4">
+                                    <CastList casts={tmdbEpisode.credits.cast} />
+                                </div>
+                            </div>
+
+                            <div className="py-4">
+                                <h3 className="font-bold py-2">Guest Casts</h3>
+                                <div className="flex overflow-x-auto gap-4">
+                                    <GuestList guests={tmdbEpisode.guest_stars} />
+                                </div>
+                            </div>
+
+                            <div className="py-4">
+                                <h3 className="font-bold py-2">Crew</h3>
+                                <div className="flex overflow-x-auto gap-4">
+                                    <CrewList
+                                        crews={tmdbEpisode.credits.crew.filter(
+                                            (c) =>
+                                                c.job === "Writer" ||
+                                                c.job === "Director" ||
+                                                c.job === "Screenplay" ||
+                                                c.job === "Director of Photography" ||
+                                                c.job === "Original Music Composer"
+                                        )}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>

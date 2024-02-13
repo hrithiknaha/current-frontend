@@ -17,6 +17,7 @@ import { useSeries, useSeriesWatchedEpisodes, useHasSeriesAdded } from "../hooks
 
 import { extractSeriesIdFromURL } from "../configs/helpers";
 import { seasonCompleted, computeSumAndWatchTime, computePercentageCompletion } from "../configs/helpers";
+import SkeletonShow from "../components/SkeletonShow";
 
 const Series = () => {
     const { tvId } = useParams();
@@ -43,12 +44,12 @@ const Series = () => {
     return (
         <div className="bg-gray-100 min-h-screen px-4 lg:px-0">
             {isLoading || isDetailsLoading ? (
-                <LoadingSpinner />
+                <SkeletonShow />
             ) : !series ? (
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-8 lg:py-12">
-                    <div className="bg-white rounded-lg shadow-md p-4">
+                    <div className="bg-white rounded-lg shadow-md p-8">
                         <div className="flex flex-col pb-2 gap-4 my-4 lg:flex-row lg:my-0 justify-between items-center">
                             <h1 className="text-4xl my-1">{series.name} </h1>
 
@@ -160,17 +161,27 @@ const Series = () => {
                             )}
                         </div>
                     </div>
-
                     <div className="bg-white rounded-lg shadow-md p-4">
-                        <CastList casts={series.credits.cast} />
-                        <CrewList
-                            crews={series.credits.crew.filter(
-                                (c) =>
-                                    c.job === "Director" ||
-                                    c.job === "Director of Photography" ||
-                                    c.job === "Screenplay"
-                            )}
-                        />
+                        <div className="py-4">
+                            <h3 className="font-bold py-2">Casts</h3>
+                            <div className="flex overflow-x-auto gap-4">
+                                <CastList casts={series.credits.cast} />
+                            </div>
+                        </div>
+
+                        <div className="py-4">
+                            <h3 className="font-bold py-2">Crews</h3>
+                            <div className="flex overflow-x-auto gap-4">
+                                <CrewList
+                                    crews={series.credits.crew.filter(
+                                        (c) =>
+                                            c.job === "Director" ||
+                                            c.job === "Director of Photography" ||
+                                            c.job === "Screenplay"
+                                    )}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

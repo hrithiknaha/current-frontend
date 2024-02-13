@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-import { ResponsiveContainer, PieChart, Pie, Legend, Tooltip, Cell, XAxis, Bar, BarChart, YAxis } from "recharts";
+import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell, XAxis, Bar, BarChart, YAxis } from "recharts";
 import { convertMinutesToMonthsDaysHours } from "../../configs/helpers";
 import { axiosPrivateInstance } from "../../configs/axios";
 

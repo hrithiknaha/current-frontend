@@ -7,6 +7,7 @@ import { axiosPrivateInstance } from "../configs/axios";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import SeriesList from "../components/lists/SeriesList";
 import MovieList from "../components/lists/MovieList";
+import SkeletonProfile from "../components/SkeletonProfile";
 
 const Profile = () => {
     const { username } = useParams();
@@ -207,7 +208,7 @@ const Profile = () => {
                     </div>
                 </div>
             ) : (
-                <LoadingSpinner />
+                <SkeletonProfile />
             )}
         </div>
     );

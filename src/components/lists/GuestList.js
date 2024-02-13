@@ -6,7 +6,6 @@ const defaultImg = "https://t4.ftcdn.net/jpg/02/17/34/67/240_F_217346782_7XpCTt8
 const GuestList = ({ guests }) => {
     return (
         <div className="mt-2 mb-8">
-            <h3 className="font-bold py-2">Guest Casts</h3>
             <div className="flex overflow-x-auto gap-4">
                 {guests.map((actor) => (
                     <Link
