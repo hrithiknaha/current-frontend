@@ -7,17 +7,15 @@ import SeasonRow from "../components/TV/SeasonRow";
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/configs/NotFound";
-import LoadingSpinner from "../components/configs/LoadingSpinner";
+import SkeletonShow from "../components/SkeletonShow";
 import CompletedSeasonRow from "../components/TV/CompletedSeasonRow";
 import RatingAndTimeDetails from "../components/configs/RatingAndTimeDetails";
 
 import { axiosPrivateInstance } from "../configs/axios";
-
-import { useSeries, useSeriesWatchedEpisodes, useHasSeriesAdded } from "../hooks/useSeries";
-
 import { extractSeriesIdFromURL } from "../configs/helpers";
 import { seasonCompleted, computeSumAndWatchTime, computePercentageCompletion } from "../configs/helpers";
-import SkeletonShow from "../components/SkeletonShow";
+
+import { useSeries, useSeriesWatchedEpisodes, useHasSeriesAdded } from "../hooks/useSeries";
 
 const Series = () => {
     const { tvId } = useParams();
@@ -57,10 +55,7 @@ const Series = () => {
                                 <RatingAndTimeDetails
                                     status={series.status}
                                     data={computeSumAndWatchTime(watchedEpisodes)}
-                                    completion={computePercentageCompletion(
-                                        watchedEpisodes.length,
-                                        series.number_of_episodes
-                                    )}
+                                    completion={computePercentageCompletion(watchedEpisodes.length, series.number_of_episodes)}
                                 />
                             ) : (
                                 <button
@@ -119,9 +114,7 @@ const Series = () => {
                                 </div>
                                 <div className="text-center">
                                     <p className="text-gray-600">Watched:</p>
-                                    {watchedEpisodes && (
-                                        <p className="text-2xl font-semibold">{watchedEpisodes.length}</p>
-                                    )}
+                                    {watchedEpisodes && <p className="text-2xl font-semibold">{watchedEpisodes.length}</p>}
                                 </div>
                             </div>
                         </div>
@@ -129,18 +122,9 @@ const Series = () => {
                         <div className="my-8">
                             <h3 className="bg-gray-100 font-bold">Seasons</h3>
                             {series.seasons
-                                .filter(
-                                    (season) => season.name != "Specials" && !seasonCompleted(season, watchedEpisodes)
-                                )
+                                .filter((season) => season.name != "Specials" && !seasonCompleted(season, watchedEpisodes))
                                 .map((season) => {
-                                    return (
-                                        <SeasonRow
-                                            season={season}
-                                            tvId={tvId}
-                                            watchedEpisodes={watchedEpisodes}
-                                            key={season.id}
-                                        />
-                                    );
+                                    return <SeasonRow season={season} tvId={tvId} watchedEpisodes={watchedEpisodes} key={season.id} />;
                                 })}
                         </div>
                         <div className="my-8 ">
@@ -174,10 +158,7 @@ const Series = () => {
                             <div className="flex overflow-x-auto gap-4">
                                 <CrewList
                                     crews={series.credits.crew.filter(
-                                        (c) =>
-                                            c.job === "Director" ||
-                                            c.job === "Director of Photography" ||
-                                            c.job === "Screenplay"
+                                        (c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay"
                                     )}
                                 />
                             </div>

@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import moment from "moment";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useParams, Link } from "react-router-dom";
+import { ArrowRight, ArrowLeft } from "react-feather";
+import axios from "axios";
+import moment from "moment";
+
 import CastList from "../components/lists/CastList";
 import GuestList from "../components/lists/GuestList";
 import CrewList from "../components/lists/CrewList";
-import axios from "axios";
-import { ArrowRight, ArrowLeft } from "react-feather";
 
 import NotFound from "../components/configs/NotFound";
-import LoadingSpinner from "../components/configs/LoadingSpinner";
-import { extractSeriesIdFromURL, extractSeriesNameFromURL } from "../configs/helpers";
-import SmallLoadingSpinner from "../components/configs/SmallLoadingSpinner";
-
 import RatingForm from "../components/forms/RatingForm";
-
-import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 import RatingDetails from "../components/configs/RatingDetails";
 import SkeletonEpisode from "../components/SkeletonEpisode";
 import DisabledRatingForm from "../components/DisabledRatingForm";
 import SkeletonRatingForm from "../components/SkeletonRatingForm";
+
+import { extractSeriesIdFromURL, extractSeriesNameFromURL } from "../configs/helpers";
+import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
 
 const Episode = () => {
     const { tvId, seasonNumber, episodeNumber } = useParams();
@@ -97,19 +95,17 @@ const Episode = () => {
         setHasPreviousEpisode(true);
         setHasNextEpisode(true);
 
-        axiosPublicInstance
-            .get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`)
-            .then(({ data }) => {
-                setEpisodeCountDetails(data.episodes);
-                if (data?.episodes)
-                    if (parseInt(episodeNumber) === 1) {
-                        setHasPreviousEpisode(false);
-                        setHasNextEpisode(true);
-                    } else if (parseInt(episodeNumber) === data.episodes[data.episodes.length - 1].episode_number) {
-                        setHasPreviousEpisode(true);
-                        setHasNextEpisode(false);
-                    }
-            });
+        axiosPublicInstance.get(`/api/tmdb/series/${extractSeriesIdFromURL(tvId)}/season/${seasonNumber}`).then(({ data }) => {
+            setEpisodeCountDetails(data.episodes);
+            if (data?.episodes)
+                if (parseInt(episodeNumber) === 1) {
+                    setHasPreviousEpisode(false);
+                    setHasNextEpisode(true);
+                } else if (parseInt(episodeNumber) === data.episodes[data.episodes.length - 1].episode_number) {
+                    setHasPreviousEpisode(true);
+                    setHasNextEpisode(false);
+                }
+        });
     }, [tvId, seasonNumber, episodeNumber]);
 
     const handleWatch = (e) => {
@@ -162,9 +158,7 @@ const Episode = () => {
                                 <div className="pb-4 flex justify-between">
                                     {hasPreviousEpisode ? (
                                         <Link
-                                            to={`/tv/${tvId}/season/${seasonNumber}/episode/${
-                                                parseInt(episodeNumber) - 1
-                                            }`}
+                                            to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) - 1}`}
                                             className="text-orange-500 pb-4 flex gap-2">
                                             <ArrowLeft />
                                             Previous Episode
@@ -174,9 +168,7 @@ const Episode = () => {
                                     )}
                                     {hasNextEpisode && (
                                         <Link
-                                            to={`/tv/${tvId}/season/${seasonNumber}/episode/${
-                                                parseInt(episodeNumber) + 1
-                                            }`}
+                                            to={`/tv/${tvId}/season/${seasonNumber}/episode/${parseInt(episodeNumber) + 1}`}
                                             className="text-orange-500 pb-4 flex gap-2">
                                             Next Episode
                                             <ArrowRight />
