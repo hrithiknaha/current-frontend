@@ -7,6 +7,7 @@ import SeriesStats from "../components/TV/SeriesStats";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 
 import { axiosPrivateInstance } from "../configs/axios";
+import SkeletonStats from "../components/SkeletonStats";
 
 const Stats = () => {
     const { username } = useParams();
@@ -56,7 +57,7 @@ const Stats = () => {
                     )}
                 </div>
             ) : (
-                <LoadingSpinner />
+                <SkeletonStats />
             )}
         </div>
     );

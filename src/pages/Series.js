@@ -7,16 +7,15 @@ import SeasonRow from "../components/TV/SeasonRow";
 import CastList from "../components/lists/CastList";
 import CrewList from "../components/lists/CrewList";
 import NotFound from "../components/configs/NotFound";
-import LoadingSpinner from "../components/configs/LoadingSpinner";
+import SkeletonShow from "../components/SkeletonShow";
 import CompletedSeasonRow from "../components/TV/CompletedSeasonRow";
 import RatingAndTimeDetails from "../components/configs/RatingAndTimeDetails";
 
 import { axiosPrivateInstance } from "../configs/axios";
-
-import { useSeries, useSeriesWatchedEpisodes, useHasSeriesAdded } from "../hooks/useSeries";
-
 import { extractSeriesIdFromURL } from "../configs/helpers";
 import { seasonCompleted, computeSumAndWatchTime, computePercentageCompletion } from "../configs/helpers";
+
+import { useSeries, useSeriesWatchedEpisodes, useHasSeriesAdded } from "../hooks/useSeries";
 
 const Series = () => {
     const { tvId } = useParams();
@@ -43,12 +42,12 @@ const Series = () => {
     return (
         <div className="bg-gray-100 min-h-screen px-4 lg:px-0">
             {isLoading || isDetailsLoading ? (
-                <LoadingSpinner />
+                <SkeletonShow />
             ) : !series ? (
                 <NotFound />
             ) : (
                 <div className="container mx-auto py-8 lg:py-12">
-                    <div className="bg-white rounded-lg shadow-md p-4">
+                    <div className="bg-white rounded-lg shadow-md p-8">
                         <div className="flex flex-col pb-2 gap-4 my-4 lg:flex-row lg:my-0 justify-between items-center">
                             <h1 className="text-4xl my-1">{series.name} </h1>
 
@@ -56,10 +55,7 @@ const Series = () => {
                                 <RatingAndTimeDetails
                                     status={series.status}
                                     data={computeSumAndWatchTime(watchedEpisodes)}
-                                    completion={computePercentageCompletion(
-                                        watchedEpisodes.length,
-                                        series.number_of_episodes
-                                    )}
+                                    completion={computePercentageCompletion(watchedEpisodes.length, series.number_of_episodes)}
                                 />
                             ) : (
                                 <button
@@ -118,9 +114,7 @@ const Series = () => {
                                 </div>
                                 <div className="text-center">
                                     <p className="text-gray-600">Watched:</p>
-                                    {watchedEpisodes && (
-                                        <p className="text-2xl font-semibold">{watchedEpisodes.length}</p>
-                                    )}
+                                    {watchedEpisodes && <p className="text-2xl font-semibold">{watchedEpisodes.length}</p>}
                                 </div>
                             </div>
                         </div>
@@ -128,18 +122,9 @@ const Series = () => {
                         <div className="my-8">
                             <h3 className="bg-gray-100 font-bold">Seasons</h3>
                             {series.seasons
-                                .filter(
-                                    (season) => season.name != "Specials" && !seasonCompleted(season, watchedEpisodes)
-                                )
+                                .filter((season) => season.name != "Specials" && !seasonCompleted(season, watchedEpisodes))
                                 .map((season) => {
-                                    return (
-                                        <SeasonRow
-                                            season={season}
-                                            tvId={tvId}
-                                            watchedEpisodes={watchedEpisodes}
-                                            key={season.id}
-                                        />
-                                    );
+                                    return <SeasonRow season={season} tvId={tvId} watchedEpisodes={watchedEpisodes} key={season.id} />;
                                 })}
                         </div>
                         <div className="my-8 ">
@@ -160,17 +145,24 @@ const Series = () => {
                             )}
                         </div>
                     </div>
-
                     <div className="bg-white rounded-lg shadow-md p-4">
-                        <CastList casts={series.credits.cast} />
-                        <CrewList
-                            crews={series.credits.crew.filter(
-                                (c) =>
-                                    c.job === "Director" ||
-                                    c.job === "Director of Photography" ||
-                                    c.job === "Screenplay"
-                            )}
-                        />
+                        <div className="py-4">
+                            <h3 className="font-bold py-2">Casts</h3>
+                            <div className="flex overflow-x-auto gap-4">
+                                <CastList casts={series.credits.cast} />
+                            </div>
+                        </div>
+
+                        <div className="py-4">
+                            <h3 className="font-bold py-2">Crews</h3>
+                            <div className="flex overflow-x-auto gap-4">
+                                <CrewList
+                                    crews={series.credits.crew.filter(
+                                        (c) => c.job === "Director" || c.job === "Director of Photography" || c.job === "Screenplay"
+                                    )}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

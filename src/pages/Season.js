@@ -16,6 +16,7 @@ import WatchedEpisodeRow from "../components/TV/WatchedEpisodeRow";
 import RatingAndTimeDetails from "../components/configs/RatingAndTimeDetails";
 
 import { axiosPrivateInstance, axiosPublicInstance } from "../configs/axios";
+import SkeletonSeason from "../components/SkeletonSeason";
 
 const Season = () => {
     const { tvId, seasonNumber } = useParams();
@@ -77,7 +78,7 @@ const Season = () => {
     return (
         <div className="min-h-screen bg-gray-100 px-4 lg:px-0">
             {isLoading ? (
-                <LoadingSpinner />
+                <SkeletonSeason />
             ) : !seasonEpisodes && !watchedEpisodes ? (
                 <NotFound />
             ) : (

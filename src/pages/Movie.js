@@ -16,6 +16,9 @@ import { axiosPrivateInstance } from "../configs/axios";
 import { extractSeriesIdFromURL } from "../configs/helpers";
 
 import { useMovieTMDB, useMovieDetails } from "../hooks/useMovie";
+import SkeletonMovie from "../components/SkeletonMovie";
+import SkeletonRatingForm from "../components/SkeletonRatingForm";
+import DisabledRatingForm from "../components/DisabledRatingForm";
 
 const Movie = () => {
     const { movieId } = useParams();
@@ -51,7 +54,7 @@ const Movie = () => {
     return (
         <div className="bg-gray-100 min-h-screen px-4 lg:px-0">
             {isLoading ? (
-                <LoadingSpinner />
+                <SkeletonMovie />
             ) : !movie ? (
                 <NotFound />
             ) : (
@@ -66,9 +69,9 @@ const Movie = () => {
                             </h1>
 
                             {isDetailsLoading ? (
-                                <SmallLoadingSpinner />
+                                <SkeletonRatingForm />
                             ) : isSending ? (
-                                <SmallLoadingSpinner />
+                                <DisabledRatingForm />
                             ) : movieDetails?.rating ? (
                                 <RatingDetails data={movieDetails} />
                             ) : (
@@ -89,17 +92,28 @@ const Movie = () => {
                             <p className="text-gray-700 text-sm mb-4">{movie.overview}</p>
                         </div>
 
-                        <CastList casts={movie.credits.cast.filter((cast) => cast.order < 10)} />
-                        <CrewList
-                            crews={movie.credits.crew.filter(
-                                (c) =>
-                                    c.job === "Writer" ||
-                                    c.job === "Director" ||
-                                    c.job === "Screenplay" ||
-                                    c.job === "Director of Photography" ||
-                                    c.job === "Original Music Composer"
-                            )}
-                        />
+                        <div className="py-4">
+                            <h3 className="font-bold py-2">Casts</h3>
+                            <div className="flex overflow-x-auto gap-4">
+                                <CastList casts={movie.credits.cast.filter((cast) => cast.order < 10)} />
+                            </div>
+                        </div>
+
+                        <div className="py-4">
+                            <h3 className="font-bold py-2">Crews</h3>
+                            <div className="flex overflow-x-auto gap-4">
+                                <CrewList
+                                    crews={movie.credits.crew.filter(
+                                        (c) =>
+                                            c.job === "Writer" ||
+                                            c.job === "Director" ||
+                                            c.job === "Screenplay" ||
+                                            c.job === "Director of Photography" ||
+                                            c.job === "Original Music Composer"
+                                    )}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

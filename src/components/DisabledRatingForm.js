@@ -1,6 +1,6 @@
 import React from "react";
 
-const RateForm = ({ setRating, handleWatch }) => {
+const DisabledRatingForm = ({ setRating, handleWatch }) => {
     return (
         <form onSubmit={handleWatch} className="flex gap-4 justify-between w-full lg:w-80 h-10">
             <input
@@ -13,12 +13,13 @@ const RateForm = ({ setRating, handleWatch }) => {
                 className=" px-4 py-2 w-full lg:w-56 h-full border rounded mb-4"
                 placeholder="Ratings"
                 required
+                disabled
             />
-            <button type="submit" className="w-24  bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded">
-                Rate
+            <button disabled className="w-24 bg-orange-500 text-white font-semibold rounded cursor-not-allowed">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mx-auto"></div>
             </button>
         </form>
     );
 };
 
-export default RateForm;
+export default DisabledRatingForm;

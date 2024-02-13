@@ -7,6 +7,7 @@ import { axiosPrivateInstance } from "../configs/axios";
 import LoadingSpinner from "../components/configs/LoadingSpinner";
 import SeriesList from "../components/lists/SeriesList";
 import MovieList from "../components/lists/MovieList";
+import SkeletonProfile from "../components/SkeletonProfile";
 
 const Profile = () => {
     const { username } = useParams();
@@ -107,15 +108,11 @@ const Profile = () => {
                     <div className="flex flex-col lg:flex-row gap-4 py-4">
                         {/* Followers */}
                         <div className="flex justify-between items-center gap-4">
-                            <Link
-                                to="friends"
-                                className="flex gap-4 justify-between flex-1 bg-white px-4 py-2 rounded-lg shadow-md">
+                            <Link to="friends" className="flex gap-4 justify-between flex-1 bg-white px-4 py-2 rounded-lg shadow-md">
                                 <h2 className="text-sm">Followers</h2>
                                 <p className="text-sm  text-center">{user.followers.length}</p>
                             </Link>
-                            <Link
-                                to="friends"
-                                className="flex gap-4 justify-between flex-1 bg-white px-4 py-2 rounded-lg shadow-md">
+                            <Link to="friends" className="flex gap-4 justify-between flex-1 bg-white px-4 py-2 rounded-lg shadow-md">
                                 <h2 className="text-sm">Following</h2>
                                 <p className="text-sm  text-center">{user.following.length}</p>
                             </Link>
@@ -129,9 +126,7 @@ const Profile = () => {
                                 <div
                                     onClick={selectMovies}
                                     className={`flex items-center justify-between ${
-                                        selected === "movies"
-                                            ? "bg-gray-200 "
-                                            : "hover:bg-gray-200 hover:cursor-pointer"
+                                        selected === "movies" ? "bg-gray-200 " : "hover:bg-gray-200 hover:cursor-pointer"
                                     } pt-4 p-3`}>
                                     <p>Movies</p>
                                     <p className="bg-orange-500 px-2 rounded text-white">{user.movies.length}</p>
@@ -148,55 +143,35 @@ const Profile = () => {
                         </div>
                         <div className="w-full mt-4 lg:mt-0">
                             {selected === "movies" ? (
-                                <MovieList
-                                    movies={user.movies.sort((a, b) => (a.date_watched < b.date_watched ? 1 : -1))}
-                                />
+                                <MovieList movies={user.movies.sort((a, b) => (a.date_watched < b.date_watched ? 1 : -1))} />
                             ) : (
                                 <div>
                                     <div>
-                                        <h1 className="inline-block bg-orange-500 text-white px-4 py-2 mb-4 rounded-lg">
-                                            Watching Now
-                                        </h1>
+                                        <h1 className="inline-block bg-orange-500 text-white px-4 py-2 mb-4 rounded-lg">Watching Now</h1>
                                         <SeriesList
                                             series={user.series
                                                 .filter((s) => s.episodes.length !== s.number_of_episodes)
                                                 .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                         />
                                     </div>
-                                    {loggedUser.series.filter(
-                                        (s) =>
-                                            s.episodes.length === s.number_of_episodes &&
-                                            s.status === "Returning Series"
-                                    ).length > 0 && (
+                                    {loggedUser.series.filter((s) => s.episodes.length === s.number_of_episodes && s.status === "Returning Series")
+                                        .length > 0 && (
                                         <div>
-                                            <h1 className="inline-block bg-green-500 text-white px-4 py-2 mb-4 rounded-lg">
-                                                Up To Date
-                                            </h1>
+                                            <h1 className="inline-block bg-green-500 text-white px-4 py-2 mb-4 rounded-lg">Up To Date</h1>
                                             <SeriesList
                                                 series={user.series
-                                                    .filter(
-                                                        (s) =>
-                                                            s.episodes.length === s.number_of_episodes &&
-                                                            s.status === "Returning Series"
-                                                    )
+                                                    .filter((s) => s.episodes.length === s.number_of_episodes && s.status === "Returning Series")
                                                     .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                             />
                                         </div>
                                     )}
-                                    {loggedUser.series.filter(
-                                        (s) => s.episodes.length === s.number_of_episodes && s.status === "Ended"
-                                    ).length > 0 && (
+                                    {loggedUser.series.filter((s) => s.episodes.length === s.number_of_episodes && s.status === "Ended").length >
+                                        0 && (
                                         <div>
-                                            <h1 className="inline-block bg-purple-500 text-white px-4 py-2 mb-4 rounded-lg">
-                                                Completed
-                                            </h1>
+                                            <h1 className="inline-block bg-purple-500 text-white px-4 py-2 mb-4 rounded-lg">Completed</h1>
                                             <SeriesList
                                                 series={user.series
-                                                    .filter(
-                                                        (s) =>
-                                                            s.episodes.length === s.number_of_episodes &&
-                                                            s.status === "Ended"
-                                                    )
+                                                    .filter((s) => s.episodes.length === s.number_of_episodes && s.status === "Ended")
                                                     .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))}
                                             />
                                         </div>
@@ -207,7 +182,7 @@ const Profile = () => {
                     </div>
                 </div>
             ) : (
-                <LoadingSpinner />
+                <SkeletonProfile />
             )}
         </div>
     );
